@@ -11,7 +11,7 @@
                 <i class="fas fa-search"></i>
                 <input v-model="keyword" type="text"/>
             </div>
-            <button v-if="!this.$cookies.isKey('Auth-Token')" type="button" class="login-btn" data-toggle="modal" data-target="#exampleModal">
+            <button v-if="!this.$cookies.isKey('Auth-Token')" type="button" class="login-btn" data-toggle="modal" data-target="#LoginModal">
                 로그인
             </button>
             <button v-if="this.$cookies.isKey('Auth-Token')" @click="logout" type="button" class="login-btn">
@@ -20,7 +20,6 @@
             <button v-if="this.$cookies.isKey('Auth-Token')" @click="info" type="button" class="login-btn">
                 회원정보
             </button>
-
         </div> 
     </div>
     
