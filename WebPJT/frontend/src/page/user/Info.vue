@@ -111,7 +111,7 @@ export default {
       .digits()
       .has()
       .letters();
-    this.email = this.$cookies.get("User").email;
+    this.email = this.$cookies.get("User");
     axios
         .get(`${baseURL}/viewInfo/${this.email}`)
         .then(response => {

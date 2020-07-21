@@ -90,7 +90,7 @@
                 this.$router.go()
             },
             info: function() {
-                this.$router.push('/user/info/')
+                this.$router.push('/user/info/').catch(()=>{});
             },
         },
         data: function() {
