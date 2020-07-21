@@ -2,12 +2,17 @@ package com.web.blog.controller.account;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
+import com.web.blog.jwt.JwtService;
 import com.web.blog.dao.user.UserDao;
 import com.web.blog.model.BasicResponse;
 import com.web.blog.model.user.SignupRequest;
@@ -21,6 +26,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -29,6 +35,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
+import io.swagger.models.Response;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -49,22 +56,42 @@ public class AccountController {
     @Autowired
     UserDao userDao;
 
+    @Autowired
+    JwtService jwtService;
+
     @GetMapping("/login/{email}/{password}")
     @ApiOperation(value = "로그인")
-    public Object login(@PathVariable String email, @PathVariable String password) throws SQLException, IOException {
+    public Object login(HttpServletRequest req, @PathVariable String email, @PathVariable String password)
+            throws SQLException, IOException {
         try {
             Optional<User> userOpt = userDao.findUserByEmailAndPassword(email, password);
             ResponseEntity response = null;
             if (userOpt.isPresent()) {
-                return userOpt;
-                // final BasicResponse result = new BasicResponse();
-                // result.status = true;
-                // result.data = email;
-                // response = new ResponseEntity<>(result, HttpStatus.OK);
+                String token = jwtService.createLoginToken(userOpt.get());
+                req.getSession().setAttribute("login_user", jwtService.getUser(token));
+                 String uemail = jwtService.getUser(token);
+                // res.setHeader("auth-token", token);
+                // System.out.println(jwtService.getUser(req.getHeader("auth-token")));
+
+                return uemail;
             } else {
                 response = new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
                 return response;
             }
+        } catch (Exception e) {
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @GetMapping("/getuserinfo")
+    @ApiOperation(value = "세션정보가져오기")
+    public Object getUserInfo(HttpServletRequest req) {
+        HttpStatus status = null;
+        try {
+            status = HttpStatus.ACCEPTED;
+            String loginuser = (String) req.getSession().getAttribute("login_user");
+            return loginuser;
+            // return new ResponseEntity<>(loginuser, status);
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -113,6 +140,18 @@ public class AccountController {
         return user;
     }
 
+    @GetMapping("/viewInfo/{email}")
+    @ApiOperation(value = "회원정보조회")
+    public Object viewInfo(@PathVariable String email) throws SQLException, IOException {
+        try {
+            Optional<User> userOpt = userDao.findUserByEmail(email);
+            return userOpt.get();
+        } catch (Exception e) {
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
+    }
+
     @GetMapping("/checkEmail/{email}")
     @ApiOperation(value = "이메일확인")
     public String checkEmail(@PathVariable String email) {
@@ -149,6 +188,7 @@ public class AccountController {
                 newUser.setName(request.getName());
                 newUser.setPassword(request.getPassword());
                 newUser.setNickname(request.getNickname());
+                newUser.setImgurl(request.getImgurl());
                 userDao.save(newUser);
                 return newUser;
             } else {

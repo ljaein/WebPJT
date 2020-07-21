@@ -10,7 +10,7 @@
 <script> 
 import './assets/css/style.scss' 
 import Header from './components/common/Header.vue'
-import LoginModal from './components/Modal/LoginModal.vue'
+import LoginModal from './components/modal/LoginModal.vue'
 import constants from './lib/constants' 
 
 export default {
@@ -35,6 +35,7 @@ export default {
 
           let array = [
               constants.URL_TYPE.USER.LOGIN,
+
           ];
 
           let isHeader = true;

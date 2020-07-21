@@ -1,5 +1,65 @@
 <template>
   <div class="post">
+    <!-- Modal -->
+    <!-- <div
+      class="modal fade"
+      id="exampleModal"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">로그인</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="user" id="login">
+              <div class="wrapC table">
+                <h1>SS_log</h1>
+                <div class="input-wrap">
+                  <input
+                    v-model="email"
+                    v-bind:class="{error : error.email, complete:!error.email&&email.length!==0}"
+                    id="email"
+                    placeholder="이메일을 입력해주세요"
+                    type="text"
+                  />
+                  <div class="error-text" v-if="error.email">{{error.email}}</div>
+                </div>
+                <div class="input-wrap">
+                  <input
+                    v-model="password"
+                    v-bind:class="{error : error.password, complete:!error.password&&password.length!==0}"
+                    :type="passwordType"
+                    id="password"
+                    placeholder="영문, 숫자 혼용 8자 이상"
+                  />
+                  <span :class="{active : passwordType==='text'}">
+                    <i class="fas fa-eye"></i>
+                  </span>
+                  <div class="error-text" v-if="error.password">{{error.password}}</div>
+                </div>
+                <button class="btn btn--back btn--login" @click="login" data-dismiss="modal">로그인</button>
+                <div class="add-option">
+                  <div class="wrap">
+                    <p>아직 회원이 아니신가요?</p>
+                    <button type="button" class="btn--text" @click="join" data-dismiss="modal">회원가입</button>
+                    </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="login-btn" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div> -->
 
     <!-- {{this.$cookies.get("User").name}} -->
 
@@ -187,10 +247,7 @@ export default {
 
   methods: {
     checkForm() {
-      if (
-        this.email.length > 0 &&
-        !EmailValidator.validate(this.email)
-      )
+      if (this.email.length > 0 && !EmailValidator.validate(this.email))
         this.error.email = "이메일 형식이 아닙니다.";
       else this.error.email = false;
 
@@ -203,22 +260,16 @@ export default {
     },
     login() {
       axios
-        .get(
-          `${baseURL}/login/${this.email}/${this.password}`,
-          {
-            params: {
-              email: this.email,
-              password: this.password
-            }
+        .get(`${baseURL}/login/${this.email}/${this.password}`, {
+          params: {
+            email: this.email,
+            password: this.password
           }
-        )
+        })
         .then(response => {
           if (response.status == 200) {
             var jwt = require("jsonwebtoken");
-            var token = jwt.sign(
-              { sub: this.email },
-              this.password
-            );
+            var token = jwt.sign({ sub: this.email }, this.password);
             this.$cookies.set("Auth-Token", token);
             this.$cookies.set("User", response.data);
             console.log(response.data);
@@ -236,7 +287,19 @@ export default {
     },
     join: function() {
       this.$router.push("/user/join/");
+    },
+    init(){
+      axios.get(`${baseURL}/getuserinfo`).then(response => {
+        // alert(response.data);
+      })
     }
+    // init(){
+    //   if(storage.getItem("jwt-auth-token")){
+    //     this.message = storage.getItem("login_user")+"로 로그인";
+    //   }else{
+    //     storage.setItem("jwt-auth-token","");
+    //   }
+    // }
   },
   data: () => {
     return {
@@ -249,6 +312,9 @@ export default {
       },
       passwordType: "password"
     };
+  },
+  mounted(){
+    this.init();
   }
 };
 </script>
