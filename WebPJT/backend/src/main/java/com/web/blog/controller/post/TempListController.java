@@ -44,6 +44,17 @@ public class TempListController {
         return temp;
     }
 
+    @GetMapping("/detail/{pid}")
+    @ApiOperation(value = "임시저장 상세정보")
+    public Object selectDetail(@PathVariable int pid) throws SQLException, IOException {
+        PostList post = postDao.findByPid(pid);
+        if(post!=null){
+            System.out.println(post);
+            return post;
+        }else {
+            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+        }
+    }
 
     @PostMapping("/tempRegist")
     @ApiOperation("임시저장 등록")
@@ -60,6 +71,7 @@ public class TempListController {
             temp.setCompanyInfo(request.getCompanyInfo());
             temp.setDetail(request.getDetail());
             temp.setFlag(0);
+            temp.setActivity(request.getActivity());
             LocalDateTime time = LocalDateTime.now();
             temp.setCreateDate(time);
             postDao.save(temp);
@@ -74,9 +86,9 @@ public class TempListController {
     @ApiOperation(value = "임시저장 수정하기")
     public Object modify(@Valid @RequestBody PostList request) throws SQLException, IOException {
         try {
-            Optional<PostList> temp = postDao.findByEmail(request.getEmail());
-            if(temp.isPresent()){
-                PostList newTemp = temp.get();
+           PostList temp = postDao.findByPid(request.getPid());
+            if(temp!=null){
+                PostList newTemp = temp;
                 newTemp.setTitle(request.getTitle());
                 newTemp.setLocation(request.getLocation());
                 newTemp.setImgurl(request.getImgurl());
@@ -85,7 +97,7 @@ public class TempListController {
                 newTemp.setEdate(request.getEdate());
                 newTemp.setCompanyInfo(request.getCompanyInfo());
                 newTemp.setDetail(request.getDetail());
-                newTemp.setFlag(0);
+                newTemp.setActivity(request.getActivity());
                 LocalDateTime time = LocalDateTime.now();
                 newTemp.setCreateDate(time);
                 
@@ -104,9 +116,9 @@ public class TempListController {
     @DeleteMapping("/delete/{pid}")
     @ApiOperation(value = "임시저장 삭제")
     public Object delete(@PathVariable int pid) throws SQLException, IOException {
-        Optional<PostList> temp = postDao.findByPid(pid);
-        if(temp.isPresent()){
-            postDao.delete(temp.get());
+        PostList post = postDao.findByPid(pid);
+        if(post != null){
+            postDao.delete(post);
             return "삭제 완료";
         } else {
             return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
