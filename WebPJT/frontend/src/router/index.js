@@ -12,6 +12,7 @@ import Info from '../page/user/Info.vue'
 import List from '../page/post/List.vue'
 import NotFound from '../page/error/NotFound.vue'
 import Params from '../page/error/Params.vue'
+import Msg from '../page/msg/msg.vue'
 
 // 시즌
 import PostListView from '../page/Season/PostListView.vue'
@@ -118,6 +119,11 @@ export default new Router({
             component: Sky,
         },
 
+        // kakao share
+        {
+            path: '/msg/msg',
+            component: Msg,
+          },
 
     ]
 })
