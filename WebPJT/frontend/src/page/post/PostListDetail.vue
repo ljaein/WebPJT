@@ -33,6 +33,7 @@
                   text-overflow:ellipsis;overflow: hidden;white-space: nowrap;"
                 >가격 : 30000원</p>
                 <div class="d-flex justify-content-end mr-0 mt-0">
+                  <button class="btn btn-primary">장바구니</button>
                   <button class="btn btn-primary">구매하기</button>
                 </div>
               </div>

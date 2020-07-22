@@ -1,7 +1,5 @@
 <template>
-  <div>
-      겨울
-  </div>
+  <h1>CommentModify</h1>
 </template>
 
 <script>

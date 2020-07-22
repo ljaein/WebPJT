@@ -1,11 +1,10 @@
 <template>
-  <div>
-      봄
-  </div>
+  <h1>PostCreate</h1>
 </template>
 
 <script>
 export default {
+
 }
 </script>
 
