@@ -45,6 +45,7 @@ export default {
           })
           this.isHeader = isHeader;
 
+
       },
   },
   data: function () {

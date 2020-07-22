@@ -1,4 +1,4 @@
-package com.web.blog.controller.post;
+﻿package com.web.blog.controller.post;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -32,7 +32,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 @RestController
 @RequestMapping("/post")
 public class PostListController {
-    
+    //test
     @Autowired
     PostListDao postDao;
 
