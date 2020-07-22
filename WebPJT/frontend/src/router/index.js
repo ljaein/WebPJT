@@ -3,26 +3,26 @@ import Router from 'vue-router'
 
 import constants from '../lib/constants'
 
-// 유저
+// user
 import Login from '../page/user/Login.vue'
 import Join from '../page/user/Join.vue'
 import Info from '../page/user/Info.vue'
 
-// 포스트
-import List from '../page/post/List.vue'
+// error
 import NotFound from '../page/error/NotFound.vue'
 import Params from '../page/error/Params.vue'
+import Msg from '../page/msg/msg.vue'
 
-// 시즌
-import PostListView from '../page/Season/PostListView.vue'
-import PostListDetailView from '../page/Season/PostListDetailView.vue'
+// main
+import List from '../page/main/List.vue'
 
-import Spring from '../page/Season/Spring.vue'
-import Summer from '../page/Season/Summer.vue'
-import Autumn from '../page/Season/Autumn.vue'
-import Winter from '../page/Season/Winter.vue'
+// post
+import PostList from '../page/post/PostList.vue'
+import PostListDetail from '../page/post/PostListDetail.vue'
+import PostCreate from '../page/post/PostCreate.vue'
+import PostUpdate from '../page/post/PostUpdate.vue'
 
-// Activity
+// activity
 import Ground from '../page/activity/Ground.vue'
 import Water from '../page/activity/Water.vue'
 import Sky from '../page/activity/Sky.vue'
@@ -69,11 +69,11 @@ export default new Router({
         // 포스트
         {
             path: '/posts',
-            name: 'PostListView',
-            component: PostListView,
+            name: 'PostList',
+            component: PostList,
         }, 
-        // 포스트 디테일
         {
+<<<<<<< HEAD
             path: '/posts/:ID',
             name: 'PostListDetailView',
             component: PostListDetailView,
@@ -84,21 +84,21 @@ export default new Router({
             path: '/spring',
             name: 'Spring',
             component: Spring,
+=======
+            path: '/posts/:post_pk',
+            name: 'PostListDetail',
+            component: PostListDetail,
+>>>>>>> 1fc5d02db6b0eab36ffca76d5a8a5a906b15ce7d
         },
         {
-            path: '/summer',
-            name: 'Summer',
-            component: Summer,
+            path: '/postcreate',
+            name: 'PostCreate',
+            component: PostCreate,
         },
         {
-            path: '/autumn',
-            name: 'Autumn',
-            component: Autumn,
-        },
-        {
-            path: '/winter',
-            name: 'Winter',
-            component: Winter,
+            path: '/postupdate',
+            name: 'PostUpdate',
+            component: PostUpdate,
         },
 
         //activity
@@ -118,6 +118,11 @@ export default new Router({
             component: Sky,
         },
 
+        // kakao share
+        {
+            path: '/msg/msg',
+            component: Msg,
+          },
 
     ]
 })

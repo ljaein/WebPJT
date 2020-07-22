@@ -1,7 +1,5 @@
 <template>
-  <div>
-      여름
-  </div>
+  <h1>CommentModify</h1>
 </template>
 
 <script>

@@ -2,7 +2,7 @@
   <div id="app">
     <Header :isHeader="isHeader"/>
     <LoginModal />
-    <router-view/>
+    <router-view />
   </div>
 </template>
 
