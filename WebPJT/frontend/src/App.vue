@@ -12,6 +12,7 @@ import Header from './components/common/Header.vue'
 import constants from './lib/constants'
 import LoginModal from './components/modal/LoginModal.vue'
 
+
 export default {
   name: 'App',
   components: { 

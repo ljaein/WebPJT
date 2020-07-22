@@ -7,7 +7,7 @@
         <!-- img -->
           <div class="card col-sm-12 mt-1" align="left" >
             <input ref="imageInput" type="file" hidden @change="onChangeImages" />
-            <img v-if="this.imageUrl" :src="this.imageUrl" />
+            <img v-if="this.imgurl" :src="this.imgurl" />
             <button type="button" @click="onClickImageUpload" v-if="validated == 0">이미지 업로드</button>
           </div>
         <div class="card col-sm-12 mt-1">
@@ -92,7 +92,6 @@
 </template>
 
 <script>
-// import "../../assets/css/user.scss";
 import PV from "password-validator";
 import * as EmailValidator from "email-validator";
 import axios from "axios";
@@ -111,10 +110,17 @@ export default {
       .digits()
       .has()
       .letters();
-    this.email = this.$cookies.get("User").email;
-    this.name = this.$cookies.get("User").name;
-    this.nickname = this.$cookies.get("User").nickname;
-    this.imageUrl = this.$cookies.get("imgurl");
+    this.email = this.$cookies.get("User");
+    axios
+        .get(`${baseURL}/viewInfo/${this.email}`)
+        .then(response => {
+          this.name = response.data.name;
+          this.nickname = response.data.nickname;
+          this.imgurl = response.data.imgurl;
+        })
+        .catch((err) => {
+          this.$router.push({name: 'Params', params: {name: err.response.status}});
+        });
   },
 
   watch: {
@@ -159,18 +165,18 @@ export default {
         });
     },
     modify() {
-      let { email, nickname, password, name } = this;
+      let { email, nickname, password, name, imgurl } = this;
       let data = {
         email,
         nickname,
         password,
-        name
+        name,
+        imgurl
       };
       axios
         .put(`${baseURL}/modify`, data)
         .then(response => {
           alert("수정 완료");
-          this.$cookies.set('User', response.data);
           this.$router.push("/user/info");
           this.$router.go();
         })
@@ -185,8 +191,8 @@ export default {
     onChangeImages(e) {
       console.log(e.target.files);
       const file = e.target.files[0];
-      this.imageUrl = URL.createObjectURL(file);
-      this.$cookies.set("imgurl",this.imageUrl);
+      this.imgurl = URL.createObjectURL(file);
+      // this.$cookies.set("imgurl",this.imgurl);
     }
   },
   data: () => {
@@ -204,7 +210,7 @@ export default {
       isTerm: false,
       passwordType: "password",
       passwordConfirmType: "password",
-      imageUrl: null,
+      imgurl: null,
       validated: 1
     };
   }
