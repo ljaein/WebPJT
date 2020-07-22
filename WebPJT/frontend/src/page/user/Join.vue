@@ -69,7 +69,6 @@
 </template>
 
 <script>
-import "../../assets/css/user.scss";
 import PV from "password-validator";
 import * as EmailValidator from "email-validator";
 import axios from "axios";

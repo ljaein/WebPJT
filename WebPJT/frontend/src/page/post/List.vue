@@ -1,230 +1,49 @@
 <template>
-  <div class="post">
-    <!-- Modal -->
-    <!-- <div
-      class="modal fade"
-      id="exampleModal"
-      tabindex="-1"
-      role="dialog"
-      aria-labelledby="exampleModalLabel"
-      aria-hidden="true"
-    >
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">로그인</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            <div class="user" id="login">
-              <div class="wrapC table">
-                <h1>SS_log</h1>
-                <div class="input-wrap">
-                  <input
-                    v-model="email"
-                    v-bind:class="{error : error.email, complete:!error.email&&email.length!==0}"
-                    id="email"
-                    placeholder="이메일을 입력해주세요"
-                    type="text"
-                  />
-                  <div class="error-text" v-if="error.email">{{error.email}}</div>
-                </div>
-                <div class="input-wrap">
-                  <input
-                    v-model="password"
-                    v-bind:class="{error : error.password, complete:!error.password&&password.length!==0}"
-                    :type="passwordType"
-                    id="password"
-                    placeholder="영문, 숫자 혼용 8자 이상"
-                  />
-                  <span :class="{active : passwordType==='text'}">
-                    <i class="fas fa-eye"></i>
-                  </span>
-                  <div class="error-text" v-if="error.password">{{error.password}}</div>
-                </div>
-                <button class="btn btn--back btn--login" @click="login" data-dismiss="modal">로그인</button>
-                <div class="add-option">
-                  <div class="wrap">
-                    <p>아직 회원이 아니신가요?</p>
-                    <button type="button" class="btn--text" @click="join" data-dismiss="modal">회원가입</button>
-                    </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="login-btn" data-dismiss="modal">Close</button>
-          </div>
+  <div>
+    <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+      <div class="carousel-inner">
+        <div class="carousel-item active">
+          <img src="https://t2.daumcdn.net/thumb/R720x0/?fname=http://t1.daumcdn.net/brunch/service/user/2OhT/image/O8cC0T4PchZkbqSc09Fvv8kVHOc.jpg" class="d-block w-100" alt="paragliding">
+        </div>
+        <div class="carousel-item">
+          <img src="https://img1.daumcdn.net/thumb/R800x0/?scode=mtistory2&fname=https%3A%2F%2Ft1.daumcdn.net%2Fcfile%2Ftistory%2F997560335A1C150A27" class="d-block w-100" alt="snowboarding">
+        </div>
+        <div class="carousel-item">
+          <img src="https://lh3.googleusercontent.com/proxy/gkQKSCqih08jNeQrDx-D347lJyC1eC_ltW7Ex4DqBARyXAzoYkmRiWIS1pmzKauFXgQPEoGeoNqbXmqk1QXN6Twb0QWSf0vl8zutIimTaK-rsgwWLs8SCI4Bi4RwposDzw9PGJ5YUILkcyZoYLMRWI0vWTYRiDQXca_sC7RmhB9_OOH1KfO0E9Cl5tVdUg" class="d-block w-100" alt="wingsuit">
         </div>
       </div>
-    </div> -->
-
-    <!-- {{this.$cookies.get("User").name}} -->
-
-    <div class="wrapB">
-      <h2>전체글</h2>
-
-      <section class="post-list">
-        <div>
-          <div class="post-card">
-            <a>
-              <div
-                :style="{backgroundImage:'url(https://www.ipcc.ch/site/assets/uploads/sites/3/2019/10/img-placeholder.png)'}"
-                class="post-img"
-              />
-
-              <div class="contents">
-                <h3>제목</h3>
-                <p class="content">컨텐츠</p>
-                <span class="date">2020-06-19ㆍ</span>
-                <span class="comment">댓글 0개</span>
-              </div>
-            </a>
-
-            <div class="writer-wrap">
-              <a>닉네임</a>
-              <span>♥ 2</span>
-            </div>
-          </div>
-        </div>
-        <div>
-          <div class="post-card">
-            <a>
-              <div
-                :style="{backgroundImage:'url(https://www.ipcc.ch/site/assets/uploads/sites/3/2019/10/img-placeholder.png)'}"
-                class="post-img"
-              />
-
-              <div class="contents">
-                <h3>제목</h3>
-                <p class="content">컨텐츠</p>
-                <span class="date">2020-06-19ㆍ</span>
-                <span class="comment">댓글 0개</span>
-              </div>
-            </a>
-
-            <div class="writer-wrap">
-              <a>닉네임</a>
-              <span>♥ 2</span>
-            </div>
-          </div>
-        </div>
-        <div>
-          <div class="post-card">
-            <a>
-              <div
-                :style="{backgroundImage:'url(https://www.ipcc.ch/site/assets/uploads/sites/3/2019/10/img-placeholder.png)'}"
-                class="post-img"
-              />
-
-              <div class="contents">
-                <h3>제목</h3>
-                <p class="content">컨텐츠</p>
-                <span class="date">2020-06-19ㆍ</span>
-                <span class="comment">댓글 0개</span>
-              </div>
-            </a>
-
-            <div class="writer-wrap">
-              <a>닉네임</a>
-              <span>♥ 2</span>
-            </div>
-          </div>
-        </div>
-        <div>
-          <div class="post-card">
-            <a>
-              <div
-                :style="{backgroundImage:'url(https://www.ipcc.ch/site/assets/uploads/sites/3/2019/10/img-placeholder.png)'}"
-                class="post-img"
-              />
-
-              <div class="contents">
-                <h3>제목</h3>
-                <p class="content">컨텐츠</p>
-                <span class="date">2020-06-19ㆍ</span>
-                <span class="comment">댓글 0개</span>
-              </div>
-            </a>
-
-            <div class="writer-wrap">
-              <a>닉네임</a>
-              <span>♥ 2</span>
-            </div>
-          </div>
-        </div>
-        <div>
-          <div class="post-card">
-            <a>
-              <div
-                :style="{backgroundImage:'url(https://www.ipcc.ch/site/assets/uploads/sites/3/2019/10/img-placeholder.png)'}"
-                class="post-img"
-              />
-
-              <div class="contents">
-                <h3>제목</h3>
-                <p class="content">컨텐츠</p>
-                <span class="date">2020-06-19ㆍ</span>
-                <span class="comment">댓글 0개</span>
-              </div>
-            </a>
-
-            <div class="writer-wrap">
-              <a>닉네임</a>
-              <span>♥ 2</span>
-            </div>
-          </div>
-        </div>
-        <div>
-          <div class="post-card">
-            <a>
-              <div
-                :style="{backgroundImage:'url(https://www.ipcc.ch/site/assets/uploads/sites/3/2019/10/img-placeholder.png)'}"
-                class="post-img"
-              />
-
-              <div class="contents">
-                <h3>제목</h3>
-                <p class="content">컨텐츠</p>
-                <span class="date">2020-06-19ㆍ</span>
-                <span class="comment">댓글 0개</span>
-              </div>
-            </a>
-
-            <div class="writer-wrap">
-              <a>닉네임</a>
-              <span>♥ 2</span>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <div class="tag-list-wrap">
-        <h4>인기태그</h4>
-        <ul class="tag-list">
-          <li>#태그1 (8)</li>
-          <li>#태그2 (5)</li>
-          <li>#태그3 (2)</li>
-        </ul>
-      </div>
+      <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="sr-only">Previous</span>
+      </a>
+      <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="sr-only">Next</span>
+      </a>
     </div>
+    
+    <div>
   </div>
+
+
+  </div>
+
+  
 </template>
  
 <script>
-import "../../assets/css/post.scss";
-import "../../assets/css/user.scss";
 import PV from "password-validator";
 import * as EmailValidator from "email-validator";
 import axios from "axios";
 
 const baseURL = "http://localhost:8080/account";
 
+
 export default {
   name: "Post",
-  components: {},
+  components: {
+    // FontAwesomeIcon
+  },
   created() {
     this.passwordSchema
       .is()
@@ -247,7 +66,10 @@ export default {
 
   methods: {
     checkForm() {
-      if (this.email.length > 0 && !EmailValidator.validate(this.email))
+      if (
+        this.email.length > 0 &&
+        !EmailValidator.validate(this.email)
+      )
         this.error.email = "이메일 형식이 아닙니다.";
       else this.error.email = false;
 
@@ -258,48 +80,7 @@ export default {
         this.error.password = "영문,숫자 포함 8 자리이상이어야 합니다.";
       else this.error.password = false;
     },
-    login() {
-      axios
-        .get(`${baseURL}/login/${this.email}/${this.password}`, {
-          params: {
-            email: this.email,
-            password: this.password
-          }
-        })
-        .then(response => {
-          if (response.status == 200) {
-            var jwt = require("jsonwebtoken");
-            var token = jwt.sign({ sub: this.email }, this.password);
-            this.$cookies.set("Auth-Token", token);
-            this.$cookies.set("User", response.data);
-            console.log(response.data);
-            this.name = response.data.name;
-            this.$router.push("/");
-            this.$router.go();
-          }
-        })
-        .catch(err => {
-          console.log(err.response);
-          alert("아이디 및 비밀번호를 확인해주세요.");
-          this.email = "";
-          this.password = "";
-        });
-    },
-    join: function() {
-      this.$router.push("/user/join/");
-    },
-    init(){
-      axios.get(`${baseURL}/getuserinfo`).then(response => {
-        // alert(response.data);
-      })
-    }
-    // init(){
-    //   if(storage.getItem("jwt-auth-token")){
-    //     this.message = storage.getItem("login_user")+"로 로그인";
-    //   }else{
-    //     storage.setItem("jwt-auth-token","");
-    //   }
-    // }
+    
   },
   data: () => {
     return {
@@ -310,11 +91,14 @@ export default {
         email: false,
         password: false
       },
-      passwordType: "password"
+      passwordType: "password",
+      itemcount : 0,
+      faMapMarkerAlt,
+      faQuestionCircle,
+      faUser,
+      faHeart,
+      faShoppingBag
     };
-  },
-  mounted(){
-    this.init();
   }
 };
 </script>
