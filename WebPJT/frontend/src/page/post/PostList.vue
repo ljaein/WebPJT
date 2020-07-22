@@ -58,7 +58,10 @@
     </div>
     <div class="container">
       <div class="column">
-        <div class="card mt-5 mb-3" style="max-width: 100%;" @click="getdetail(1)">
+        <div class="d-flex justify-content-end">
+        <button class="btn btn-primary mt-3 mb-1" @click="gocreate">글쓰기</button>
+        </div>
+        <div class="card mb-3" style="max-width: 100%;" @click="getdetail(1)">
           <div class="row no-gutters">
             <div class="col-md-4">
               <img
@@ -91,9 +94,10 @@
                     <i
                       class="fas fa-bookmark select-button mr-2"
                       style="text-align: right; font-size:20px;"
+
                     ></i>
                     <i
-                      class="fas fa-heart select-button"
+                      class="fas fa-heart select-button like-button"
                       style="text-align: right; font-size: 20px;"
                     ></i>
                   </div>
@@ -112,6 +116,8 @@ import axios from "axios";
 
 const baseURL = "http://localhost:8080/account";
 
+// const likeButtons = document.querySelectorAll('.like-button');
+
 export default {
   data() {
     return {
@@ -119,9 +125,29 @@ export default {
     };
   },
   methods: {
+    // forEach: function (likeButton) {
+    //     likeButton.addEventListener('click', function (event) {
+    //         const postPk = event.target.dataset.postPk
+    //         const countInfo = document.querySelector(`#like-count-${postPk}`)
+    //         axios.get(`/posts/${postPk}`)
+    //             .then(function (response) {
+    //                 const count = response.data.count
+    //                 const liked = response.data.liked
+    //                 if (liked) {
+    //                     event.target.style.color = "crimson"
+    //                 } else {
+    //                     event.target.style.color = "blue"
+    //                 }
+    //                 countInfo.innerText = `${count}`
+    //             });
+    //     });
+    // },
+    gocreate(){
+      this.$router.push('/postcreate')
+    },
     getdetail(post_pk) {
       this.$router.push(`/posts/${post_pk}`);
-    }
+    },
   }
 };
 </script>
