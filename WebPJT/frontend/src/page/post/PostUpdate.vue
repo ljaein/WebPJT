@@ -1,7 +1,5 @@
 <template>
-  <div>
-      가을
-  </div>
+  <h1>PostUpdate</h1>
 </template>
 
 <script>
