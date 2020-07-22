@@ -35,6 +35,7 @@ public class PostList {
     private String companyInfo;
     private String detail;
     private int flag;
+    private String activity;
 
     @JsonIgnore
     private LocalDateTime createDate;

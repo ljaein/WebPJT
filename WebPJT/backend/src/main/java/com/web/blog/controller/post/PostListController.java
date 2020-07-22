@@ -44,17 +44,45 @@ public class PostListController {
         System.out.println(temp);
         return temp;
     }
+
+    @GetMapping("/detail/{pid}")
+    @ApiOperation(value = "포스트 상세정보")
+    public Object selectDetail(@PathVariable int pid) throws SQLException, IOException {
+        PostList post = postDao.findByPid(pid);
+        if(post!=null){
+            System.out.println(post);
+            return post;
+        }else {
+            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @GetMapping("/searchAct/{word}")
+    @ApiOperation(value = "포스트 검색(액티비티)")
+    public List<PostList> searchAct(@PathVariable String word) throws SQLException, IOException {
+        List<PostList> post = new LinkedList<>();
+        post = postDao.findByActivityLike("%"+word+"%");
+        return post;
+    }
+
+    @GetMapping("/searchPrice/{word}")
+    @ApiOperation(value = "포스트 검색(가격)")
+    public List<PostList> searchPrice(@PathVariable String word) throws SQLException, IOException {
+        int price = Integer.parseInt(word);
+        List<PostList> post = new LinkedList<>();
+        post = postDao.findByPriceLessThan(price);
+        return post;
+    }
     
 
     @PutMapping("/modify")
     @ApiOperation(value = "포스트 수정하기")
     public Object modify(@Valid @RequestBody PostList request) throws SQLException, IOException {
         try {
-            Optional<PostList> temp = postDao.findByEmail(request.getEmail());
-            if(temp.isPresent()){
-                System.out.println(temp);
+            PostList post = postDao.findByPid(request.getPid());
+            if(post!=null){
 
-                PostList newTemp = temp.get();
+                PostList newTemp = post;
                 newTemp.setTitle(request.getTitle());
                 newTemp.setLocation(request.getLocation());
                 newTemp.setImgurl(request.getImgurl());
@@ -63,7 +91,7 @@ public class PostListController {
                 newTemp.setEdate(request.getEdate());
                 newTemp.setCompanyInfo(request.getCompanyInfo());
                 newTemp.setDetail(request.getDetail());
-                newTemp.setFlag(request.getFlag());
+                newTemp.setActivity(request.getActivity());
                 LocalDateTime time = LocalDateTime.now();
                 newTemp.setCreateDate(time);
                 System.out.println(newTemp);
@@ -82,16 +110,16 @@ public class PostListController {
     @DeleteMapping("/delete/{pid}")
     @ApiOperation(value = "포스트 삭제")
     public Object delete(@PathVariable int pid) throws SQLException, IOException {
-        Optional<PostList> temp = postDao.findByPid(pid);
-        if(temp.isPresent()){
-            postDao.delete(temp.get());
+        PostList post = postDao.findByPid(pid);
+        if(post!=null){
+            postDao.delete(post);
             return "포스트 삭제 완료";
         } else {
             return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
         }
     }
 
-    @PostMapping("regist")
+    @PostMapping("/regist")
     @ApiOperation("포스트 등록")
     public Object regist(@RequestBody PostList request) throws SQLException, IOException {
         try {
@@ -106,6 +134,7 @@ public class PostListController {
             temp.setCompanyInfo(request.getCompanyInfo());
             temp.setDetail(request.getDetail());
             temp.setFlag(1);
+            temp.setActivity(request.getActivity());
             LocalDateTime time = LocalDateTime.now();
             temp.setCreateDate(time);
             postDao.save(temp);
