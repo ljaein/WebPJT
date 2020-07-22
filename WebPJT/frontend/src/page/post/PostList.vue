@@ -59,14 +59,8 @@
 
     <div class="container" v-for="(post, index) in posts" :key="index">
       <div class="column">
-<<<<<<< HEAD:WebPJT/frontend/src/page/Season/PostListView.vue
         <div class="card mt-5 mb-3" style="max-width: 100%;" @click="getdetail(post.pid)">
-=======
-        <div class="d-flex justify-content-end">
-        <button class="btn btn-primary mt-3 mb-1" @click="gocreate">글쓰기</button>
-        </div>
-        <div class="card mb-3" style="max-width: 100%;" @click="getdetail(1)">
->>>>>>> 1fc5d02db6b0eab36ffca76d5a8a5a906b15ce7d:WebPJT/frontend/src/page/post/PostList.vue
+
           <div class="row no-gutters">
             <div class="col-md-4">
               <img
@@ -138,7 +132,6 @@ export default {
     };
   },
   methods: {
-<<<<<<< HEAD:WebPJT/frontend/src/page/Season/PostListView.vue
     getdetail(pid) {
       this.$router.push({
             name: "PostListDetailView",
@@ -155,31 +148,7 @@ export default {
       .catch(err => {
         console.log(err);
       });
-=======
-    // forEach: function (likeButton) {
-    //     likeButton.addEventListener('click', function (event) {
-    //         const postPk = event.target.dataset.postPk
-    //         const countInfo = document.querySelector(`#like-count-${postPk}`)
-    //         axios.get(`/posts/${postPk}`)
-    //             .then(function (response) {
-    //                 const count = response.data.count
-    //                 const liked = response.data.liked
-    //                 if (liked) {
-    //                     event.target.style.color = "crimson"
-    //                 } else {
-    //                     event.target.style.color = "blue"
-    //                 }
-    //                 countInfo.innerText = `${count}`
-    //             });
-    //     });
-    // },
-    gocreate(){
-      this.$router.push('/postcreate')
-    },
-    getdetail(post_pk) {
-      this.$router.push(`/posts/${post_pk}`);
-    },
->>>>>>> 1fc5d02db6b0eab36ffca76d5a8a5a906b15ce7d:WebPJT/frontend/src/page/post/PostList.vue
+
   }
 };
 </script>
