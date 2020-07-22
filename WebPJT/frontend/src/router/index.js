@@ -11,6 +11,7 @@ import Info from '../page/user/Info.vue'
 // error
 import NotFound from '../page/error/NotFound.vue'
 import Params from '../page/error/Params.vue'
+import Msg from '../page/msg/msg.vue'
 
 // main
 import List from '../page/main/List.vue'
@@ -104,6 +105,11 @@ export default new Router({
             component: Sky,
         },
 
+        // kakao share
+        {
+            path: '/msg/msg',
+            component: Msg,
+          },
 
     ]
 })
