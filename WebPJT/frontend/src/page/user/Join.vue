@@ -156,7 +156,10 @@ export default {
           this.$router.push("/");
         })
         .catch(() => {
-          this.$router.push({name: 'Params', params: {name: err.response.status}});
+          this.$router.push({
+            name: "Params",
+            params: { name: err.response.status }
+          });
         });
     }
   },

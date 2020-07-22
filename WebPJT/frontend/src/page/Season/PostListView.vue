@@ -1,6 +1,6 @@
 <template>
   <div class="post">
-    <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+    <!-- <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
       <ol class="carousel-indicators">
         <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
         <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
@@ -55,10 +55,11 @@
         <span class="carousel-control-next-icon" aria-hidden="true"></span>
         <span class="sr-only">Next</span>
       </a>
-    </div>
-    <div class="container">
+    </div>-->
+
+    <div class="container" v-for="(post, index) in posts" :key="index">
       <div class="column">
-        <div class="card mt-5 mb-3" style="max-width: 100%;" @click="getdetail(1)">
+        <div class="card mt-5 mb-3" style="max-width: 100%;" @click="getdetail(post.pid)">
           <div class="row no-gutters">
             <div class="col-md-4">
               <img
@@ -73,20 +74,20 @@
                 <h5
                   class="card-title"
                   style="font-size: 2.2rem; text-align: center; margin-bottom: 1rem; text-overflow:ellipsis;overflow: hidden;white-space: nowrap;"
-                >수상스키 50000 => 30000 팔아요</h5>
+                >{{post.title}}</h5>
                 <div class="text">
                   <p
                     class="card-text"
                     style="font-size: 1.1rem; text-align: left; text-overflow:ellipsis;overflow: hidden;white-space: nowrap;"
-                  >액티비티 : 수상 스키</p>
+                  >액티비티 : {{post.activity}}</p>
                   <p
                     class="card-text"
                     style="font-size: 1.1rem; text-align: left; text-overflow:ellipsis;overflow: hidden;white-space: nowrap;"
-                  >지역 : 가평</p>
+                  >지역 : {{post.location}}</p>
                   <p
                     class="card-text"
                     style="font-size: 1.1rem; text-align: left; text-overflow:ellipsis;overflow: hidden;white-space: nowrap;"
-                  >가격 : 30000원</p>
+                  >가격 : {{post.price}}</p>
                   <div class="d-flex justify-content-end">
                     <i
                       class="fas fa-bookmark select-button mr-2"
@@ -110,18 +111,39 @@
 <script>
 import axios from "axios";
 
-const baseURL = "http://localhost:8080/account";
+const baseURL = "http://localhost:8080/post";
 
 export default {
   data() {
     return {
-      posts: []
+      posts: {
+        pid: "",
+        email: "",
+        activity: "",
+        title: "",
+        location: "",
+        imgurl: "",
+        price: ""
+      }
     };
   },
   methods: {
-    getdetail(post_pk) {
-      this.$router.push(`/posts/${post_pk}`);
+    getdetail(pid) {
+      this.$router.push({
+            name: "PostListDetailView",
+            params: { ID:pid }
+          });
     }
+  },
+  created() {
+    axios
+      .get(`${baseURL}/list`)
+      .then(res => {
+        this.posts = res.data;
+      })
+      .catch(err => {
+        console.log(err);
+      });
   }
 };
 </script>

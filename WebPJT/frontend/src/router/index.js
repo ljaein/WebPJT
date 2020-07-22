@@ -74,7 +74,7 @@ export default new Router({
         }, 
         // 포스트 디테일
         {
-            path: '/posts/:post_pk',
+            path: '/posts/:ID',
             name: 'PostListDetailView',
             component: PostListDetailView,
         },
