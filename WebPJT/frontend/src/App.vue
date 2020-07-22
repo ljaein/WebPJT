@@ -1,17 +1,16 @@
 <template>
   <div id="app">
     <Header :isHeader="isHeader"/>
-    <LoginModal/>
+    <LoginModal />
     <router-view/>
   </div>
 </template>
 
 <script src="https://use.fontawesome.com/releases/v5.2.0/js/all.js"></script>  
 <script> 
-import './assets/css/style.scss' 
 import Header from './components/common/Header.vue'
+import constants from './lib/constants'
 import LoginModal from './components/modal/LoginModal.vue'
-import constants from './lib/constants' 
 
 export default {
   name: 'App',
@@ -35,7 +34,6 @@ export default {
 
           let array = [
               constants.URL_TYPE.USER.LOGIN,
-
           ];
 
           let isHeader = true;
@@ -44,7 +42,6 @@ export default {
                   isHeader = false;
           })
           this.isHeader = isHeader;
-
 
       },
   },
