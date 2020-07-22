@@ -85,16 +85,16 @@ export default new Router({
         //     component: Spring,
 
         // },
-        // {
-        //     path: '/postcreate',
-        //     name: 'PostCreate',
-        //     component: PostCreate,
-        // },
-        // {
-        //     path: '/postupdate',
-        //     name: 'PostUpdate',
-        //     component: PostUpdate,
-        // },
+        {
+            path: '/postcreate',
+            name: 'PostCreate',
+            component: PostCreate,
+        },
+        {
+            path: '/postupdate',
+            name: 'PostUpdate',
+            component: PostUpdate,
+        },
 
         //activity
         {
