@@ -36,13 +36,49 @@ public class PostListController {
     @Autowired
     PostListDao postDao;
 
+
+    @GetMapping("/search/{key}/{word}")
+    @ApiOperation(value = "검색")
+    public List<PostList> search(@PathVariable String key, @PathVariable String word) throws SQLException, IOException {
+        List<PostList> post = new LinkedList<>();
+        if(key.equals("all")){
+            post = postDao.findByFlagOrderByCreateDateDesc(1);
+        }else if(key.equals("title")){
+            post = postDao.findByTitleLike("%"+word+"%");
+        }else if(key.equals("activity")){
+            post = postDao.findByActivityLike("%"+word+"%");
+        }else if(key.equals("price")){
+            int price = Integer.parseInt(word);
+            post = postDao.findByPriceLessThanEqual(price);
+        }
+        return post;
+    }
+
     @GetMapping("/list")
     @ApiOperation(value = "포스트 리스트")
     public List<PostList> selectAll() throws SQLException, IOException {
         List<PostList> temp = new LinkedList<>();
-        temp = postDao.findByFlag(1);
+        temp = postDao.findByFlagOrderByCreateDateDesc(1);
         System.out.println(temp);
         return temp;
+    }
+
+    @GetMapping("/searchAct/{word}")
+    @ApiOperation(value = "포스트 검색(액티비티)")
+    public List<PostList> searchAct(@PathVariable String word) throws SQLException, IOException {
+        System.out.println(word);
+        List<PostList> post = new LinkedList<>();
+        post = postDao.findByActivityLike("%"+word+"%");
+        return post;
+    }
+
+    @GetMapping("/searchPrice/{word}")
+    @ApiOperation(value = "포스트 검색(가격)")
+    public List<PostList> searchPrice(@PathVariable String word) throws SQLException, IOException {
+        int price = Integer.parseInt(word);
+        List<PostList> post = new LinkedList<>();
+        post = postDao.findByPriceLessThanEqual(price);
+        return post;
     }
 
     @GetMapping("/detail/{pid}")
@@ -55,23 +91,6 @@ public class PostListController {
         }else {
             return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
         }
-    }
-
-    @GetMapping("/searchAct/{word}")
-    @ApiOperation(value = "포스트 검색(액티비티)")
-    public List<PostList> searchAct(@PathVariable String word) throws SQLException, IOException {
-        List<PostList> post = new LinkedList<>();
-        post = postDao.findByActivityLike("%"+word+"%");
-        return post;
-    }
-
-    @GetMapping("/searchPrice/{word}")
-    @ApiOperation(value = "포스트 검색(가격)")
-    public List<PostList> searchPrice(@PathVariable String word) throws SQLException, IOException {
-        int price = Integer.parseInt(word);
-        List<PostList> post = new LinkedList<>();
-        post = postDao.findByPriceLessThan(price);
-        return post;
     }
     
 

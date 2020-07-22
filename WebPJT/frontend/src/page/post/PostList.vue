@@ -1,5 +1,19 @@
 <template>
   <div class="post">
+    <select v-model="key">
+      <option value="all">전체검색</option>
+      <option value="title">제목</option>
+      <option value="activity">액티비티</option>
+      <option value="price">가격</option>
+    </select>
+    <input
+      class="my-2 my-lg-0 mr-2 bg-light"
+      type="text"
+      placeholder="Search"
+      v-model="word"
+      @keypress.enter="search"
+    />
+    <button type="button" @click="search">검색</button>
     <!-- <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
       <ol class="carousel-indicators">
         <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
@@ -60,7 +74,6 @@
     <div class="container" v-for="(post, index) in posts" :key="index">
       <div class="column">
         <div class="card mt-5 mb-3" style="max-width: 100%;" @click="getdetail(post.pid)">
-
           <div class="row no-gutters">
             <div class="col-md-4">
               <img
@@ -93,7 +106,6 @@
                     <i
                       class="fas fa-bookmark select-button mr-2"
                       style="text-align: right; font-size:20px;"
-
                     ></i>
                     <i
                       class="fas fa-heart select-button like-button"
@@ -128,27 +140,54 @@ export default {
         location: "",
         imgurl: "",
         price: ""
-      }
+      },
+      key: "",
+      word: ""
     };
   },
   methods: {
     getdetail(pid) {
       this.$router.push({
-            name: "PostListDetailView",
-            params: { ID:pid }
+        name: "PostListDetailView",
+        params: { ID: pid }
+      });
+    },
+    search() {
+      
+      if (this.key == "all" || this.key=="") {
+        axios
+          .get(`${baseURL}/list/`)
+          .then(res => {
+            this.posts = res.data;
+          })
+          .catch(err => {
+            console.log(err);
           });
+      } else {
+        if (this.word == "") {
+          alert("검색어를 입력하세요.");
+        } else {
+          axios
+            .get(`${baseURL}/search/${this.key}/${this.word}`)
+            .then(res => {
+              this.posts = res.data;
+            })
+            .catch(err => {
+              alert("올바른 값을 입력하세요.");
+            });
+        }
+      }
     }
   },
   created() {
     axios
-      .get(`${baseURL}/list`)
+      .get(`${baseURL}/list/`)
       .then(res => {
         this.posts = res.data;
       })
       .catch(err => {
         console.log(err);
       });
-
   }
 };
 </script>
