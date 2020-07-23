@@ -8,6 +8,7 @@
 
 <script src="https://use.fontawesome.com/releases/v5.2.0/js/all.js"></script>  
 <script> 
+import './assets/css/style.css'
 import Header from './components/common/Header.vue'
 import constants from './lib/constants'
 import LoginModal from './components/modal/LoginModal.vue'
@@ -62,6 +63,7 @@ export default {
   -moz-osx-font-smoothing: grayscale; 
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
+  margin-top: 0;
+  background-color: rgb(31,31,31) !important;
 }
 </style>
