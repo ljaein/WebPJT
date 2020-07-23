@@ -59,7 +59,6 @@ public class PostListController {
     public List<PostList> selectAll() throws SQLException, IOException {
         List<PostList> temp = new LinkedList<>();
         temp = postDao.findByFlagOrderByCreateDateDesc(1);
-        System.out.println(temp);
         return temp;
     }
 
