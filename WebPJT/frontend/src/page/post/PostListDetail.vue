@@ -31,8 +31,15 @@
                   class="card-text"
                   style="font-size: 1.1rem; text-align: left; margin-bottom: 5px;
                   text-overflow:ellipsis;overflow: hidden;white-space: nowrap;"
-                >가격 : {{post.price}}원</p>
+                >가격 : {{post.price}}원 </p>
                 <div class="d-flex justify-content-end mr-0 mt-0">
+                        <div>
+        
+                           <a href="javascript:;" @click="test()" id="kakao-link-btn">
+                             
+                          <img src="//developers.kakao.com/assets/img/about/logos/kakaolink/kakaolink_btn_small.png" width="50px" />
+                           </a>
+                          </div>
                   <button class="btn btn-primary">장바구니</button>
                   <button class="btn btn-primary">구매하기</button>
                 </div>
@@ -108,7 +115,43 @@ export default {
       pid:"",
     }
   },
+       created() {
+              this.pid = this.$route.params.ID,
+              this.getPost();
+    
+          },
   methods: {
+         test(){
+            Kakao.init('765ed14c0d508f8aa48c6d173446acba'); 
+        Kakao.Link.createDefaultButton({
+          container: '#kakao-link-btn',
+          objectType: 'feed',
+          content: {
+            title: '상세페이지 제목 호출',
+            description: '내용, 주로 해시태그',
+            imageUrl: document.images[0].src,
+            link: {
+              webUrl: 'http://localhost:3000/#/posts/' + this.pid,
+              mobileWebUrl: 'https://developers.kakao.com'
+            }
+          },
+          social: {
+            likeCount: 286,
+            commentCount: 45,
+            sharedCount: 845
+          },
+          buttons: [
+            {
+              title: 'Open!',
+              link: {
+                mobileWebUrl: 'https://developers.kakao.com',
+                webUrl: 'http://localhost:3000/#/posts/' + this.pid     
+              }
+            }  
+          ]
+        });
+        },
+
     goinfo() {
       this.$router.go();
     },
@@ -149,12 +192,15 @@ export default {
         })
     },
   },
-  created() {
-    this.pid = this.$route.params.ID,
-    this.getPost();
-  }
+ 
 };
 </script>
+
+
+
+
+
+
 
 <style>
 </style>
