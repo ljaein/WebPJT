@@ -32,7 +32,7 @@
     </div>
     <div class="form-group">
       <label class="d-flex justify-content-start">Corporation-Detail</label>
-      <input type="textarea" class="form-control" id="company-information" v-model="PostCreate.company_info">
+      <input type="textarea" class="form-control" id="company-information" v-model="PostCreate.companyInfo">
       <small class="form-text text-muted d-flex">업체 정보를 입력해주세요.</small>
     </div>
     <div class="form-group">
@@ -66,7 +66,7 @@ export default {
         price: "",
         sdate: "",
         edate: "",
-        company_info: "",
+        companyInfo: "",
         detail: "",
         activity: "",
       },

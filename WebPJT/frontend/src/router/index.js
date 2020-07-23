@@ -71,7 +71,7 @@ export default new Router({
             path: '/posts',
             name: 'PostList',
             component: PostList,
-        }, 
+        },
         {
             path: '/posts/:ID',
             name: 'PostListDetailView',
@@ -91,7 +91,7 @@ export default new Router({
             component: PostCreate,
         },
         {
-            path: '/postupdate',
+            path: '/posts/:ID/postupdate/',
             name: 'PostUpdate',
             component: PostUpdate,
         },
@@ -117,7 +117,7 @@ export default new Router({
         {
             path: '/msg/msg',
             component: Msg,
-          },
+        },
 
     ]
 })
