@@ -89,6 +89,8 @@
           aria-label="Recipient's username"
           aria-describedby="button-addon2"
         />
+
+        <!-- 댓글 작성, 수정, 삭제 -->
         <div class="input-group-append">
           <button
             class="btn btn-outline-secondary bg-dark text-white"
@@ -96,19 +98,34 @@
             id="button-addon2"
           >작성</button>
         </div>
+        <div>
+          <button class="btn btn-info">수정</button>
+        </div>
+        <div>
+          <button class="btn btn-danger">삭제</button>
+        </div>
       </div>
+      
+      <!-- 글 수정 삭제 -->
+      <div class="d-flex justify-content-end">
+        <button class="btn btn-success" @click="goModify">글 수정하기</button>
+        <button class="btn btn-danger">글 삭제하기</button>
+      </div>
+      
     </div>
   </div>
 </template>
 
 <script>
 import axios from "axios";
+import PostUpdateVue from './PostUpdate.vue';
 const baseURL = "http://localhost:8080/post";
 
 export default {
   data(){
     return{
       post:[],
+      pid:"",
       // pid:"",
       // email:"",
       // title:"",
@@ -131,24 +148,21 @@ export default {
       axios
         .get(`${baseURL}/detail/${this.$route.params.ID}`)
         .then(res => {
-          // this.email = res.data.email;
-          // this.title =res.data.title;
-          // this.location =res.data.location;
-          // this.imgurl = res.data.imgurl;
-          // this.price = res.data.price;
-          // this.sdate = res.data.sdate;
-          // this.edate = res.data.edate;
-          // this.companyInfo = res.data.companyInfo;
-          // this.detail = res.data.detail;
-          // this.activity = res.data.activity;
           this.post = res.data;
         })
         .catch(err => {
           console.log(err);
         });
-    }
+    },
+    goModify() {
+      this.$router.push({
+        name: "PostUpdate",
+        params: {ID : this.pid},
+      })
+    },
   },
   created() {
+    this.pid = this.$route.params.ID,
     this.getPost();
   }
 };

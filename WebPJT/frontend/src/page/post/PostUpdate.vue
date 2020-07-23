@@ -1,17 +1,51 @@
 <template>
-  <div>
-    <h1>{{ this.PostUpdate.email }}</h1>
-    제목: <input type="text"  v-model="PostUpdate.title" placeholder="PostCreate.Ctitle"><br>
-    위치: <input type="text"  v-model="PostUpdate.location" placeholder="PostCreate.Clocation"><br>
-    이미지: <input type="text"  v-model="PostUpdate.imgurl" placeholder="PostCreate.Cimgurl"><br>
-    가격: <input type="text"  v-model="PostUpdate.price" placeholder="PostCreate.Cprice"><br>
-    시작일: <input type="text"  v-model="PostUpdate.sdate" placeholder="PostCreate.Csdate"><br>
-    마감일: <input type="text"  v-model="PostUpdate.edate" placeholder="PostCreate.Cedate"><br>
-    회사 정보: <input type="text"  v-model="PostUpdate.company_info" placeholder="PostCreate.Ccompany_info"><br>
-    세부 정보: <input type="text"  v-model="PostUpdate.detail" placeholder="PostCreate.Cdetail"><br>
-    활동: <input type="text"  v-model="PostUpdate.activity" placeholder="PostCreate.Cactivity"><br>
-    <button class="btn btn-primary">수정하기</button>
-
+  <div class="container p-5 taeduri">
+    <div class="form-group">
+      <label class="d-flex">IMG_URL</label>
+      <input type="text" class="form-control" id="imgurl" v-model="PostUpdate.imgurl">
+      <small class="form-text text-muted d-flex">원하는 사진을 업로드해주세요.</small>
+    </div>
+    <div class="form-group">
+      <label class="d-flex">TITLE</label>
+      <input type="text" class="form-control" id="title" v-model="PostUpdate.title">
+      <small class="form-text text-muted d-flex">원하는 제목을 입력해주세요.</small>
+    </div>
+    <div class="form-group">
+      <label class="d-flex justify-content-start">Location</label>
+      <input type="text" class="form-control" id="location" v-model="PostUpdate.location" >
+      <small class="form-text text-muted d-flex">해당 위치를 상세히 적어주세요.</small>
+    </div>
+    <div class="form-group">
+      <label class="d-flex justify-content-start">Price</label>
+      <input type="text" class="form-control" id="price" v-model="PostUpdate.price" >
+      <small class="form-text text-muted d-flex">해당 엑티비티의 가격을 책정해주세요.</small>
+    </div>
+    <div class="form-group">
+      <label class="d-flex justify-content-start">Start-Date</label>
+      <input type="text" class="form-control" id="start-date" v-model="PostUpdate.sdate">
+      <small class="form-text text-muted d-flex">시작일을 지정해주세요.</small>
+    </div>
+    <div class="form-group">
+      <label class="d-flex justify-content-start">End-Date</label>
+      <input type="text" class="form-control" id="end-date" v-model="PostUpdate.edate" >
+      <small class="form-text text-muted d-flex">마감일을 지정해주세요.</small>
+    </div>
+    <div class="form-group">
+      <label class="d-flex justify-content-start">Corporation-Detail</label>
+      <input type="textarea" class="form-control" id="company-information" v-model="PostUpdate.companyInfo" >
+      <small class="form-text text-muted d-flex">업체 정보를 입력해주세요.</small>
+    </div>
+    <div class="form-group">
+      <label class="d-flex justify-content-start">Detail-Information</label>
+      <input type="text" class="form-control" id="detail" v-model="PostUpdate.detail" >
+      <small class="form-text text-muted d-flex">세부 정보를 입력해주세요.</small>
+    </div>
+    <div class="form-group">
+      <label class="d-flex justify-content-start">Activity</label>
+      <input type="text" class="form-control" id="activity" v-model="PostUpdate.activity" >
+      <small class="form-text text-muted d-flex">활동명을 입력해주세요.</small>
+    </div>
+    <button type="submit" class="btn btn-primary d-flex justify-content-start" @click="modify">제출</button>
   </div>
 </template>
 
@@ -23,34 +57,37 @@ const baseURL = "http://localhost:8080/post";
 export default {
   data(){
     return{
-      PostUpdate: {
-        email:'',
-        title:'',
-        location:'',
-        imgurl:'',
-        price:'',
-        sdate:'',
-        edate:'',
-        company_info:'',
-        detail:'',
-        activity:'',
-    },
-      PostCreate: {
-        Ctitle:'',
-        Clocation:'',
-        Cimgurl:'',
-        Cprice:'',
-        Csdate:'',
-        Cedate:'',
-        Ccompany_info:'',
-        Cdetail:'',
-        Cactivity:'',
-      },
+      PostUpdate: [],
+      pid:''
+      // Instance_Date: []
     }
   },
- created() {
-  this.PostUpdate.email  = this.$cookies.get('User')
- },
+  methods: {
+    fetchDetail:function() {
+      axios.get(`${baseURL}/detail/${this.pid}`)
+        .then((response) => {
+          this.PostUpdate = response.data
+        }).catch((error) => {
+          console.log(error.response.data)
+        })
+    },
+    modify: function() {
+      axios.put(`${baseURL}/modify`,this.PostUpdate)
+        .then(() => {
+          alert('수정 완료!!')
+          this.$router.push({
+            name: "PostListDetailView",
+            params: { ID: this.pid }
+          });
+        }).catch((error) => {
+          console.log(error.response.data)
+        })
+    },
+  },
+  created() {
+    this.pid = this.$route.params.ID
+    this.fetchDetail()
+  },
 
 }
 </script>
