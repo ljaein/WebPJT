@@ -20,6 +20,7 @@ public class LikeList {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int no;
-    private int uid;
+
     private String email;
+    private int pid;
 }
