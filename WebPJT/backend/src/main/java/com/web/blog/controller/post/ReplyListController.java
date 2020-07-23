@@ -34,13 +34,13 @@ public class ReplyListController {
     @Autowired
     ReplyListDao replyListDao;
 
-    @GetMapping("/list")
+    @GetMapping("/list/{pid}")
     @ApiOperation(value ="댓글 목록")
-    public List<ReplyList> selectAll(@RequestBody ReplyList request) throws SQLException, IOException{
+    public List<ReplyList> selectAll(@PathVariable int pid) throws SQLException, IOException{
         List<ReplyList> list = new LinkedList<>();
-        int tempId = request.getPid();
-        list = replyListDao.findByPid(tempId);
-        // list = replyListDao.findAll();
+        list = replyListDao.findByPid(pid);
+        System.out.println(list);
+         //list = replyListDao.findAll();
         return list;
     }
 
@@ -51,10 +51,11 @@ public class ReplyListController {
             ReplyList temp = new ReplyList();
             temp.setRid(request.getRid());
             temp.setPid(request.getPid());
-            temp.setRegNickname(request.getRegNickname());
-            temp.setRegContent(request.getRegContent());       
+            temp.setContent(request.getContent());
+            temp.setNickname(request.getNickname());
+              
             LocalDateTime time = LocalDateTime.now();
-            temp.setRegDate(time);
+            temp.setCreateDate(time);
             replyListDao.save(temp);
 
             return temp;
