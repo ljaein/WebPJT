@@ -49,7 +49,8 @@
               <div class="card-body" style="padding: 20px 0px;" >
                 <h5
                   class="card-title"
-                  style="font-size: 1.2rem; text-align: left; margin-bottom: 1rem; text-overflow:ellipsis;overflow: hidden;white-space: nowrap;"
+                  @click="getdetail(post.pid)"
+                  style="font-size: 2.2rem; text-align: center; margin-bottom: 1rem; text-overflow:ellipsis;overflow: hidden;white-space: nowrap;"
                 >{{post.title}}</h5>
                 <div class="text">
                   <p
@@ -61,10 +62,19 @@
                       class="fas fa-bookmark select-button mr-2"
                       style="text-align: right; font-size:20px;"
                     ></i>
-                    <i
-                      class="fas fa-heart select-button like-button"
-                      style="text-align: right; font-size: 20px;"
-                    ></i>
+
+                    <div id="heart" @click="registlike(post.pid)">
+                      <i
+                        v-if="check(post.pid)"
+                        class="fas fa-heart select-button like-button"
+                        style="text-align: right; font-size: 20px; color:red"
+                      ></i>
+                      <i
+                        v-if="!check(post.pid)"
+                        class="far fa-heart"
+                        style="text-align: right; font-size: 20px;"
+                      ></i>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -80,7 +90,7 @@
 import '../../assets/css/postlist.css'
 import axios from "axios";
 
-const baseURL = "http://localhost:8080/post";
+const baseURL = "http://localhost:8080";
 
 // const likeButtons = document.querySelectorAll('.like-button');
 
@@ -98,17 +108,22 @@ export default {
       },
       key: "",
       word: "",
+      email: "",
+      postLike: [],
     };
   },
   methods: {
-    gocreate(){
-      this.$router.push({
-        name: "PostCreate"
-      })
+    check(pid) {
+      for (var i = 0; i < this.postLike.length; i++) {
+        if (this.postLike[i] == pid) {
+          return true;
+        }
+      }
+      return false;
     },
     getdetail(pid) {
       this.$router.push({
-        name: "PostListDetail",
+        name: "PostListDetailView",
         params: { ID: pid },
       });
     },
@@ -127,7 +142,7 @@ export default {
           alert("검색어를 입력하세요.");
         } else {
           axios
-            .get(`${baseURL}/search/${this.key}/${this.word}`)
+            .get(`${baseURL}/post/search/${this.key}/${this.word}`)
             .then((res) => {
               this.posts = res.data;
             })
@@ -138,18 +153,45 @@ export default {
       }
     },
     createpost() {
-      this.$router.push('/postcreate')
+      this.$router.push("/postcreate");
+    },
+    registlike(pid) {
+      axios
+        .get(`${baseURL}/like/registDelete/${this.email}/${pid}`)
+        .then((res) => {
+          if (res.data=="regist") {
+            alert("등록1!");
+          } else {
+            alert("삭제!");
+          }
+        })
+        .catch((err) => {
+          alert(err);
+        });
+    },
+    checklike() {
+      axios
+        .get(`${baseURL}/like/check/${this.email}`)
+        .then((res) => {
+          this.postLike = res.data;
+          console.log(this.postLike);
+        })
+        .catch((err) => {
+          alert(err);
+        });
     },
   },
   created() {
+    this.email = this.$cookies.get("User");
     axios
-      .get(`${baseURL}/list/`)
+      .get(`${baseURL}/post/list/`)
       .then((res) => {
         this.posts = res.data;
       })
       .catch((err) => {
         console.log(err);
       });
+    this.checklike();
   },
 };
 </script>
