@@ -113,7 +113,7 @@
       <!-- 글 수정 삭제 -->
       <div class="d-flex justify-content-end">
         <button class="btn btn-success" @click="goModify">글 수정하기</button>
-        <button class="btn btn-danger">글 삭제하기</button>
+        <button class="btn btn-danger" @click="goDelete">글 삭제하기</button>
       </div>
       
     </div>
@@ -163,6 +163,15 @@ export default {
         name: "PostUpdate",
         params: {ID : this.pid},
       })
+    },
+    goDelete() {
+      axios.delete(`${baseURL}/delete/${this.$route.params.ID}`)
+        .then(() => {
+          alert('삭제 완료')
+          this.$router.push(`/posts`)
+        }).catch((error) => {
+          console.log(error.response.data)
+        })
     },
   },
   created() {

@@ -77,6 +77,7 @@ export default {
       axios.post(`${baseURL}/regist`,this.PostCreate)
         .then((response) => {
           console.log(response.data)
+          this.$router.push('/posts')
         }).catch((error) => {
           console.log('error입니다.')
         })
