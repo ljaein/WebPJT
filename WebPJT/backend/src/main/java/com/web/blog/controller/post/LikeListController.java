@@ -6,7 +6,9 @@ import java.util.LinkedList;
 import java.util.List;
 
 import com.web.blog.dao.post.LikeListDao;
+import com.web.blog.dao.post.PostListDao;
 import com.web.blog.model.post.LikeList;
+import com.web.blog.model.post.PostList;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -29,12 +31,14 @@ public class LikeListController {
     
     @Autowired
     LikeListDao likeListDao;
+    @Autowired
+    PostListDao postListDao;
 
     @GetMapping("/list/{email}")
     @ApiOperation("좋아요 리스트")
-    public List<LikeList> selectAll(@PathVariable String email) throws SQLException, IOException {
-        List<LikeList> list = new LinkedList<>();
-        list = likeListDao.findByEmail(email);
+    public List<PostList> selectAll(@PathVariable String email) throws SQLException, IOException {
+        List<PostList> list = new LinkedList<>();
+        list = postListDao.findByEmail(email);
         return list;
     }
 
