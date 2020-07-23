@@ -34,12 +34,11 @@ public class ReplyListController {
     @Autowired
     ReplyListDao replyListDao;
 
-    @GetMapping("/list")
+    @GetMapping("/list/{pid}")
     @ApiOperation(value ="댓글 목록")
-    public List<ReplyList> selectAll(@RequestBody ReplyList request) throws SQLException, IOException{
+    public List<ReplyList> selectAll(@PathVariable int pid) throws SQLException, IOException{
         List<ReplyList> list = new LinkedList<>();
-        int tempId = request.getPid();
-        list = replyListDao.findByPid(tempId);
+        list = replyListDao.findByPid(pid);
         // list = replyListDao.findAll();
         return list;
     }
@@ -62,6 +61,23 @@ public class ReplyListController {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    @PutMapping("/modify")
+    @ApiOperation(value = "댓글 수정")
+    public Object modify(@RequestBody ReplyList request) throws SQLException, IOException{
+        try {
+            ReplyList temp = replyListDao.findByRid(request.getRid());
+            temp.setRegContent(request.getRegContent());       
+            LocalDateTime time = LocalDateTime.now();
+            temp.setRegDate(time);
+            replyListDao.save(temp);
+            return temp;
+        }catch(Exception e){
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+
     @DeleteMapping("delete/{rid}")
     @ApiOperation(value = "댓글 삭제")
     public Object delete(@PathVariable int rid) throws SQLException, IOException{
