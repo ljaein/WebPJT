@@ -73,76 +73,40 @@
       <h4 id="qna">Q&A</h4>
       <p>Ad leggings keytar, brunch id art party dolor labore. Pitchfork yr enim lo-fi before they sold out qui. Tumblr farm-to-table bicycle rights whatever. Anim keffiyeh carles cardigan. Velit seitan mcsweeney's photo booth 3 wolf moon irure. Cosby sweater lomo jean shorts, williamsburg hoodie minim qui you probably haven't heard of them et cardigan trust fund culpa biodiesel wes anderson aesthetic. Nihil tattooed accusamus, cred irony biodiesel keffiyeh artisan ullamco consequat.</p>
     </div>
-    <!-- <div class="column" style="width: 100%;">
-        <button class="btn bg-dark text-white" style="width:25%">상세 정보</button>
-        <button class="btn bg-dark text-white" style="width:25%">후기</button>
-        <button class="btn bg-dark text-white" style="width:25%">업체 정보</button>
-        <button class="btn bg-dark text-white" style="width:25%">Q&A</button>
-    </div>-->
-    <div class="column" style="width: 100%;">
-      <hr />
-      <h5>Comments</h5>
-      <div class="list-group">
-        <p class="list-group-item list-group-item-action">댓글</p>
-      </div>
-      <div class="input-group mb-3">
-        <input
-          type="text"
-          class="form-control"
-          placeholder="리뷰 작성해주세요."
-          aria-label="Recipient's username"
-          aria-describedby="button-addon2"
-        />
 
-        <!-- 댓글 작성, 수정, 삭제 -->
-        <div class="input-group-append">
-          <button
-            class="btn btn-outline-secondary bg-dark text-white"
-            type="button"
-            id="button-addon2"
-          >작성</button>
-        </div>
-        <div>
-          <button class="btn btn-info">수정</button>
-        </div>
-        <div>
-          <button class="btn btn-danger">삭제</button>
-        </div>
-      </div>
+    <hr>
+    <!-- 댓글 작성 -->
+    <CommentInput @create-comment="createcomment" />
+
+    <!-- 댓글 List -->
       
       <!-- 글 수정 삭제 -->
+      <hr>
       <div class="d-flex justify-content-end">
         <button class="btn btn-success" @click="goModify">글 수정하기</button>
         <button class="btn btn-danger" @click="goDelete">글 삭제하기</button>
       </div>
       
-    </div>
   </div>
 </template>
 
 <script>
 import axios from "axios";
 import PostUpdateVue from './PostUpdate.vue';
-const baseURL = "http://localhost:8080/post";
+
+import CommentInput from '../../components/comment/CommentInput.vue'
+
+const baseURL = "http://localhost:8080";
 
 export default {
+  components: {
+    CommentInput,
+  },
   data(){
     return{
       post:[],
       pid:"",
-      // pid:"",
-      // email:"",
-      // title:"",
-      // location:"",
-      // imgurl:"",
-      // price:"",
-      // sdate:"",
-      // edate:"",
-      // companyInfo:"",
-      // detail:"",
-      // activity:""
     }
-
   },
   methods: {
     goinfo() {
@@ -150,7 +114,7 @@ export default {
     },
     getPost() {
       axios
-        .get(`${baseURL}/detail/${this.$route.params.ID}`)
+        .get(`${baseURL}/post/detail/${this.$route.params.ID}`)
         .then(res => {
           this.post = res.data;
         })
@@ -165,12 +129,23 @@ export default {
       })
     },
     goDelete() {
-      axios.delete(`${baseURL}/delete/${this.$route.params.ID}`)
+      axios.delete(`${baseURL}/post/delete/${this.$route.params.ID}`)
         .then(() => {
           alert('삭제 완료')
           this.$router.push(`/posts`)
         }).catch((error) => {
           console.log(error.response.data)
+        })
+    },
+    createcomment(commentData) {
+      alert(commentData.nickname)
+      alert(commentData.content)
+      alert(commentData.pid)
+      axios.post(`${baseURL}/reply/register`,commentData)
+        .then((response) => {
+          console.log(response.data)
+        }).catch((error) => {
+          console.log(error)
         })
     },
   },
