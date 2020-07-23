@@ -18,7 +18,7 @@ import List from '../page/main/List.vue'
 
 // post
 import PostList from '../page/post/PostList.vue'
-import PostListDetailView from '../page/post/PostListDetail.vue'
+import PostListDetail from '../page/post/PostListDetail.vue'
 import PostCreate from '../page/post/PostCreate.vue'
 import PostUpdate from '../page/post/PostUpdate.vue'
 
@@ -74,17 +74,9 @@ export default new Router({
         },
         {
             path: '/posts/:ID',
-            name: 'PostListDetailView',
-            component: PostListDetailView,
+            name: 'PostListDetail',
+            component: PostListDetail,
         },
-
-        //계절
-        // {
-        //     path: '/spring',
-        //     name: 'Spring',
-        //     component: Spring,
-
-        // },
         {
             path: '/postcreate',
             name: 'PostCreate',

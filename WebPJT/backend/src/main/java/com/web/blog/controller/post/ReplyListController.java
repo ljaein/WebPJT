@@ -51,10 +51,11 @@ public class ReplyListController {
             ReplyList temp = new ReplyList();
             temp.setRid(request.getRid());
             temp.setPid(request.getPid());
-            temp.setRegNickname(request.getRegNickname());
-            temp.setRegContent(request.getRegContent());       
+            temp.setContent(request.getContent());
+            temp.setNickname(request.getNickname());
+              
             LocalDateTime time = LocalDateTime.now();
-            temp.setRegDate(time);
+            temp.setCreateDate(time);
             replyListDao.save(temp);
 
             return temp;
@@ -68,9 +69,9 @@ public class ReplyListController {
     public Object modify(@RequestBody ReplyList request) throws SQLException, IOException{
         try {
             ReplyList temp = replyListDao.findByRid(request.getRid());
-            temp.setRegContent(request.getRegContent());       
+            temp.setContent(request.getContent());       
             LocalDateTime time = LocalDateTime.now();
-            temp.setRegDate(time);
+            temp.setCreateDate(time);
             replyListDao.save(temp);
             return temp;
         }catch(Exception e){

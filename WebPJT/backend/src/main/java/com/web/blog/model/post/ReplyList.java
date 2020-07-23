@@ -25,9 +25,9 @@ public class ReplyList {
     private int rid;
     
     private int pid;
-    private String regNickname;
-    private String regContent;
+    private String nickname;
+    private String content;
 
         // @JsonIgnore
-        private LocalDateTime regDate;
+        private LocalDateTime createDate;
 }

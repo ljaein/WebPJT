@@ -31,8 +31,15 @@
                   class="card-text"
                   style="font-size: 1.1rem; text-align: left; margin-bottom: 5px;
                   text-overflow:ellipsis;overflow: hidden;white-space: nowrap;"
-                >가격 : {{post.price}}원</p>
+                >가격 : {{post.price}}원 </p>
                 <div class="d-flex justify-content-end mr-0 mt-0">
+                        <div>
+        
+                           <a href="javascript:;" @click="test()" id="kakao-link-btn">
+                             
+                          <img src="//developers.kakao.com/assets/img/about/logos/kakaolink/kakaolink_btn_small.png" width="50px" />
+                           </a>
+                          </div>
                   <button class="btn btn-primary">장바구니</button>
                   <button class="btn btn-primary">구매하기</button>
                 </div>
@@ -73,84 +80,91 @@
       <h4 id="qna">Q&A</h4>
       <p>Ad leggings keytar, brunch id art party dolor labore. Pitchfork yr enim lo-fi before they sold out qui. Tumblr farm-to-table bicycle rights whatever. Anim keffiyeh carles cardigan. Velit seitan mcsweeney's photo booth 3 wolf moon irure. Cosby sweater lomo jean shorts, williamsburg hoodie minim qui you probably haven't heard of them et cardigan trust fund culpa biodiesel wes anderson aesthetic. Nihil tattooed accusamus, cred irony biodiesel keffiyeh artisan ullamco consequat.</p>
     </div>
-    <!-- <div class="column" style="width: 100%;">
-        <button class="btn bg-dark text-white" style="width:25%">상세 정보</button>
-        <button class="btn bg-dark text-white" style="width:25%">후기</button>
-        <button class="btn bg-dark text-white" style="width:25%">업체 정보</button>
-        <button class="btn bg-dark text-white" style="width:25%">Q&A</button>
-    </div>-->
-    <div class="column" style="width: 100%;">
-      <hr />
-      <h5>Comments</h5>
-      <div class="list-group">
-        <p class="list-group-item list-group-item-action">댓글</p>
-      </div>
-      <div class="input-group mb-3">
-        <input
-          type="text"
-          class="form-control"
-          placeholder="리뷰 작성해주세요."
-          aria-label="Recipient's username"
-          aria-describedby="button-addon2"
-        />
 
-        <!-- 댓글 작성, 수정, 삭제 -->
-        <div class="input-group-append">
-          <button
-            class="btn btn-outline-secondary bg-dark text-white"
-            type="button"
-            id="button-addon2"
-          >작성</button>
-        </div>
-        <div>
-          <button class="btn btn-info">수정</button>
-        </div>
-        <div>
-          <button class="btn btn-danger">삭제</button>
-        </div>
-      </div>
+    <hr>
+    <!-- 댓글 작성 -->
+    <CommentInput @create-comment="createcomment" />
+
+    <!-- 댓글 List -->
+    <hr>
+    <div class="d-flex bg-white">댓글 수 : {{receiveComment.length}}</div>
+    <CommentList v-for="comment in receiveComment" :key="comment.rid" :comment="comment" @comment-delete="commentDelete"/>
+  
+    
       
       <!-- 글 수정 삭제 -->
+      <hr>
       <div class="d-flex justify-content-end">
         <button class="btn btn-success" @click="goModify">글 수정하기</button>
         <button class="btn btn-danger" @click="goDelete">글 삭제하기</button>
       </div>
       
-    </div>
   </div>
 </template>
 
 <script>
 import axios from "axios";
 import PostUpdateVue from './PostUpdate.vue';
-const baseURL = "http://localhost:8080/post";
+
+import CommentInput from '../../components/comment/CommentInput.vue'
+import CommentList from '../../components/comment/CommentList.vue'
+
+const baseURL = "http://localhost:8080";
 
 export default {
+  components: {
+    CommentInput,
+    CommentList,
+  },
   data(){
     return{
       post:[],
       pid:"",
-      // pid:"",
-      // email:"",
-      // title:"",
-      // location:"",
-      // imgurl:"",
-      // price:"",
-      // sdate:"",
-      // edate:"",
-      // companyInfo:"",
-      // detail:"",
-      // activity:""
+      receiveComment: [],
     }
-
+  },
+  created() {
+        this.pid = this.$route.params.ID,
+        this.getPost();
+        this.fetchComment()
   },
   methods: {
+         test(){
+            Kakao.init('765ed14c0d508f8aa48c6d173446acba'); 
+            Kakao.Link.createDefaultButton({
+            container: '#kakao-link-btn',
+            objectType: 'feed',
+            content: {
+              title: '상세페이지 제목 호출',
+              description: '내용, 주로 해시태그',
+              imageUrl: document.images[0].src,
+              link: {
+                webUrl: 'http://localhost:3000/#/posts/' + this.pid,
+                mobileWebUrl: 'https://developers.kakao.com'
+              }
+          },
+          social: {
+            likeCount: 286,
+            commentCount: 45,
+            sharedCount: 845
+          },
+          buttons: [
+            {
+              title: 'Open!',
+              link: {
+                mobileWebUrl: 'https://developers.kakao.com',
+                webUrl: 'http://localhost:3000/#/posts/' + this.pid     
+              }
+            }  
+          ]
+        });
+        },
     goinfo() {
       this.$router.go();
     },
     getPost() {
       axios
-        .get(`${baseURL}/detail/${this.$route.params.ID}`)
+        .get(`${baseURL}/post/detail/${this.$route.params.ID}`)
         .then(res => {
           this.post = res.data;
         })
@@ -165,7 +179,7 @@ export default {
       })
     },
     goDelete() {
-      axios.delete(`${baseURL}/delete/${this.$route.params.ID}`)
+      axios.delete(`${baseURL}/post/delete/${this.$route.params.ID}`)
         .then(() => {
           alert('삭제 완료')
           this.$router.push(`/posts`)
@@ -173,13 +187,43 @@ export default {
           console.log(error.response.data)
         })
     },
+    createcomment(commentData) {
+      axios.post(`${baseURL}/reply/register`,commentData)
+        .then((response) => {
+          this.fetchComment();
+
+          console.log(response.data)
+        }).catch((error) => {
+          console.log(error)
+        })
+    },
+    fetchComment() {
+      axios.get(`${baseURL}/reply/list/${this.$route.params.ID}`)
+        .then((response) => {
+          this.receiveComment = response.data
+          console.log(response.data)
+        }).catch((error) => {
+          console.log(error.response.data)
+        })
+    },
+    commentDelete(comment) {
+      axios.delete(`${baseURL}/reply/delete/${comment.rid}`)
+        .then((response) => {
+          this.fetchComment()
+        }).catch((error) => {
+          console.log(error.response.data)
+        })
+    },
   },
-  created() {
-    this.pid = this.$route.params.ID,
-    this.getPost();
-  }
+ 
 };
 </script>
+
+
+
+
+
+
 
 <style>
 </style>
