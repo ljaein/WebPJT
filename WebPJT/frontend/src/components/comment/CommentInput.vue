@@ -7,7 +7,6 @@
     <div class="input-group-prepend buttonComment">
         <span class="input-group-text" @click="createComment">작성</span>
     </div>
-    {{this.commentData.pid}}
   </div> 
 </template>
 

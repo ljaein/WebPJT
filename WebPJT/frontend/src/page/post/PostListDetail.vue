@@ -86,6 +86,11 @@
     <CommentInput @create-comment="createcomment" />
 
     <!-- 댓글 List -->
+    <hr>
+    <div class="d-flex bg-white">댓글 수 : {{receiveComment.length}}</div>
+    <CommentList v-for="comment in receiveComment" :key="comment.rid" :comment="comment" @comment-delete="commentDelete"/>
+  
+    
       
       <!-- 글 수정 삭제 -->
       <hr>
@@ -102,38 +107,41 @@ import axios from "axios";
 import PostUpdateVue from './PostUpdate.vue';
 
 import CommentInput from '../../components/comment/CommentInput.vue'
+import CommentList from '../../components/comment/CommentList.vue'
 
 const baseURL = "http://localhost:8080";
 
 export default {
   components: {
     CommentInput,
+    CommentList,
   },
   data(){
     return{
       post:[],
       pid:"",
+      receiveComment: [],
     }
   },
-       created() {
-              this.pid = this.$route.params.ID,
-              this.getPost();
-    
-          },
+  created() {
+        this.pid = this.$route.params.ID,
+        this.getPost();
+        this.fetchComment()
+  },
   methods: {
          test(){
             Kakao.init('765ed14c0d508f8aa48c6d173446acba'); 
-        Kakao.Link.createDefaultButton({
-          container: '#kakao-link-btn',
-          objectType: 'feed',
-          content: {
-            title: '상세페이지 제목 호출',
-            description: '내용, 주로 해시태그',
-            imageUrl: document.images[0].src,
-            link: {
-              webUrl: 'http://localhost:3000/#/posts/' + this.pid,
-              mobileWebUrl: 'https://developers.kakao.com'
-            }
+            Kakao.Link.createDefaultButton({
+            container: '#kakao-link-btn',
+            objectType: 'feed',
+            content: {
+              title: '상세페이지 제목 호출',
+              description: '내용, 주로 해시태그',
+              imageUrl: document.images[0].src,
+              link: {
+                webUrl: 'http://localhost:3000/#/posts/' + this.pid,
+                mobileWebUrl: 'https://developers.kakao.com'
+              }
           },
           social: {
             likeCount: 286,
@@ -151,7 +159,6 @@ export default {
           ]
         });
         },
-
     goinfo() {
       this.$router.go();
     },
@@ -181,14 +188,30 @@ export default {
         })
     },
     createcomment(commentData) {
-      alert(commentData.nickname)
-      alert(commentData.content)
-      alert(commentData.pid)
       axios.post(`${baseURL}/reply/register`,commentData)
         .then((response) => {
+          this.fetchComment();
+
           console.log(response.data)
         }).catch((error) => {
           console.log(error)
+        })
+    },
+    fetchComment() {
+      axios.get(`${baseURL}/reply/list/${this.$route.params.ID}`)
+        .then((response) => {
+          this.receiveComment = response.data
+          console.log(response.data)
+        }).catch((error) => {
+          console.log(error.response.data)
+        })
+    },
+    commentDelete(comment) {
+      axios.delete(`${baseURL}/reply/delete/${comment.rid}`)
+        .then((response) => {
+          this.fetchComment()
+        }).catch((error) => {
+          console.log(error.response.data)
         })
     },
   },
