@@ -33,7 +33,9 @@
                   text-overflow:ellipsis;overflow: hidden;white-space: nowrap;"
                 >가격 : {{post.price}}원</p>
                 <div class="d-flex justify-content-end mr-0 mt-0">
-                  <button class="btn btn-primary">장바구니</button>
+                  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#BasketModal">장바구니</button>
+                  <BasketModal />
+                  <button v-if="!this.$cookies.isKey('Auth-Token')" type="button" class="login-btn btn-primary" data-toggle="modal" data-target="#LoginModal">로그인</button>
                   <button class="btn btn-primary">구매하기</button>
                 </div>
               </div>
@@ -123,9 +125,13 @@
 <script>
 import axios from "axios";
 import PostUpdateVue from './PostUpdate.vue';
+import BasketModal from '../../components/modal/BasketModal.vue'
 const baseURL = "http://localhost:8080/post";
 
 export default {
+  components:{
+    BasketModal,
+  },
   data(){
     return{
       post:[],

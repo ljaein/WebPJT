@@ -1,0 +1,16 @@
+.post {
+    margin-top: 7rem;
+    background-color: rgb(31,31,31) !important;
+    font-weight: bold;
+    text-decoration: none !important;
+}
+
+.card{
+    color: white;
+    border-radius: 15px;
+}
+
+.card-body img{
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+}
