@@ -178,6 +178,13 @@ public class AccountController {
         return result;
     }
 
+    @GetMapping("/getNickname/{email}")
+    @ApiOperation(value = "닉네임가져오기")
+    public String getNickname(@PathVariable String email) {
+        User user = userDao.getUserByEmail(email);
+        return user.getNickname();
+    }
+
     @PutMapping("/modify")
     @ApiOperation(value = "회원정보수정")
     public Object modify(@Valid @RequestBody SignupRequest request) throws SQLException, IOException {
