@@ -40,7 +40,8 @@
                           <img src="//developers.kakao.com/assets/img/about/logos/kakaolink/kakaolink_btn_small.png" width="50px" />
                            </a>
                           </div>
-                  <button class="btn btn-primary">장바구니</button>
+                  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#BasketModal">장바구니</button>
+                  <BasketModal />
                   <button class="btn btn-primary">구매하기</button>
                 </div>
               </div>
@@ -105,6 +106,7 @@
 <script>
 import axios from "axios";
 import PostUpdateVue from './PostUpdate.vue';
+import BasketModal from '../../components/modal/BasketModal.vue'
 
 import CommentInput from '../../components/comment/CommentInput.vue'
 import CommentList from '../../components/comment/CommentList.vue'
@@ -115,6 +117,7 @@ export default {
   components: {
     CommentInput,
     CommentList,
+    BasketModal
   },
   data(){
     return{
