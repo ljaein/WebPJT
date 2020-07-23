@@ -19,12 +19,13 @@
     </div>
     <div class="container" v-for="(post, index) in posts" :key="index">
       <div class="column">
-        <div class="card mt-5 mb-3 postlist" style="max-width: 100%;" @click="getdetail(post.pid)">
+        <div class="card mt-5 mb-3 postlist" style="max-width: 100%;">
           <div class="row no-gutters">
             <div class="col-md-4">
               <img
                 src="https://cdn0000.airklass.com/classes/340/new_cover-w1920-h1080?v=-1153120733"
                 class="card-img"
+                @click="getdetail(post.pid)"
                 style="height: 16rem;"
                 alt
               />
@@ -33,6 +34,7 @@
               <div class="card-body">
                 <h5
                   class="card-title"
+                  @click="getdetail(post.pid)"
                   style="font-size: 2.2rem; text-align: center; margin-bottom: 1rem; text-overflow:ellipsis;overflow: hidden;white-space: nowrap;"
                 >{{post.title}}</h5>
                 <div class="text">
@@ -53,10 +55,19 @@
                       class="fas fa-bookmark select-button mr-2"
                       style="text-align: right; font-size:20px;"
                     ></i>
-                    <i
-                      class="fas fa-heart select-button like-button"
-                      style="text-align: right; font-size: 20px;"
-                    ></i>
+
+                    <div id="heart" @click="registlike(post.pid)">
+                      <i
+                        v-if="check(post.pid)"
+                        class="fas fa-heart select-button like-button"
+                        style="text-align: right; font-size: 20px; color:red"
+                      ></i>
+                      <i
+                        v-if="!check(post.pid)"
+                        class="far fa-heart"
+                        style="text-align: right; font-size: 20px;"
+                      ></i>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -71,7 +82,7 @@
 <script>
 import axios from "axios";
 
-const baseURL = "http://localhost:8080/post";
+const baseURL = "http://localhost:8080";
 
 // const likeButtons = document.querySelectorAll('.like-button');
 
@@ -85,27 +96,37 @@ export default {
         title: "",
         location: "",
         imgurl: "",
-        price: ""
+        price: "",
       },
       key: "",
-      word: ""
+      word: "",
+      email: "",
+      postLike: [],
     };
   },
   methods: {
+    check(pid) {
+      for (var i = 0; i < this.postLike.length; i++) {
+        if (this.postLike[i] == pid) {
+          return true;
+        }
+      }
+      return false;
+    },
     getdetail(pid) {
       this.$router.push({
         name: "PostListDetailView",
-        params: { ID: pid }
+        params: { ID: pid },
       });
     },
     search() {
-      if (this.key == "all" || this.key=="") {
+      if (this.key == "all" || this.key == "") {
         axios
           .get(`${baseURL}/list/`)
-          .then(res => {
+          .then((res) => {
             this.posts = res.data;
           })
-          .catch(err => {
+          .catch((err) => {
             console.log(err);
           });
       } else {
@@ -113,30 +134,57 @@ export default {
           alert("검색어를 입력하세요.");
         } else {
           axios
-            .get(`${baseURL}/search/${this.key}/${this.word}`)
-            .then(res => {
+            .get(`${baseURL}/post/search/${this.key}/${this.word}`)
+            .then((res) => {
               this.posts = res.data;
             })
-            .catch(err => {
+            .catch((err) => {
               alert("올바른 값을 입력하세요.");
             });
         }
       }
     },
     createpost() {
-      this.$router.push('/postcreate')
+      this.$router.push("/postcreate");
+    },
+    registlike(pid) {
+      axios
+        .get(`${baseURL}/like/registDelete/${this.email}/${pid}`)
+        .then((res) => {
+          if (res.data=="regist") {
+            alert("등록1!");
+          } else {
+            alert("삭제!");
+          }
+        })
+        .catch((err) => {
+          alert(err);
+        });
+    },
+    checklike() {
+      axios
+        .get(`${baseURL}/like/check/${this.email}`)
+        .then((res) => {
+          this.postLike = res.data;
+          console.log(this.postLike);
+        })
+        .catch((err) => {
+          alert(err);
+        });
     },
   },
   created() {
+    this.email = this.$cookies.get("User");
     axios
-      .get(`${baseURL}/list/`)
-      .then(res => {
+      .get(`${baseURL}/post/list/`)
+      .then((res) => {
         this.posts = res.data;
       })
-      .catch(err => {
+      .catch((err) => {
         console.log(err);
       });
-  }
+    this.checklike();
+  },
 };
 </script>
 
