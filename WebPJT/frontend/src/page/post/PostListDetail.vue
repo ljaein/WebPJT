@@ -87,7 +87,7 @@
 
     <!-- 댓글 List -->
     <hr>
-    <div class="d-flex">댓글 수 : {{receiveComment.length}}</div>
+    <div class="d-flex bg-white">댓글 수 : {{receiveComment.length}}</div>
     <CommentList v-for="comment in receiveComment" :key="comment.rid" :comment="comment" @comment-delete="commentDelete"/>
   
     

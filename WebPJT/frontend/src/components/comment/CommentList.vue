@@ -2,17 +2,17 @@
   <div>
     <div class="card mt-4">
       <div class="card-header d-flex">
-        <strong class="mr-auto">{{comment.nickname}}</strong>
-        <small class="my-auto ml-auto">{{comment.createDate}}</small>
+        <strong class="mr-auto text-dark">{{comment.nickname}}</strong>
+        <small class="my-auto ml-auto text-dark">{{comment.createDate}}</small>
       </div>
       <ul class="list-group list-group-flush">
         <li class="list-group-item d-flex">
           <CommentUpdate v-if="isUpdated" :comment="comment" @update-comment="commentModify" />
-          <span v-else>{{comment.content}}</span>
+          <span v-else class="text-dark">{{comment.content}}</span>
         </li>
       </ul>
     </div>
-    <div v-if="!NickNameCheck" class="d-flex">
+    <div v-if="NickNameCheck" class="d-flex">
     <small
         class="ml-auto mr-2 badge commentModify btn btn-outline-success"
         @click="commentModify"
@@ -22,16 +22,19 @@
     </small>
     <small class="badge commentDelete btn btn-outline-danger" @click="commentDelete">삭제</small>
     </div>
-    {{this.NickName}}
   </div>
 </template>
 
 <script>
 import axios from 'axios'
+import CommentUpdate from './CommentUpdate'
 
 const baseURL = "http://localhost:8080";
 
 export default {
+  components: {
+    CommentUpdate,
+  },
   props: {
     comment: Object,
   },
@@ -49,10 +52,18 @@ export default {
         this.$emit('comment-delete',this.comment)
       }
     },
+    commentModify() {
+      this.isUpdated = !this.isUpdated
+    },
     fetchNickName(){
         axios.get(`${baseURL}/account/getNickname/${this.email}`)
             .then((response) => {
               this.NickName = response.data
+              if (this.NickName == this.comment.nickname) {
+                this.NickNameCheck = true
+              } else {
+                this.NickNameCheck = false
+              }
               console.log(response.data)
             })
             .catch((err) => {
