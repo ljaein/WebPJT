@@ -77,14 +77,6 @@ export default new Router({
             name: 'PostListDetail',
             component: PostListDetail,
         },
-
-        //계절
-        // {
-        //     path: '/spring',
-        //     name: 'Spring',
-        //     component: Spring,
-
-        // },
         {
             path: '/postcreate',
             name: 'PostCreate',

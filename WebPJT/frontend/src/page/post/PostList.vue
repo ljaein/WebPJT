@@ -137,6 +137,9 @@ export default {
         }
       }
     },
+    createpost() {
+      this.$router.push('/postcreate')
+    },
   },
   created() {
     axios
@@ -167,4 +170,10 @@ export default {
   font-size: 3rem;
   text-align: center;
 }
+.postlist {
+  cursor: pointer;
+}
+/* listhover:hover {
+  color: burlywood;
+} */
 </style>
