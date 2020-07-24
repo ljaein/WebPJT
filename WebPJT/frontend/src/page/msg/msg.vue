@@ -1,48 +1,89 @@
 <template>
-        <div>
-    <a href="javascript:;" @click="test" id="kakao-link-btn">
-    <img src="//developers.kakao.com/assets/img/about/logos/kakaolink/kakaolink_btn_small.png" width="100px" />
-    </a>
+  <div>
+    <div
+      ref="searchWindow"
+      :style="searchWindow"
+      style="border:1px solid;width:500px;margin:5px 0;position:relative"
+    >
+      <img
+        src="//t1.daumcdn.net/postcode/resource/images/close.png"
+        id="btnFoldWrap"
+        style="cursor:pointer;right:0px;top:-1px;z-index:1"
+        @click="searchWindow.display = 'none'"
+        alt="close"
+      >
     </div>
+    <input type="text" v-model="address" placeholder="주소">
+    <br>
+    <input type="text" v-model="extraAddress" ref="extraAddress" placeholder="상세주소">
+    <input type="text" placeholder="우편번호" v-model="postcode">
+    <input type="button" value="우편번호 찾기" @click="execDaumPostcode" id="ttt">
+    <br>
+  </div>
 </template>
-     <script type="text/javascript">
-    import axios from "axios";
+
+<script>
 export default {
-    created(){
-          Kakao.init('765ed14c0d508f8aa48c6d173446acba');
-
-    },
-    methods: {
-        test(){
-        Kakao.Link.createDefaultButton({
-          container: '#kakao-link-btn',
-          objectType: 'feed',
-          content: {
-            title: '상세페이지 제목 호출',
-            description: '내용, 주로 해시태그',
-            imageUrl: document.images[0].src,
-            link: {
-              webUrl: 'http://localhost:3000/#/posts/3',
-              mobileWebUrl: 'https://developers.kakao.com'
+  data() {
+    return {
+      searchWindow: {
+        // display: 'none',
+        height: '300px',
+      },
+      postcode: '',
+      address: '',
+      extraAddress: '',
+    };
+  },
+  methods: {
+    execDaumPostcode() {
+      const currentScroll = Math.max(
+        document.body.scrollTop,
+        document.documentElement.scrollTop,
+      );
+      // eslint-disable-next-line
+      new daum.Postcode({
+        onComplete: (data) => {
+          if (data.userSelectedType === 'R') {
+            this.address = data.roadAddress;
+          } else {
+            this.address = data.jibunAddress;
+          }
+          if (data.userSelectedType === 'R') {
+            if (data.bname !== '' && /[동|로|가]$/g.test(data.bname)) {
+              this.extraAddress += data.bname;
             }
-          },
-          social: {
-            likeCount: 286,
-            commentCount: 45,
-            sharedCount: 845
-          },
-          buttons: [
-            {
-              title: 'Open!',
-              link: {
-                mobileWebUrl: 'https://developers.kakao.com',
-                webUrl: 'http://localhost:3000/#/posts/3'     
-              }
-            }  
-          ]
-        });
-        }
-    }
-}
-    </script>
+            if (data.buildingName !== '' && data.apartment === 'Y') {
+              this.extraAddress +=
+                this.extraAddress !== ''
+                  ? `, ${data.buildingName}`
+                  : data.buildingName;
+            }
+            if (this.extraAddress !== '') {
+              this.extraAddress = ` (${this.extraAddress})`;
+            }
+          } else {
+            this.extraAddress = '';
+          }
+          this.postcode = data.zonecode;
+          this.$refs.extraAddress.focus();
+          // this.searchWindow.display = 'none';
+          document.body.scrollTop = currentScroll;
+        },
+        onResize: (size) => {
+          this.searchWindow.height = `${size.height}px`;
+        },
+        width: '100%',
+        height: '100%',
+      }).embed(this.$refs.searchWindow);
+      // this.searchWindow.display = 'block';s
+    },
+  },
+};
+</script>
 
+<style>
+#ttt {
+  background-color : red;
+}
+</style>

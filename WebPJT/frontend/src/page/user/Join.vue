@@ -4,6 +4,11 @@
       <div class="middle">
         <h1>회원가입</h1>
         <div class="form-wrap">
+          
+   <input type="radio" id="normal" name="type" value="normal">
+  <label for="male">일반 사용자</label>
+  <input type="radio" id="business" name="type" value="business">
+  <label for="female">사업자 </label><br>
           <div class="input-wrap">
             <input v-model="name" id="name" placeholder="이름을 입력해주세요" type="text" />
           </div>
