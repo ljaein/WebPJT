@@ -1,5 +1,6 @@
 <template>
   <div class="post">
+    <hr class="hr-line">
     <!-- 
     <select v-model="key">
       <option value="all">전체검색</option>
@@ -16,11 +17,12 @@
     />
     <button type="button" @click="search"><i class="fas fa-search mr-1"></i>검색</button>-->
 
-    <div class="container">
+    <div class="container col-md-6">
       <div class="input-group mb-3">
         <div class="input-group-prepend">
           <select
-            class="btn btn-outline-secondary dropdown-toggle"
+            class="btn dropdown-toggle text-black"
+            style="border: 1px solid gray;"
             aria-haspopup="true"
             aria-expanded="false"
             v-model="key"
@@ -42,54 +44,56 @@
       </div>
 
       <div class="d-flex justify-content-end">
-        <a type="button" class="btn btn-outline-light form-check mb-2" href="#" @click="gocreate">
+        <a type="button" class="btn btn-outline form-check mb-2" href="#" @click="gocreate">
           <i class="fas fa-pen"></i> 포스트 작성
         </a>
       </div>
-      <div class="row justify-content-between">
+      <div class="row justify-content-left">
         <div
           class="col-12 col-sm-12 col-md-4 card-deck"
+          style="margin:auto 0;"
           v-for="(post, index) in posts"
           :key="index"
         >
-          <div class="card mb-3 bg-dark profile-post">
+          <div class="card mb-3 profile-post mr-0 ml-0">
             <div class="card-body" style="padding: 0;">
               <img
-                src="https://cdn0000.airklass.com/classes/340/new_cover-w1920-h1080?v=-1153120733"
+                src="https://t1.daumcdn.net/cfile/tistory/99BB93335A03C69C30"
                 class="card-img"
                 @click="getdetail(post.pid)"
-                style="height: 15rem;"
-                alt
+                style="height:8rem"
               />
+              <div class="card-img-overlay" style="padding:10px; text-align:right; font-weight:bold;">
+                <p>{{post.location}}</p>
             </div>
-            <div class="col-md-12">
-              <div class="card-body" style="padding: 20px 0px;">
+            <div class="col-md-12 p-0">
+              <div class="card-body" style="padding: 5px;">
+                  <p
+                    class="card-text mb-2"
+                    style="font-size: 1rem; text-align: left; text-overflow:ellipsis;overflow: hidden;white-space: nowrap; color:gray"
+                  >{{post.sdate}}~{{post.edate}}</p>
                 <h5
                   class="card-title"
                   @click="getdetail(post.pid)"
-                  style="font-size: 1.2rem; text-align: left; margin-bottom: 1rem; text-overflow:ellipsis;overflow: hidden;white-space: nowrap;"
+                  style="font-size: 1rem; text-align: left; margin-bottom: 1rem; text-overflow:ellipsis;overflow: hidden;white-space: nowrap;"
                 >{{post.title}}</h5>
-                <div class="text">
+                <div class="text d-flex justify-content-between">
                   <p
                     class="card-text"
                     style="font-size: 1rem; text-align: left; text-overflow:ellipsis;overflow: hidden;white-space: nowrap;"
                   >가격 : {{post.price}}</p>
-                  <div class="d-flex justify-content-end mt-0">
-                    <div id="heart" class="heart" @click="registlike(post.pid)">
-                      <i
-                        v-if="check(post.pid)"
-                        class="fas fa-heart select-button mr-2"
-                        style="text-align: right; font-size: 20px; color:red"
-                      ></i>
-                      <i
-                        v-if="!check(post.pid)"
-                        class="far fa-heart mr-2"
-                        style="text-align: right; font-size: 20px; "
-                      ></i>
-
-                      {{post.likecnt}}
-                    </div>
-                  </div>
+                  <div id="heart" @click="registlike(post.pid)">
+                  <i
+                    v-if="check(post.pid)"
+                    class="fas fa-heart select-button like-button"
+                    style="text-align: right; font-size: 20px; color:red;"
+                  ></i>
+                  <i
+                    v-if="!check(post.pid)"
+                    class="far fa-heart"
+                    style="text-align: right; font-size: 20px;"
+                  ></i>
+              </div>
                 </div>
               </div>
             </div>
@@ -97,6 +101,7 @@
         </div>
       </div>
     </div>
+  </div>
   </div>
 </template>
  
@@ -119,7 +124,8 @@ export default {
         location: "",
         imgurl: "",
         price: "",
-        likecnt: "",
+        sdate:"",
+        edate:"",
       },
       key: "",
       word: "",
