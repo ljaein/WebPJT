@@ -171,7 +171,7 @@ export default {
       axios
         .post(`${baseURL}/signup`, data)
         .then(response => {
-          console.log(data);
+          // console.log(data);
           alert("회원가입 인증 메일이 발송되었습니다. 이메일을 확인해주세요.");
           this.$router.push("/");
         })
@@ -186,13 +186,13 @@ export default {
   },
   data: () => {
     return {
+      checkType: "",
       email: "",
       name: "",
       nickname: "",
       password: "",
       passwordconfirm: "",
       passwordSchema: new PV(),
-      checkType:null,
       error: {
         email: false,
         password: false,

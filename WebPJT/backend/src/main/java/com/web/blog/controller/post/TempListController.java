@@ -56,9 +56,9 @@ public class TempListController {
         }
     }
 
-    @PostMapping("/tempRegist")
+    @PostMapping("/regist")
     @ApiOperation("임시저장 등록")
-    public Object tespRegist(@RequestBody PostList request) throws SQLException, IOException {
+    public Object regist(@RequestBody PostList request) throws SQLException, IOException {
         try {
             PostList temp = new PostList();
             temp.setEmail(request.getEmail());

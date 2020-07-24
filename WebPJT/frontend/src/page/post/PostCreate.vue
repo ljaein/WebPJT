@@ -45,13 +45,14 @@
       <input type="text" class="form-control" id="activity" v-model="PostCreate.activity">
       <small class="form-text text-muted d-flex">활동명을 입력해주세요.</small>
     </div>
-    <button type="submit" class="btn btn-primary d-flex justify-content-start" @click="regist">제출</button>
+    <button type="submit" class="btn btn-primary d-flex justify-content-start" @click="regist">등록</button>
+    <button type="submit" class="btn btn-primary d-flex justify-content-start" @click="tempSave">임시저장</button>
   </div>
 </template>
 
 <script>
 
-const baseURL = "http://localhost:8080/post"
+const baseURL = "http://localhost:8080/"
 
 import axios from 'axios'
 
@@ -74,7 +75,7 @@ export default {
   },
   methods: {
     regist: function() {
-      axios.post(`${baseURL}/regist`,this.PostCreate)
+      axios.post(`${baseURL}/post/regist`,this.PostCreate)
         .then((response) => {
           console.log(response.data)
           this.$router.push('/posts')
@@ -82,6 +83,16 @@ export default {
           console.log('error입니다.')
         })
     },
+    tempSave(){
+      //임시저장 메소드
+      axios.post(`${baseURL}/temp/regist`,this.PostCreate)
+        .then((response) => {
+          console.log(response.data)
+          this.$router.push('/posts')
+        }).catch((error) => {
+          console.log('error입니다.')
+        })
+    }
   },
   created() {
     this.PostCreate.email = this.$cookies.get('User')

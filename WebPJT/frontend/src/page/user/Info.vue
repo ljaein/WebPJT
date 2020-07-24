@@ -86,6 +86,9 @@
         <button v-if="validated==0" @click="modify" class="btn">
           <span>완료</span>
         </button>
+        <button @click="templist" class="btn">
+          <span>임시저장 리스트</span>
+        </button>
       </div>
     </div>
   </div>
