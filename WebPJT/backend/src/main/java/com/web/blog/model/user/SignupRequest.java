@@ -27,4 +27,7 @@ public class SignupRequest {
     String name;
     @ApiModelProperty(required = true)
     String imgurl;
+    @ApiModelProperty(required = true)
+    @NotNull
+    String checkType;
 }
