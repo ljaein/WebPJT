@@ -25,8 +25,8 @@
             aria-expanded="false"
             v-model="key"
           >
-            <option value="all">All</option>
             <div role="separator" class="dropdown-divider"></div>
+            <option value="all">All</option>
             <option value="title">Title</option>
             <option value="activity">Activity</option>
             <option value="price">Price</option>
@@ -75,22 +75,19 @@
                     style="font-size: 1rem; text-align: left; text-overflow:ellipsis;overflow: hidden;white-space: nowrap;"
                   >가격 : {{post.price}}</p>
                   <div class="d-flex justify-content-end mt-0">
-                    <i
-                      class="fas fa-bookmark select-button mr-2"
-                      style="text-align: right; font-size:20px;"
-                    ></i>
-
-                    <div id="heart" @click="registlike(post.pid)">
+                    <div id="heart" class="heart" @click="registlike(post.pid)">
                       <i
                         v-if="check(post.pid)"
-                        class="fas fa-heart select-button like-button"
+                        class="fas fa-heart select-button mr-2"
                         style="text-align: right; font-size: 20px; color:red"
                       ></i>
                       <i
                         v-if="!check(post.pid)"
-                        class="far fa-heart"
-                        style="text-align: right; font-size: 20px;"
+                        class="far fa-heart mr-2"
+                        style="text-align: right; font-size: 20px; "
                       ></i>
+
+                      {{post.likecnt}}
                     </div>
                   </div>
                 </div>
@@ -122,11 +119,13 @@ export default {
         location: "",
         imgurl: "",
         price: "",
+        likecnt: "",
       },
       key: "",
       word: "",
       email: "",
       postLike: [],
+      cntLike: [],
     };
   },
   methods: {
@@ -182,6 +181,7 @@ export default {
         .get(`${baseURL}/like/registDelete/${this.email}/${pid}`)
         .then((res) => {
           this.checklike();
+          this.init();
         })
         .catch((err) => {
           alert(err);
@@ -197,17 +197,30 @@ export default {
           alert(err);
         });
     },
+    cntlike() {
+      axios
+        .get(`${baseURL}/like/cnt`)
+        .then((res) => {
+          this.cntLike = res.data;
+        })
+        .catch((err) => {
+          alert(err);
+        });
+    },
+    init() {
+      axios
+        .get(`${baseURL}/post/list/`)
+        .then((res) => {
+          this.posts = res.data;
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
   },
   created() {
     this.email = this.$cookies.get("User");
-    axios
-      .get(`${baseURL}/post/list/`)
-      .then((res) => {
-        this.posts = res.data;
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    this.init();
     this.checklike();
   },
 };
@@ -231,6 +244,9 @@ export default {
 }
 .postlist {
   cursor: pointer;
+}
+.card-title, .card-img, .heart{
+  cursor:pointer;
 }
 /* listhover:hover {
   color: burlywood;
