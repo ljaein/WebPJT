@@ -43,7 +43,7 @@
 
       <div class="d-flex justify-content-end">
         <a type="button" class="btn btn-outline-light form-check mb-2" href="#" @click="gocreate">
-          <i class="fas fa-pen"></i> 포스트 작성
+          <i class="fas fa-pen"></i> 상품 등록
         </a>
       </div>
       <div class="row justify-content-between">
