@@ -18,7 +18,8 @@
         @click="commentModify"
     >
         <span v-if="isUpdated">취소</span>
-        <span v-else>수정</span>
+        <span v-else @click="fetchCommentRID">수정</span>
+        {{this.rid}}
     </small>
     <small class="badge commentDelete btn btn-outline-danger" @click="commentDelete">삭제</small>
     </div>
@@ -44,11 +45,12 @@ export default {
       NickNameCheck: false,
       isUpdated: false,
       email: '',
+      rid:'',
     }
   },
   methods: {
     commentDelete: function() {
-      if (confirm('댓글을 삭제하시겠습니다?')) {
+      if (confirm('댓글을 삭제하시겠습니까?')) {
         this.$emit('comment-delete',this.comment)
       }
     },
@@ -64,16 +66,28 @@ export default {
               } else {
                 this.NickNameCheck = false
               }
-              console.log(response.data)
             })
             .catch((err) => {
               console.log(err.response.data)
             });
     },
+    fetchCommentRID() {
+      this.rid = this.comment.rid
+    },
+    // fetchCommentRes() {
+    //   axios.get(`${baseURL}/reply/list/${this.$route.params.ID}/${this.rid}`)
+    //     .then((response) => {
+    //       console.log(response.data)
+    //     }).catch((error) => {
+    //       console.log(error.response.data)
+    //     })
+    // },
   },
   created() {
     this.email = this.$cookies.get('User')
     this.fetchNickName()
+    this.fetchCommentRID()
+    // this.fetchCommentRes()
   },
 }
 </script>
