@@ -73,7 +73,9 @@ public class LikeListController {
                 list.setPid(Integer.parseInt(pid));
                 list.setEmail(email);
                 likeListDao.save(list);
-
+                PostList post = postListDao.findByPid(Integer.parseInt(pid));
+                post.setLikecnt(post.getLikecnt()+1);
+                postListDao.save(post);
                 // return list;
                 return "regist";
             } catch (Exception e) {
@@ -82,6 +84,9 @@ public class LikeListController {
         } else { // 삭제
             try {
                 likeListDao.delete(likeListDao.findByNo(like.getNo()));
+                PostList post = postListDao.findByPid(Integer.parseInt(pid));
+                post.setLikecnt(post.getLikecnt()-1);
+                postListDao.save(post);
                 // return like;
                 return "del";
             } catch (Exception e) {
@@ -101,6 +106,18 @@ public class LikeListController {
         }
         return likelist;
     }
+
+    // @GetMapping("/cnt")
+    // @ApiOperation("좋아요 개수")
+    // public Object cnt() throws SQLException, IOException {
+    //     List<PostList> postlist = postListDao.findByFlagOrderByCreateDateDesc(1);
+    //     List<Integer> cntlist = new LinkedList<>();
+    //     for(PostList post : postlist){
+    //         List<LikeList> likelist = likeListDao.findByPid(post.getPid());
+    //         cntlist.add(likelist.size());
+    //     }
+    //     return cntlist;
+    // }
 
     @DeleteMapping("/delete/{no}")
     @ApiOperation("좋아요 삭제")

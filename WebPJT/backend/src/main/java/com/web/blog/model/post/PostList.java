@@ -36,6 +36,7 @@ public class PostList {
     private String detail;
     private int flag;
     private String activity;
+    private int likecnt;
 
     @JsonIgnore
     private LocalDateTime createDate;

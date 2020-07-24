@@ -4,11 +4,13 @@
       <div class="middle">
         <h1>회원가입</h1>
         <div class="form-wrap">
-          
-   <input type="radio" id="normal" name="type" value="normal">
-  <label for="male">일반 사용자</label>
-  <input type="radio" id="business" name="type" value="business">
-  <label for="female">사업자 </label><br>
+          <!-- 라디오 박스 -->
+          <input type="radio" id="normal" name="type" value="normal" v-model="checkType">
+            <label for="normal">일반 사용자</label>
+          <input type="radio" id="business" name="type" value="business" v-model="checkType">
+            <label for="business">사업자 </label><br>
+            <div class="error-text" v-if="error.checkType">{{error.checkType}}</div>
+
           <div class="input-wrap">
             <input v-model="name" id="name" placeholder="이름을 입력해주세요" type="text" />
           </div>
@@ -92,6 +94,8 @@ export default {
       .digits()
       .has()
       .letters();
+
+      this.checkForm();
   },
 
   watch: {
@@ -106,10 +110,19 @@ export default {
     },
     nickname: function(v) {
       this.checkForm();
+    },
+    checkType: function(v) {
+      this.checkForm();
     }
   },
   methods: {
     checkForm() {
+      if(this.checkType == null) {
+        this.error.checkType = "사용자 구분을 해주세요.";
+      } else {
+        this.error.checkType = false;
+      }
+
       if (this.nickname.length > 0) {
         axios
           .get(`${baseURL}/checkNickname/${this.nickname}`)
@@ -147,20 +160,23 @@ export default {
       else this.error.passwordconfirm = false;
     },
     join() {
-      let { email, nickname, password, name } = this;
+      let { email, nickname, password, name, checkType } = this;
       let data = {
         email,
         nickname,
         password,
-        name
+        name,
+        checkType
       };
       axios
         .post(`${baseURL}/signup`, data)
         .then(response => {
+          console.log(data);
           alert("회원가입 인증 메일이 발송되었습니다. 이메일을 확인해주세요.");
           this.$router.push("/");
         })
         .catch(() => {
+          alert("회원 정보를 모두 입력해주세요.");
           this.$router.push({
             name: "Params",
             params: { name: err.response.status }
@@ -176,11 +192,13 @@ export default {
       password: "",
       passwordconfirm: "",
       passwordSchema: new PV(),
+      checkType:null,
       error: {
         email: false,
         password: false,
         nickname: false,
-        passwordconfirm: false
+        passwordconfirm: false,
+        checkType: false
       },
       isTerm: false,
       passwordType: "password",
