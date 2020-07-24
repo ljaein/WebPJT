@@ -12,7 +12,7 @@ import Info from '../page/user/Info.vue'
 import NotFound from '../page/error/NotFound.vue'
 import Params from '../page/error/Params.vue'
 import Msg from '../page/msg/msg.vue'
-
+import Kakao from '../page/msg/kakao.vue'
 // main
 import List from '../page/main/List.vue'
 
@@ -110,6 +110,11 @@ export default new Router({
             path: '/msg/msg',
             component: Msg,
         },
+        // kakao login
+        {
+            path: '/msg/kakao',
+            component : Kakao
+        }
 
     ]
 })
