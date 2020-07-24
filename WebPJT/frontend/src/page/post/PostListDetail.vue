@@ -199,8 +199,8 @@ export default {
     createcomment(commentData) {
       axios.post(`${baseURL}/reply/register`,commentData)
         .then((response) => {
+          commentData.content = ''
           this.fetchComment();
-
           console.log(response.data)
         }).catch((error) => {
           console.log(error)

@@ -29,6 +29,7 @@ export default {
       axios.put(`${baseURL}/reply/modify`,this.comment)
         .then((response) => {
           console.log(response.data)
+          this.$router.go()
         }).catch((error) => {
           console.log(error.response.data)
         })
