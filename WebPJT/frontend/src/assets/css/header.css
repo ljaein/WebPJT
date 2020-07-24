@@ -1,31 +1,32 @@
 .header-nav{
     position: fixed;
     z-index: 2 !important;
-    background-color: rgb(31,31,31) !important;
-    color: white !important;
+    color: black !important;
     font-weight: bold;
     text-decoration: none !important;
     padding-bottom: 0;
+    margin: auto;
 }
 
 .nav-title{
     color: red;
-    font-size: 2rem;
+    font-size: 1.5rem;
     text-decoration: none !important;
 }
 
 .header-link{
-    font-size: 1rem;
+    font-size: 0.8rem;
+    color: black !important;
 }
 
 
 .dropdown-menu{
-    background-color: rgb(20, 20, 31) !important;
+    background-color: rgb(236, 236, 236) !important;
     width: 2rem;
 }
 
 .dropdown-item{
-    color: white;
+    color: black;
 }
 
 .login {

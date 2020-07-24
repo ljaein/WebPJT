@@ -64,6 +64,5 @@ export default {
   text-align: center;
   color: #2c3e50;
   margin-top: 0;
-  background-color: rgb(31,31,31) !important;
 }
 </style>

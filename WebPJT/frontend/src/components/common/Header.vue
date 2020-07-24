@@ -1,8 +1,8 @@
 <template>
   <div id="header" class="p-0" v-if="isHeader">
-    <nav class="navbar navbar-expand-lg navbar-dark fixed-top header-nav" >
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top header-nav col-md-6" >
       <router-link class="nav-title" v-bind:to="{name:constants.URL_TYPE.POST.MAIN}">
-        <h5 class="m-2 ml-4 font-weight-bold nav-title">Leisure</h5>
+        <h5 class="mt-3 font-weight-bold nav-title">Linkivity</h5>
       </router-link>
       <button
         class="navbar-toggler navbar-toggler-right text-black"
@@ -17,7 +17,7 @@
       </button>
 
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav ml-auto mr-4">
+        <ul class="navbar-nav ml-auto">
           <li class="nav-item dropdown">
             <a
               class="nav-link dropdown-toggle mt-2 mr-3 header-link"
@@ -28,9 +28,8 @@
               aria-haspopup="true"
               aria-expanded="false"
             >Season</a>
-            <div class="dropdown-menu text-white dropdown-menu-left" aria-labelledby="navbarDropdown">
+            <div class="dropdown-menu dropdown-menu-left" aria-labelledby="navbarDropdown">
               <a class="dropdown-item" style="padding-top:0;" @click="goPost" href="#">Post</a>
-              <div class="dropdown-divider m-0"></div>
               <a class="dropdown-item" @click="goSpring" href="#">Spring</a>
               <a class="dropdown-item" @click="goSummer" href="#">Summer</a>
               <a class="dropdown-item" @click="goAutumn" href="#">Autumn</a>
@@ -53,7 +52,7 @@
               <a class="dropdown-item" @click="skyAct" href="#">Sky Activity</a>
             </div>
           </li>
-          <a v-if="!this.$cookies.isKey('Auth-Token')" data-toggle="modal" data-target="#LoginModal" class="nav-link mt-3" href="#"><i class="fas fa-sign-in-alt mr-1"></i>Login</a>
+          <a v-if="!this.$cookies.isKey('Auth-Token')" data-toggle="modal" data-target="#LoginModal" class="nav-link mt-2" style="font-size:0.8rem;" href="#"><i class="fas fa-sign-in-alt mr-1"></i>Login</a>
           <li v-if="this.$cookies.isKey('Auth-Token')" class="nav-item dropdown">
             <a
               class="nav-link dropdown-toggle text-black mt-2 header-link"
@@ -70,6 +69,7 @@
               <!-- <div class="dropdown-divider"></div> -->
             </div>
           </li>
+
         </ul>
         <!-- <a
           v-if="!this.$cookies.isKey('Auth-Token')"
@@ -88,6 +88,7 @@
         >회원정보</a> -->
       </div>
     </nav>
+
   </div>
 </template>   
 
@@ -160,3 +161,11 @@ export default {
   }
 };
 </script>
+
+<style scoped>
+.hr-line{
+    border: 0.5px solid rgb(214, 214, 214) !important;
+    /* margin-top: 0; */
+    /* margin-bottom: 4rem; */
+}
+</style>
