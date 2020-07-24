@@ -44,6 +44,14 @@ public class ReplyListController {
         return list;
     }
 
+    @GetMapping("/list/{pid}/{rid}")
+    @ApiOperation(value ="rid별 댓글 목록")
+    public List<ReplyList> selectComment(@PathVariable int pid, @PathVariable int rid) throws SQLException, IOException{
+        List<ReplyList> list = new LinkedList<>();
+        list = replyListDao.findByPidAndRid(pid, rid);
+        return list;
+    }
+
     @PostMapping("/register")
     @ApiOperation(value = "댓글 등록")
     public Object register(@RequestBody ReplyList request) throws SQLException, IOException{
