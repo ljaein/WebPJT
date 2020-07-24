@@ -11,7 +11,9 @@
         </div>
         <div class="modal-body">
             E-mail : <input type="text" v-model="email" id="email" placeholder="이메일을 입력해주세요."><br>
+            <div class="error-text" v-if="error.email">{{error.email}}</div>
             Password : <input type="password" v-model="password" id="password" placeholder="비밀번호를 입력해주세요.">
+
         </div>
         <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -57,14 +59,17 @@ export default {
     checkForm() {
       if (this.email.length > 0 && !EmailValidator.validate(this.email))
         this.error.email = "이메일 형식이 아닙니다.";
-      else this.error.email = false;
+      else if (this.email.length > 0 && EmailValidator.validate(this.email)) {
+        axios
+          .get(`${baseURL}/checkEmail/${this.email}`)
+          .then(response => {
+            this.error.email = "";
+          })
+          .catch(() => {
+            alert("에러");
+          });
+      } else this.error.email = false;
 
-      if (
-        this.password.length > 0 &&
-        !this.passwordSchema.validate(this.password)
-      )
-        this.error.password = "영문,숫자 포함 8 자리이상이어야 합니다.";
-      else this.error.password = false;
     },
     login() {
       axios
