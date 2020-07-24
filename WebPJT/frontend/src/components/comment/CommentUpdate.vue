@@ -31,8 +31,8 @@ export default {
   methods: {
     commentUpdate() {
       axios.put(`${baseURL}/reply/modify`,this.updateComment)
-        .then((response) => {
-          console.log(response.data)
+        .then(() => {
+          alert('댓글 수정 완료!')
           this.$router.go()
         }).catch((error) => {
           console.log(error.response.data)
