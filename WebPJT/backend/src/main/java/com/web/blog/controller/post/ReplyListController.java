@@ -44,7 +44,7 @@ public class ReplyListController {
         return list;
     }
 
-    @GetMapping("/list/{pid}/{rid}")
+    @GetMapping("/rlist/{pid}/{rid}")
     @ApiOperation(value ="rid별 댓글 목록")
     public List<ReplyList> selectComment(@PathVariable int pid, @PathVariable int rid) throws SQLException, IOException{
         List<ReplyList> list = new LinkedList<>();

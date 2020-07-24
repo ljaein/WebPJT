@@ -1,6 +1,6 @@
 <template>
   <div class="input-group mb-3">
-    <textarea
+    <input
       type="text"
       class="form-control"
       placeholder="Please write modify content"
@@ -8,7 +8,6 @@
       aria-describedby="button-addon2"
       v-model="comment.content"
     />
-    <!-- <h1 class="text-dark">{{this.updateCommnet}}</h1> -->
     <div class="input-group-append">
       <button class="btn btn-outline-primary" type="button" id="button-addon2" @click="commentUpdate">수정</button>
     </div>
@@ -24,32 +23,17 @@ export default {
   props: {
     comment: Object,
   },
-  data: function() {
-    return {
-      updateCommnet: [],
-    }
-  },
   methods: {
     commentUpdate() {
+      // console.log(this.comment)
       axios.put(`${baseURL}/reply/modify`,this.comment)
-        .then(() => {
-          alert('댓글 수정 완료!')
+        .then((response) => {
+          console.log(response.data)
           this.$router.go()
         }).catch((error) => {
           console.log(error.response.data)
         })
     },
-    fetchComment() {
-      axios.get(`${baseURL}/reply/list/${this.$route.params.ID}`)
-        .then((response) => {
-          this.updateCommnet = response.data
-        }).catch((error) => {
-          console.log(error.response.data)
-        })
-    },
-  },
-  created() {
-    this.fetchComment()
   },
 }
 </script>

@@ -17,7 +17,7 @@
         class="ml-auto mr-2 badge commentModify btn btn-outline-success"
         @click="commentModify"
     >
-        <span v-if="isUpdated">취소</span>
+        <span v-if="isUpdated" @click="bringCommentDetail">취소</span>
         <span v-else @click="fetchCommentRID">수정</span>
         {{this.rid}}
     </small>
@@ -74,20 +74,13 @@ export default {
     fetchCommentRID() {
       this.rid = this.comment.rid
     },
-    // fetchCommentRes() {
-    //   axios.get(`${baseURL}/reply/list/${this.$route.params.ID}/${this.rid}`)
-    //     .then((response) => {
-    //       console.log(response.data)
-    //     }).catch((error) => {
-    //       console.log(error.response.data)
-    //     })
-    // },
+    bringCommentDetail() {
+      this.$router.go()
+    },
   },
   created() {
     this.email = this.$cookies.get('User')
     this.fetchNickName()
-    this.fetchCommentRID()
-    // this.fetchCommentRes()
   },
 }
 </script>
