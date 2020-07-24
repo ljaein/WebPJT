@@ -17,9 +17,8 @@
         class="ml-auto mr-2 badge commentModify btn btn-outline-success"
         @click="commentModify"
     >
-        <span v-if="isUpdated" @click="bringCommentDetail">취소</span>
+        <span v-if="isUpdated">취소</span>
         <span v-else @click="fetchCommentRID">수정</span>
-        {{this.rid}}
     </small>
     <small class="badge commentDelete btn btn-outline-danger" @click="commentDelete">삭제</small>
     </div>
@@ -73,9 +72,6 @@ export default {
     },
     fetchCommentRID() {
       this.rid = this.comment.rid
-    },
-    bringCommentDetail() {
-      this.$router.go()
     },
   },
   created() {
