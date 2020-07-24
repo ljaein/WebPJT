@@ -33,6 +33,12 @@
                   text-overflow:ellipsis;overflow: hidden;white-space: nowrap;"
                 >가격 : {{post.price}}원 </p>
                 <div class="d-flex justify-content-end mr-0 mt-0">
+                    <div class="d-flex justify-content-start">
+                      <i
+                          class="fas fa-heart select-button mr-2"
+                          style="text-align: right; font-size: 20px; color:red"
+                        ></i> {{post.likecnt}}명이 좋아요를 눌렀습니다.
+                    </div>
                         <div>
         
                            <a href="javascript:;" @click="test()" id="kakao-link-btn">
@@ -40,7 +46,8 @@
                           <img src="//developers.kakao.com/assets/img/about/logos/kakaolink/kakaolink_btn_small.png" width="50px" />
                            </a>
                           </div>
-                  <button class="btn btn-primary">장바구니</button>
+                  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#BasketModal">장바구니</button>
+                  <BasketModal />
                   <button class="btn btn-primary">구매하기</button>
                 </div>
               </div>
@@ -105,6 +112,7 @@
 <script>
 import axios from "axios";
 import PostUpdateVue from './PostUpdate.vue';
+import BasketModal from '../../components/modal/BasketModal.vue'
 
 import CommentInput from '../../components/comment/CommentInput.vue'
 import CommentList from '../../components/comment/CommentList.vue'
@@ -115,6 +123,7 @@ export default {
   components: {
     CommentInput,
     CommentList,
+    BasketModal
   },
   data(){
     return{

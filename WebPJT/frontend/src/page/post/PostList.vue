@@ -1,19 +1,6 @@
 <template>
   <div class="post">
-    <div class="input-group mb-3">
-      <div class="input-group-prepend">
-        <select class="btn btn-outline-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-model="key">
-          <option  value="all">All</option>
-          <div role="separator" class="dropdown-divider"></div>
-          <option  value="title">Title</option>
-          <option value="activity">Activity</option>
-          <option  value="price">Price</option>
-        </select>
-      </div>
-      <input type="text" class="form-control"  placeholder="Search" v-model="word" @keypress.enter="search">
-    </div>
-
-<!-- 
+    <!-- 
     <select v-model="key">
       <option value="all">전체검색</option>
       <option value="title">제목</option>
@@ -27,28 +14,59 @@
       v-model="word"
       @keypress.enter="search"
     />
-    <button type="button" @click="search"><i class="fas fa-search mr-1"></i>검색</button> -->
+    <button type="button" @click="search"><i class="fas fa-search mr-1"></i>검색</button>-->
 
     <div class="container">
-      <div class="d-flex justify-content-end">
-        <a type="button" class="btn btn-outline-light form-check mb-2" href="#" @click="gocreate"><i class="fas fa-pen"></i> 포스트 작성</a>
+      <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <select
+            class="btn btn-outline-secondary dropdown-toggle"
+            aria-haspopup="true"
+            aria-expanded="false"
+            v-model="key"
+          >
+            <div role="separator" class="dropdown-divider"></div>
+            <option value="all">All</option>
+            <option value="title">Title</option>
+            <option value="activity">Activity</option>
+            <option value="price">Price</option>
+          </select>
+        </div>
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Search"
+          v-model="word"
+          @keypress.enter="search"
+        />
       </div>
-      <div class="row justify-content-between" >
-        <div class="col-12 col-sm-12 col-md-4 card-deck" v-for="(post, index) in posts" :key="index">
-          <div class="card mb-3 bg-dark profile-post"
-              @click="getdetail(post.pid)">
-              <div class="card-body" style="padding: 0;">
+
+      <div class="d-flex justify-content-end">
+        <a type="button" class="btn btn-outline-light form-check mb-2" href="#" @click="gocreate">
+          <i class="fas fa-pen"></i> 포스트 작성
+        </a>
+      </div>
+      <div class="row justify-content-between">
+        <div
+          class="col-12 col-sm-12 col-md-4 card-deck"
+          v-for="(post, index) in posts"
+          :key="index"
+        >
+          <div class="card mb-3 bg-dark profile-post">
+            <div class="card-body" style="padding: 0;">
               <img
                 src="https://cdn0000.airklass.com/classes/340/new_cover-w1920-h1080?v=-1153120733"
                 class="card-img"
+                @click="getdetail(post.pid)"
                 style="height: 15rem;"
                 alt
               />
             </div>
             <div class="col-md-12">
-              <div class="card-body" style="padding: 20px 0px;" >
+              <div class="card-body" style="padding: 20px 0px;">
                 <h5
                   class="card-title"
+                  @click="getdetail(post.pid)"
                   style="font-size: 1.2rem; text-align: left; margin-bottom: 1rem; text-overflow:ellipsis;overflow: hidden;white-space: nowrap;"
                 >{{post.title}}</h5>
                 <div class="text">
@@ -57,30 +75,36 @@
                     style="font-size: 1rem; text-align: left; text-overflow:ellipsis;overflow: hidden;white-space: nowrap;"
                   >가격 : {{post.price}}</p>
                   <div class="d-flex justify-content-end mt-0">
-                    <i
-                      class="fas fa-bookmark select-button mr-2"
-                      style="text-align: right; font-size:20px;"
-                    ></i>
-                    <i
-                      class="fas fa-heart select-button like-button"
-                      style="text-align: right; font-size: 20px;"
-                    ></i>
+                    <div id="heart" class="heart" @click="registlike(post.pid)">
+                      <i
+                        v-if="check(post.pid)"
+                        class="fas fa-heart select-button mr-2"
+                        style="text-align: right; font-size: 20px; color:red"
+                      ></i>
+                      <i
+                        v-if="!check(post.pid)"
+                        class="far fa-heart mr-2"
+                        style="text-align: right; font-size: 20px; "
+                      ></i>
+
+                      {{post.likecnt}}
+                    </div>
                   </div>
                 </div>
               </div>
-              </div>
+            </div>
           </div>
-      </div>
+        </div>
       </div>
     </div>
   </div>
 </template>
  
 <script>
-import '../../assets/css/postlist.css'
+import "../../assets/css/postlist.css";
 import axios from "axios";
 
-const baseURL = "http://localhost:8080/post";
+const baseURL = "http://localhost:8080";
 
 // const likeButtons = document.querySelectorAll('.like-button');
 
@@ -95,16 +119,28 @@ export default {
         location: "",
         imgurl: "",
         price: "",
+        likecnt: "",
       },
       key: "",
       word: "",
+      email: "",
+      postLike: [],
+      cntLike: [],
     };
   },
   methods: {
-    gocreate(){
+    check(pid) {
+      for (var i = 0; i < this.postLike.length; i++) {
+        if (this.postLike[i] == pid) {
+          return true;
+        }
+      }
+      return false;
+    },
+    gocreate() {
       this.$router.push({
-        name: "PostCreate"
-      })
+        name: "PostCreate",
+      });
     },
     getdetail(pid) {
       this.$router.push({
@@ -115,7 +151,7 @@ export default {
     search() {
       if (this.key == "all" || this.key == "") {
         axios
-          .get(`${baseURL}/list/`)
+          .get(`${baseURL}/post/list`)
           .then((res) => {
             this.posts = res.data;
           })
@@ -127,7 +163,7 @@ export default {
           alert("검색어를 입력하세요.");
         } else {
           axios
-            .get(`${baseURL}/search/${this.key}/${this.word}`)
+            .get(`${baseURL}/post/search/${this.key}/${this.word}`)
             .then((res) => {
               this.posts = res.data;
             })
@@ -138,18 +174,54 @@ export default {
       }
     },
     createpost() {
-      this.$router.push('/postcreate')
+      this.$router.push("/postcreate");
+    },
+    registlike(pid) {
+      axios
+        .get(`${baseURL}/like/registDelete/${this.email}/${pid}`)
+        .then((res) => {
+          this.checklike();
+          this.init();
+        })
+        .catch((err) => {
+          alert(err);
+        });
+    },
+    checklike() {
+      axios
+        .get(`${baseURL}/like/check/${this.email}`)
+        .then((res) => {
+          this.postLike = res.data;
+        })
+        .catch((err) => {
+          alert(err);
+        });
+    },
+    cntlike() {
+      axios
+        .get(`${baseURL}/like/cnt`)
+        .then((res) => {
+          this.cntLike = res.data;
+        })
+        .catch((err) => {
+          alert(err);
+        });
+    },
+    init() {
+      axios
+        .get(`${baseURL}/post/list/`)
+        .then((res) => {
+          this.posts = res.data;
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     },
   },
   created() {
-    axios
-      .get(`${baseURL}/list/`)
-      .then((res) => {
-        this.posts = res.data;
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    this.email = this.$cookies.get("User");
+    this.init();
+    this.checklike();
   },
 };
 </script>
@@ -172,6 +244,9 @@ export default {
 }
 .postlist {
   cursor: pointer;
+}
+.card-title, .card-img, .heart{
+  cursor:pointer;
 }
 /* listhover:hover {
   color: burlywood;

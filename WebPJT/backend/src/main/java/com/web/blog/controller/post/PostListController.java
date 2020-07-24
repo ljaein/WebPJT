@@ -44,12 +44,12 @@ public class PostListController {
         if(key.equals("all")){
             post = postDao.findByFlagOrderByCreateDateDesc(1);
         }else if(key.equals("title")){
-            post = postDao.findByTitleLike("%"+word+"%");
+            post = postDao.findByTitleLikeOrderByCreateDateDesc("%"+word+"%");
         }else if(key.equals("activity")){
-            post = postDao.findByActivityLike("%"+word+"%");
+            post = postDao.findByActivityLikeOrderByCreateDateDesc("%"+word+"%");
         }else if(key.equals("price")){
             int price = Integer.parseInt(word);
-            post = postDao.findByPriceLessThanEqual(price);
+            post = postDao.findByPriceLessThanEqualOrderByCreateDateDesc(price);
         }
         return post;
     }
@@ -59,34 +59,17 @@ public class PostListController {
     public List<PostList> selectAll() throws SQLException, IOException {
         List<PostList> temp = new LinkedList<>();
         temp = postDao.findByFlagOrderByCreateDateDesc(1);
-        System.out.println(temp);
         return temp;
     }
 
-    @GetMapping("/searchAct/{word}")
-    @ApiOperation(value = "포스트 검색(액티비티)")
-    public List<PostList> searchAct(@PathVariable String word) throws SQLException, IOException {
-        System.out.println(word);
-        List<PostList> post = new LinkedList<>();
-        post = postDao.findByActivityLike("%"+word+"%");
-        return post;
-    }
-
-    @GetMapping("/searchPrice/{word}")
-    @ApiOperation(value = "포스트 검색(가격)")
-    public List<PostList> searchPrice(@PathVariable String word) throws SQLException, IOException {
-        int price = Integer.parseInt(word);
-        List<PostList> post = new LinkedList<>();
-        post = postDao.findByPriceLessThanEqual(price);
-        return post;
-    }
+   
 
     @GetMapping("/detail/{pid}")
     @ApiOperation(value = "포스트 상세정보")
     public Object selectDetail(@PathVariable int pid) throws SQLException, IOException {
         PostList post = postDao.findByPid(pid);
         if(post!=null){
-            System.out.println(post);
+            // System.out.println(post);
             return post;
         }else {
             return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
@@ -113,7 +96,7 @@ public class PostListController {
                 newTemp.setActivity(request.getActivity());
                 LocalDateTime time = LocalDateTime.now();
                 newTemp.setCreateDate(time);
-                System.out.println(newTemp);
+                // System.out.println(newTemp);
                 postDao.save(newTemp);
                 return newTemp;
             } else {

@@ -36,7 +36,7 @@ public class User {
     private String nickname;
     private String name;
     private String imgurl;
-
+    private String checkType;
     @Column(insertable = false, updatable = false)
     private LocalDateTime createDate;
 
