@@ -6,7 +6,7 @@
       placeholder="Please write modify content"
       aria-label="Recipient's username"
       aria-describedby="button-addon2"
-      v-model="comment.content"
+      v-model="updateComment.content"
     />
     <div class="input-group-append">
       <button class="btn btn-outline-primary" type="button" id="button-addon2" @click="commentUpdate">수정</button>
@@ -20,13 +20,17 @@ import axios from 'axios'
 const baseURL = "http://localhost:8080";
 
 export default {
+  data: function() {
+    return {
+      updateComment: []
+    }
+  },
   props: {
     comment: Object,
   },
   methods: {
     commentUpdate() {
-      // console.log(this.comment)
-      axios.put(`${baseURL}/reply/modify`,this.comment)
+      axios.put(`${baseURL}/reply/modify`,this.updateComment)
         .then((response) => {
           console.log(response.data)
           this.$router.go()
@@ -34,6 +38,18 @@ export default {
           console.log(error.response.data)
         })
     },
+    fetchComment() {
+      axios.get(`${baseURL}/reply/rlist/${this.$route.params.ID}/${this.comment.rid}`)
+        .then((response) => {
+          this.updateComment = response.data[0]
+          // console.log(this.updateComment)
+        }).catch((error) => {
+          console.log(error.response.data)
+        })
+    },
+  },
+  created(){
+    this.fetchComment()
   },
 }
 </script>
