@@ -10,4 +10,5 @@ public interface LikeListDao extends JpaRepository<LikeList, String> {
     public LikeList findByNo(int no);
     public List<LikeList> findByEmail(String email);
     public LikeList findByEmailAndPid(String email, int pid);
+    public List<LikeList> findByPid(int pid);
 }

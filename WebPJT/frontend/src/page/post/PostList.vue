@@ -27,8 +27,8 @@
             aria-expanded="false"
             v-model="key"
           >
-            <option value="all">All</option>
             <div role="separator" class="dropdown-divider"></div>
+            <option value="all">All</option>
             <option value="title">Title</option>
             <option value="activity">Activity</option>
             <option value="price">Price</option>
@@ -131,6 +131,7 @@ export default {
       word: "",
       email: "",
       postLike: [],
+      cntLike: [],
     };
   },
   methods: {
@@ -186,6 +187,7 @@ export default {
         .get(`${baseURL}/like/registDelete/${this.email}/${pid}`)
         .then((res) => {
           this.checklike();
+          this.init();
         })
         .catch((err) => {
           alert(err);
@@ -201,17 +203,30 @@ export default {
           alert(err);
         });
     },
+    cntlike() {
+      axios
+        .get(`${baseURL}/like/cnt`)
+        .then((res) => {
+          this.cntLike = res.data;
+        })
+        .catch((err) => {
+          alert(err);
+        });
+    },
+    init() {
+      axios
+        .get(`${baseURL}/post/list/`)
+        .then((res) => {
+          this.posts = res.data;
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
   },
   created() {
     this.email = this.$cookies.get("User");
-    axios
-      .get(`${baseURL}/post/list/`)
-      .then((res) => {
-        this.posts = res.data;
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    this.init();
     this.checklike();
   },
 };
@@ -235,6 +250,9 @@ export default {
 }
 .postlist {
   cursor: pointer;
+}
+.card-title, .card-img, .heart{
+  cursor:pointer;
 }
 /* listhover:hover {
   color: burlywood;

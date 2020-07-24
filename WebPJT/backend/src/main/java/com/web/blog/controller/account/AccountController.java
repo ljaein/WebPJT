@@ -112,6 +112,7 @@ public class AccountController {
         user.setName(request.getName());
         user.setPassword(request.getPassword());
         user.setNickname(request.getNickname());
+        user.setCheckType(request.getCheckType());
         userDao.save(user);
 
         try {
