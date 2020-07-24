@@ -1,16 +1,17 @@
 .post {
-    margin-top: 7rem;
-    background-color: rgb(31,31,31) !important;
-    font-weight: bold;
+    margin-top: 4rem;
+    /* font-weight: bold; */
     text-decoration: none !important;
 }
 
+.form-control{
+    border: 1px solid gray !important;
+}
+
 .card{
-    color: white;
-    border-radius: 15px;
+    border: 0;
 }
 
 .card-body img{
-    border-top-left-radius: 15px;
-    border-top-right-radius: 15px;
+    border-radius: 5px;
 }
