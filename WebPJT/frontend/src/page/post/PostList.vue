@@ -1,6 +1,5 @@
 <template>
   <div class="post">
-    <hr class="hr-line">
     <!-- 
     <select v-model="key">
       <option value="all">전체검색</option>
@@ -22,7 +21,7 @@
         <div class="input-group-prepend">
           <select
             class="btn dropdown-toggle text-black"
-            style="border: 1px solid gray;"
+            style="border: 1px solid gray; z-index: 1;"
             aria-haspopup="true"
             aria-expanded="false"
             v-model="key"
@@ -45,7 +44,7 @@
       </div>
 
       <div class="d-flex justify-content-end">
-        <a type="button" class="btn btn-outline-light form-check mb-2" href="#" @click="gocreate">
+        <a type="button" class="btn btn-outline form-check mb-2" @click="gocreate">
           <i class="fas fa-pen"></i> 상품 등록
         </a>
       </div>
@@ -84,6 +83,7 @@
                     style="font-size: 1rem; text-align: left; text-overflow:ellipsis;overflow: hidden;white-space: nowrap;"
                   >가격 : {{post.price}}</p>
                   <div id="heart" @click="registlike(post.pid)">
+                  {{post.likecnt}}
                   <i
                     v-if="check(post.pid)"
                     class="fas fa-heart select-button like-button"
@@ -94,7 +94,6 @@
                     class="far fa-heart"
                     style="text-align: right; font-size: 20px;"
                   ></i>
-                  {{post.likecnt}}
               </div>
                 </div>
               </div>
@@ -183,9 +182,6 @@ export default {
             });
         }
       }
-    },
-    createpost() {
-      this.$router.push("/postcreate");
     },
     registlike(pid) {
       axios

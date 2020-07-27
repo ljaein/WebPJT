@@ -64,8 +64,7 @@ export default new Router({
         {
             path: '/params',
             component: Params,
-            name: 'Params',
-            props: true
+            name: 'Params'
         },
 
         // 포스트
@@ -125,7 +124,7 @@ export default new Router({
         // kakao login
         {
             path: '/msg/kakao',
-            component : Kakao
+            component: Kakao
         }
 
     ]
