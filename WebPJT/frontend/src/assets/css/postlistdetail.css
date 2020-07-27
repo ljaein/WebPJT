@@ -1,0 +1,18 @@
+.card img{
+    border-radius: 5px;
+}
+
+.nav-info{
+    background-color: white;
+    border-bottom: 0.5px solid rgb(218,218,218);
+}
+
+.info-link{
+    color: black;
+    font-weight: bold;
+}
+
+h4{
+    margin-bottom: 1rem;
+    font-weight: bold;
+}

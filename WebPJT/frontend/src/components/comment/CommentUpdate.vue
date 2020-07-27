@@ -9,7 +9,7 @@
       v-model="updateComment.content"
     />
     <div class="input-group-append">
-      <button class="btn btn-outline-primary" type="button" id="button-addon2" @click="commentUpdate">수정</button>
+      <button class="btn btn-outline-success" type="button" id="button-addon2" @click="commentUpdate">수정</button>
     </div>
   </div>
 </template>

@@ -1,5 +1,5 @@
 <template>
-  <div class="container p-5 taeduri">
+  <div class="container taeduri col-md-6">
     <div class="form-group">
       <label class="d-flex">IMG_URL</label>
       <input type="text" class="form-control" id="imgurl" v-model="PostCreate.imgurl">
@@ -45,8 +45,11 @@
       <input type="text" class="form-control" id="activity" v-model="PostCreate.activity">
       <small class="form-text text-muted d-flex">활동명을 입력해주세요.</small>
     </div>
-    <button type="submit" class="btn btn-primary d-flex justify-content-start" @click="regist">등록</button>
-    <button type="submit" class="btn btn-primary d-flex justify-content-start" @click="tempSave">임시저장</button>
+    <!-- <a type="button" class="btn btn-outline form-check mb-2" href="#" @click="gocreate()"> -->
+    <div class="d-flex justify-content-end mb-5" >
+    <button type="submit" class="btn btn-outline mr-1" style="font-size: 1rem; color: gray;" @click="tempSave">저장</button>
+    <button type="submit" class="btn btn-outline pr-0" style="font-size: 1.1rem;" @click="regist"><i class="fas fa-pen mr-1"></i>등록</button>
+    </div>
   </div>
 </template>
 
@@ -99,9 +102,3 @@ export default {
   },
 }
 </script>
-
-<style>
-.taeduri {
-  border: 2px solid black;
-}
-</style>

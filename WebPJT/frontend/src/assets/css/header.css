@@ -5,9 +5,10 @@
     color: black !important;
     font-weight: bold;
     text-decoration: none !important;
+    padding-top: 1rem;
     padding-bottom: 0;
     margin: auto;
-    border-bottom: 0.5px solid gray !important;
+    border-bottom: 0.5px solid rgb(218, 218, 218) !important;
 }
 
 .nav-title{

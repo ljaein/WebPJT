@@ -1,9 +1,9 @@
 <template>
-  <div class="container" style="margin-top: 100px">
+  <div class="container col-md-7" style="margin-top: 100px">
     <div class="column">
       <div class="card mt-5 mb-3" style="max-width: 100%;">
         <div class="row no-gutters">
-          <div class="col-md-4">
+          <div class="col-md-5">
             <img
               src="https://cdn0000.airklass.com/classes/340/new_cover-w1920-h1080?v=-1153120733"
               class="card-img"
@@ -11,44 +11,59 @@
               alt
             />
           </div>
-          <div class="col-md-8">
-            <div class="card-body">
-              <h5
+          <div class="col-md-7">
+            <div class="card-body" style="padding: 0 0 0 20px">
+              <!-- <h5
                 class="card-title"
                 style="font-size: 2.2rem; text-align: center; margin-bottom: 1rem;
                 text-overflow:ellipsis;overflow: hidden;white-space: nowrap;"
-              > {{post.title}}</h5>
+              > {{post.title}}</h5> -->
               <div class="text">
+                <div class="d-flex justify-content-between" >
                 <p
                   class="card-text"
-                  style="font-size: 1.1rem; text-align: left; text-overflow:ellipsis;overflow: hidden;white-space: nowrap;"
-                >액티비티 : {{post.activity}}</p>
+                  style="font-size: 1rem; color: rgb(168, 168, 168); text-align: left; text-overflow:ellipsis;overflow: hidden;white-space: nowrap;"
+                >[{{post.location}}]{{post.sdate}}~{{post.edate}}</p>
+                  <a href="javascript:;" @click="test()" id="kakao-link-btn">  
+                <img src="//developers.kakao.com/assets/img/about/logos/kakaolink/kakaolink_btn_small.png" width="28px" />
+                  </a>
+                </div>
+                <p
+                  class="card-text font-weight-bold"
+                  style="font-size: 1.5rem; text-align: left; text-overflow:ellipsis;overflow: hidden;white-space: nowrap;"
+                >[{{post.activity}}]{{post.title}}</p>
+                <!-- <p
+                  class="card-text"
+                  style="font-size: 1rem; text-align: left; text-overflow:ellipsis;overflow: hidden;white-space: nowrap;"
+                >액티비티 : {{post.activity}}</p> -->
+                <!-- <p
+                  class="card-text"
+                  style="font-size: 1rem; text-align: left; text-overflow:ellipsis;overflow: hidden;white-space: nowrap;"
+                >{{post.location}}</p> -->
                 <p
                   class="card-text"
-                  style="font-size: 1.1rem; text-align: left; text-overflow:ellipsis;overflow: hidden;white-space: nowrap;"
-                >지역 : {{post.location}}</p>
-                <p
-                  class="card-text"
-                  style="font-size: 1.1rem; text-align: left; margin-bottom: 5px;
+                  style="font-size: 1rem; color: rgb(168, 168, 168); text-decoration:line-through; text-align: left; margin-bottom: 5px;
                   text-overflow:ellipsis;overflow: hidden;white-space: nowrap;"
-                >가격 : {{post.price}}원 </p>
-                <div class="d-flex justify-content-end mr-0 mt-0">
+                >{{post.price}}</p>
+                <p
+                  class="card-text font-weight-bold"
+                  style="font-size: 1.5rem; text-align: left; margin-bottom: 5px;
+                  text-overflow:ellipsis;overflow: hidden;white-space: nowrap;
+                  border-bottom: 0.5px solid rgb(218,218,218);"
+                >{{post.price*0.95}} 원</p>
+                <div class="d-flex justify-content-end mr-0 mt-3 mb-3">
                     <div class="d-flex justify-content-start">
                       <i
                           class="fas fa-heart select-button mr-2"
                           style="text-align: right; font-size: 20px; color:red"
                         ></i> {{post.likecnt}}명이 좋아요를 눌렀습니다.
                     </div>
-                        <div>
-        
-                           <a href="javascript:;" @click="test()" id="kakao-link-btn">
-                             
-                          <img src="//developers.kakao.com/assets/img/about/logos/kakaolink/kakaolink_btn_small.png" width="50px" />
-                           </a>
-                          </div>
-                  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#BasketModal">장바구니</button>
+
+                </div>
+                <div class="d-flex justify-content-end">
+                  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#BasketModal"><i class="fas fa-shopping-basket mr-2"></i>장바구니</button>
                   <BasketModal />
-                  <button class="btn btn-primary">구매하기</button>
+                  <button class="btn btn-danger"><i class="far fa-hand-point-up mr-2"></i>바로구매</button>
                 </div>
               </div>
             </div>
@@ -56,19 +71,19 @@
         </div>
       </div>
     </div>
-    <nav id="navbar-example2" class="navbar navbar-light bg-light">
+    <nav id="navbar-example2" class="navbar nav-info">
       <ul class="nav justify-content-between" style="width:100%;">
         <li class="nav-item">
-          <a class="nav-link" href="#item-info" @click="goinfo()">상세 정보</a>
+          <a class="nav-link info-link" href="#item-info" @click="goinfo()">상세 정보</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#review" @click="goinfo()">후기</a>
+          <a class="nav-link info-link" href="#store-info" @click="goinfo()">업체 정보</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#store-info" @click="goinfo()">업체 정보</a>
+          <a class="nav-link info-link" href="#review" @click="goinfo()">후기</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#qna" @click="goinfo()">Q&A</a>
+          <a class="nav-link info-link" href="#qna" @click="goinfo()">Q&A</a>
         </li>
       </ul>
     </nav>
@@ -89,21 +104,22 @@
     </div>
 
     <hr>
-    <!-- 댓글 작성 -->
-    <CommentInput v-if="this.$cookies.get('User')" @create-comment="createcomment" />
+
 
     <!-- 댓글 List -->
-    <hr v-if="this.$cookies.get('User')">
-    <div class="d-flex bg-white">댓글 수 : {{receiveComment.length}}</div>
+    <br v-if="this.$cookies.get('User')">
+    <div class="d-flex bg-white">Comment : {{receiveComment.length}}</div>
     <CommentList v-for="comment in receiveComment" :key="comment.rid" :comment="comment" @comment-delete="commentDelete"/>
+
+    <!-- 댓글 작성 -->
+    <CommentInput class="mt-3" v-if="this.$cookies.get('User')" @create-comment="createcomment" />
   
     
       
       <!-- 글 수정 삭제 -->
-      <hr>
-      <div class="d-flex justify-content-end">
-        <button class="btn btn-success" @click="goModify">글 수정하기</button>
-        <button class="btn btn-danger" @click="goDelete">글 삭제하기</button>
+      <div class="d-flex justify-content-end mt-3 mb-3">
+        <button class="btn btn-success" @click="goModify"><i class="far fa-edit mr-2"></i>수정하기</button>
+        <button class="btn btn-danger" @click="goDelete"><i class="far fa-trash-alt mr-2"></i>삭제하기</button>
       </div>
       
   </div>
@@ -111,6 +127,7 @@
 
 <script>
 import axios from "axios";
+import '../../assets/css/postlistdetail.css'
 import PostUpdateVue from './PostUpdate.vue';
 import BasketModal from '../../components/modal/BasketModal.vue'
 
