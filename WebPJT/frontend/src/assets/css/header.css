@@ -1,4 +1,4 @@
-.header-nav{
+.header-nav {
     position: fixed;
     background-color: white;
     z-index: 2 !important;
@@ -11,25 +11,25 @@
     border-bottom: 0.5px solid rgb(218, 218, 218) !important;
 }
 
-.nav-title{
+.nav-title {
     color: red;
     font-size: 1.5rem;
     text-decoration: none !important;
 }
 
-.header-link{
+.header-link {
     font-size: 0.8rem;
     color: black !important;
 }
 
-
-.dropdown-menu{
+.dropdown-menu {
     background-color: rgb(236, 236, 236) !important;
     width: 2rem;
 }
 
-.dropdown-item{
+.dropdown-item {
     color: black;
+    cursor: pointer;
 }
 
 .login {
