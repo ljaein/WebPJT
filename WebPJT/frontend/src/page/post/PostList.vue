@@ -180,9 +180,6 @@ export default {
         }
       }
     },
-    createpost() {
-      this.$router.push("/postcreate");
-    },
     registlike(pid) {
       axios
         .get(`${baseURL}/like/registDelete/${this.email}/${pid}`)
