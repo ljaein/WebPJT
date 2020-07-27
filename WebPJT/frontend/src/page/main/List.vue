@@ -1,6 +1,6 @@
 <template>
-  <div class="container">
-    <div id="carouselExampleControls" class="carousel slide col-md-9" style="margin: auto;" data-ride="carousel">
+  <div class="container col-md-7">
+    <div id="carouselExampleControls" class="carousel slide" style="margin: auto;" data-ride="carousel">
       <div class="carousel-inner">
         <div class="carousel-item active">
           <img src="https://t2.daumcdn.net/thumb/R720x0/?fname=http://t1.daumcdn.net/brunch/service/user/2OhT/image/O8cC0T4PchZkbqSc09Fvv8kVHOc.jpg" class="d-block w-100" alt="paragliding">
