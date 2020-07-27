@@ -3,7 +3,8 @@
     <table class="table" >
       <tr>
         <td>제목</td>
-        <td>작성일자</td>
+        <td>작성자</td>
+        <td>작성일시</td>
         </tr>
       <tr v-for="(temp, index) in temps" :key="index">
         <td>
@@ -12,6 +13,7 @@
             class="btn--text"
           >{{temp.title}}</router-link>
         </td>
+        <td>{{email}}</td>
         <td>{{temp.createDate}}</td>
       </tr>
     </table>
