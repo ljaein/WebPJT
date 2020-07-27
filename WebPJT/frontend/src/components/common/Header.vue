@@ -117,8 +117,8 @@ export default {
       this.$router.go();
     },
     info: function() {
-      this.$router.push('/user/info')
-      this.$router.go();
+      this.$router.push("/user/info/");
+      // this.$router.go();
     },
     goPost: function() {
       this.$router.push("/posts/");
