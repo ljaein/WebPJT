@@ -74,7 +74,10 @@ public class LikeListController {
                 list.setEmail(email);
                 likeListDao.save(list);
                 PostList post = postListDao.findByPid(Integer.parseInt(pid));
-                post.setLikecnt(post.getLikecnt()+1);
+                post.setLikecnt(post.getLikecnt() + 1);
+                post.setSdate(post.getSdate().plusDays(1));
+                post.setEdate(post.getEdate().plusDays(1));
+
                 postListDao.save(post);
                 // return list;
                 return "regist";
@@ -85,7 +88,9 @@ public class LikeListController {
             try {
                 likeListDao.delete(likeListDao.findByNo(like.getNo()));
                 PostList post = postListDao.findByPid(Integer.parseInt(pid));
-                post.setLikecnt(post.getLikecnt()-1);
+                post.setLikecnt(post.getLikecnt() - 1);
+                post.setSdate(post.getSdate().plusDays(1));
+                post.setEdate(post.getEdate().plusDays(1));
                 postListDao.save(post);
                 // return like;
                 return "del";

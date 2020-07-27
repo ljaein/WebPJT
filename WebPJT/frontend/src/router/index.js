@@ -21,6 +21,8 @@ import PostList from '../page/post/PostList.vue'
 import PostListDetail from '../page/post/PostListDetail.vue'
 import PostCreate from '../page/post/PostCreate.vue'
 import PostUpdate from '../page/post/PostUpdate.vue'
+import PostTemp from '../page/post/PostTemp.vue'
+import PostTempDetail from '../page/post/PostTempDetail.vue'
 
 // activity
 import Ground from '../page/activity/Ground.vue'
@@ -86,6 +88,16 @@ export default new Router({
             path: '/posts/:ID/postupdate/',
             name: 'PostUpdate',
             component: PostUpdate,
+        },
+        {
+            path: '/posttemp',
+            name: 'PostTemp',
+            component: PostTemp,
+        },
+        {
+            path: '/posts/:ID/posttempdetail',
+            name: 'PostTempDetail',
+            component: PostTempDetail,
         },
 
         //activity

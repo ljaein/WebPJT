@@ -60,10 +60,10 @@
               <img
                 src="https://t1.daumcdn.net/cfile/tistory/99BB93335A03C69C30"
                 class="card-img"
-                @click="getdetail(post.pid)"
+                
                 style="height:8rem"
               />
-              <div class="card-img-overlay" style="padding:10px; text-align:right; font-weight:bold;">
+              <div class="card-img-overlay" @click="getdetail(post.pid)" style="padding:10px; text-align:right; font-weight:bold;">
                 <p>{{post.location}}</p>
             </div>
             <div class="col-md-12 p-0">
@@ -93,6 +93,7 @@
                     class="far fa-heart"
                     style="text-align: right; font-size: 20px;"
                   ></i>
+                  {{post.likecnt}}
               </div>
                 </div>
               </div>
@@ -126,6 +127,7 @@ export default {
         price: "",
         sdate:"",
         edate:"",
+        likecnt:""
       },
       key: "",
       word: "",
@@ -251,7 +253,7 @@ export default {
 .postlist {
   cursor: pointer;
 }
-.card-title, .card-img, .heart{
+.card-title, .card-img-overlay{
   cursor:pointer;
 }
 /* listhover:hover {

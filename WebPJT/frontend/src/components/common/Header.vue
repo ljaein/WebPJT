@@ -118,7 +118,8 @@ export default {
       this.$router.go();
     },
     info: function() {
-      this.$router.push("/user/info/");
+      this.$router.push('/user/info/').catch(()=>{});
+      this.$router.go();
     },
     goPost: function() {
       this.$router.push("/posts/");

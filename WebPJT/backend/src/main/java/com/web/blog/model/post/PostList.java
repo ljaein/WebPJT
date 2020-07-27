@@ -8,6 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
@@ -37,7 +38,5 @@ public class PostList {
     private int flag;
     private String activity;
     private int likecnt;
-
-    @JsonIgnore
     private LocalDateTime createDate;
 }
