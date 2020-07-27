@@ -27,7 +27,8 @@
             v-model="key"
           >
             <div role="separator" class="dropdown-divider"></div>
-            <option value="all">All</option>
+            <option value="">All</option>
+            <!-- <option value="all">All</option> -->
             <option value="title">Title</option>
             <option value="activity">Activity</option>
             <option value="price">Price</option>
@@ -147,7 +148,8 @@ export default {
     gocreate() {
       this.$router.push({
         name: "PostCreate",
-      });
+      })
+      this.$router.go();
     },
     getdetail(pid) {
       this.$router.push({
@@ -156,11 +158,12 @@ export default {
       });
     },
     search() {
-      if (this.key == "all" || this.key == "") {
+      if (this.key == "") {
         axios
           .get(`${baseURL}/post/list`)
           .then((res) => {
             this.posts = res.data;
+            this.word = "";
           })
           .catch((err) => {
             console.log(err);
@@ -173,6 +176,7 @@ export default {
             .get(`${baseURL}/post/search/${this.key}/${this.word}`)
             .then((res) => {
               this.posts = res.data;
+              this.word = "";
             })
             .catch((err) => {
               alert("올바른 값을 입력하세요.");

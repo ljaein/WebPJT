@@ -41,7 +41,7 @@ public class PostListController {
     @ApiOperation(value = "검색")
     public List<PostList> search(@PathVariable String key, @PathVariable String word) throws SQLException, IOException {
         List<PostList> post = new LinkedList<>();
-        if(key.equals("all")){
+        if(key.equals("")){
             post = postDao.findByFlagOrderByCreateDateDesc(1);
         }else if(key.equals("title")){
             post = postDao.findByTitleLikeOrderByCreateDateDesc("%"+word+"%");
