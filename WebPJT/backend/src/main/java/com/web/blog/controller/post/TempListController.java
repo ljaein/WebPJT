@@ -35,11 +35,11 @@ public class TempListController {
     @Autowired
     PostListDao postDao;
 
-    @GetMapping("/list")
+    @GetMapping("/list/{email}")
     @ApiOperation(value = "임시저장 리스트")
-    public List<PostList> selectAll() throws SQLException, IOException {
+    public List<PostList> selectAll(@PathVariable String email) throws SQLException, IOException {
         List<PostList> temp = new LinkedList<>();
-        temp = postDao.findByFlag(0);
+        temp = postDao.findByEmailAndFlagOrderByCreateDateDesc(email,0);
         System.out.println(temp);
         return temp;
     }

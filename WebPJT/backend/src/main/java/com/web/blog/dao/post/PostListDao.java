@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface PostListDao extends JpaRepository<PostList, String> {
     List<PostList> findByEmail(String email);
+    List<PostList> findByEmailAndFlagOrderByCreateDateDesc(String email, int flag);
     PostList findByPid(int pid);
     List<PostList> findByFlag(int flag);
     List<PostList> findByFlagOrderByCreateDateDesc(int flag);

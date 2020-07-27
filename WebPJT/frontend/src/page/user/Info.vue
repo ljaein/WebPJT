@@ -1,5 +1,5 @@
 <template>
-  <div class="user" id="join">
+  <div class="container" id="join">
     <div class="wrapC table">
       <div class="middle">
         <h1 v-if="validated == 1">회원정보 조회</h1>
@@ -135,6 +135,9 @@ export default {
     }
   },
   methods: {
+    templist(){
+      this.$router.push("/posttemp");
+    },
     checkForm() {
       if (
         this.password.length > 0 &&
@@ -159,7 +162,6 @@ export default {
           alert("탈퇴 완료");
           this.$cookies.remove("Auth-Token");
           this.$cookies.remove("User");
-          this.$cookies.remove("imgurl");
           this.$router.push("/");
           this.$router.go();
         })
