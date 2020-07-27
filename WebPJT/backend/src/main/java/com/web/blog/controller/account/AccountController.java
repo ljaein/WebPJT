@@ -69,7 +69,7 @@ public class AccountController {
             if (userOpt.isPresent()) {
                 String token = jwtService.createLoginToken(userOpt.get());
                 req.getSession().setAttribute("login_user", jwtService.getUser(token));
-                 String uemail = jwtService.getUser(token);
+                String uemail = jwtService.getUser(token);
                 // res.setHeader("auth-token", token);
                 // System.out.println(jwtService.getUser(req.getHeader("auth-token")));
 
@@ -186,15 +186,17 @@ public class AccountController {
         return user.getNickname();
     }
 
-    @PutMapping("/modify")
+    @PutMapping("/modify/{pwvalidated}")
     @ApiOperation(value = "회원정보수정")
-    public Object modify(@Valid @RequestBody SignupRequest request) throws SQLException, IOException {
+    public Object modify(@Valid @RequestBody User request, @PathVariable int pwvalidated)
+            throws SQLException, IOException {
         try {
             Optional<User> userOpt = userDao.findUserByEmail(request.getEmail());
             if (userOpt.isPresent()) {
                 User newUser = userOpt.get();
-                newUser.setName(request.getName());
-                newUser.setPassword(request.getPassword());
+                if (pwvalidated == 1) {
+                    newUser.setPassword(request.getPassword());
+                }
                 newUser.setNickname(request.getNickname());
                 newUser.setImgurl(request.getImgurl());
                 userDao.save(newUser);

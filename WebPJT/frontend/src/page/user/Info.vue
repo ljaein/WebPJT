@@ -45,8 +45,9 @@
                 type="text"
               />
             </div>
-
-            <div class="form-group" align="left" v-if="validated==0">
+            <button @click="passwordModify" v-if="pwvalidated==0" class="btn btn-link btn-sm">비밀번호 변경</button>
+            <button @click="cancel" v-if="pwvalidated==1" class="btn btn-link btn-sm mb-2">비밀번호 변경 취소</button>
+            <div class="form-group" align="left" v-if="pwvalidated==1">
               <label for="pw">비밀번호</label>
               <input
                 class="form-control mb-3"
@@ -61,7 +62,7 @@
               <div class="error-text" v-if="error.password">{{error.password}}</div>
             </div>
 
-            <div class="form-group" align="left" v-if="validated==0">
+            <div class="form-group" align="left" v-if="pwvalidated==1">
               <label for="name">비밀번호 확인</label>
               <input
                 class="form-control mb-3"
@@ -135,6 +136,12 @@ export default {
     }
   },
   methods: {
+    passwordModify(){
+      this.pwvalidated = 1;
+    },
+    cancel(){
+      this.pwvalidated = 0;
+    },
     templist(){
       this.$router.push("/posttemp");
     },
@@ -170,7 +177,7 @@ export default {
         });
     },
     modify() {
-      let { email, nickname, password, name, imgurl } = this;
+      let { email, nickname, password, name, imgurl} = this;
       let data = {
         email,
         nickname,
@@ -179,7 +186,7 @@ export default {
         imgurl
       };
       axios
-        .put(`${baseURL}/modify`, data)
+        .put(`${baseURL}/modify/${this.pwvalidated}`, data)
         .then(response => {
           alert("수정 완료");
           this.$router.push("/user/info");
@@ -194,10 +201,20 @@ export default {
       this.$refs.imageInput.click();
     },
     onChangeImages(e) {
-      console.log(e.target.files);
       const file = e.target.files[0];
-      this.imgurl = URL.createObjectURL(file);
-      // this.$cookies.set("imgurl",this.imgurl);
+      var img = new Image(file);
+      img = e.target.files[0];
+      this.createImage(img);
+      // this.imgurl = URL.createObjectURL(file);
+    },
+    createImage(file){
+      this.imgurl = new Image();
+      var reader = new FileReader();
+      reader.onload = e =>{
+        this.imgurl = e.target.result;
+        console.log(this.imgurl);
+      };
+      reader.readAsDataURL(file);
     }
   },
   data: () => {
@@ -216,7 +233,8 @@ export default {
       passwordType: "password",
       passwordConfirmType: "password",
       imgurl: null,
-      validated: 1
+      validated: 1,
+      pwvalidated:0
     };
   }
 };

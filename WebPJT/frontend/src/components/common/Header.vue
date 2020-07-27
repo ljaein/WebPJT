@@ -118,7 +118,7 @@ export default {
     },
     info: function() {
       this.$router.push("/user/info/");
-      // this.$router.go();
+      this.$router.go();
     },
     goPost: function() {
       this.$router.push("/posts/");
@@ -146,7 +146,7 @@ export default {
     },
     waterAct: function() {
       this.$router.push("/water/");
-      // this.$router.go();
+      this.$router.go();
     },
     skyAct: function() {
       this.$router.push("/sky/");
