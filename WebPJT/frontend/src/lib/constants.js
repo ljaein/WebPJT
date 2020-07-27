@@ -4,17 +4,17 @@ export default {
     LS_KEY: {
         USER_TOKEN: 'userToken',
     },
-    ERROR: { 
-        FRONT_ERROR: 'FE00' 
+    ERROR: {
+        FRONT_ERROR: 'FE00'
     },
     URL_TYPE: {
         USER: {
             LOGIN: 'login',
-            JOIN: 'join', 
+            JOIN: 'join',
+            INFO: 'info',
         },
         POST: {
-            MAIN : "main",
+            MAIN: "main",
         },
     }
 }
-

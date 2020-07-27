@@ -157,7 +157,7 @@ export default {
     },
     deluser() {
       axios
-        .delete(`${baseURL}/delete/${this.$cookies.get("User").email}`)
+        .delete(`${baseURL}/delete/${this.$cookies.get("User")}`)
         .then(response => {
           alert("탈퇴 완료");
           this.$cookies.remove("Auth-Token");
