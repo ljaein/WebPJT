@@ -8,7 +8,7 @@
           <div class="card col-sm-12 mt-1" align="left" >
             <input ref="imageInput" type="file" hidden @change="onChangeImages" />
             <img v-if="this.imgurl" :src="this.imgurl" />
-            <button type="button" @click="onClickImageUpload" v-if="validated == 0">이미지 업로드</button>
+            <button type="button" class = "" @click="onClickImageUpload" v-if="validated == 0">이미지 업로드</button>
           </div>
         <div class="card col-sm-12 mt-1">
           
@@ -212,7 +212,6 @@ export default {
       var reader = new FileReader();
       reader.onload = e =>{
         this.imgurl = e.target.result;
-        console.log(this.imgurl);
       };
       reader.readAsDataURL(file);
     }

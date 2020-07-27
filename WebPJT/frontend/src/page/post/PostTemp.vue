@@ -27,8 +27,6 @@ import axios from "axios";
 
 const baseURL = "http://localhost:8080/temp";
 
-// const likeButtons = document.querySelectorAll('.like-button');
-
 export default {
   data() {
     return {
