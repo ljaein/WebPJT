@@ -1,14 +1,15 @@
 <template>
   <div>
     <div class="card mt-4">
-      <div class="card-header d-flex">
-        <strong class="mr-auto text-dark">{{comment.nickname}}</strong>
+      <div class="card-header d-flex bg-white">
+        <strong class="mr-3 text-dark">{{comment.nickname}}</strong>
+        <span>{{comment.content}}</span>
         <small class="my-auto ml-auto text-dark">{{comment.createDate}}</small>
       </div>
       <ul class="list-group list-group-flush">
-        <li class="list-group-item d-flex">
+        <li class="list-group-item d-flex p-1">
           <CommentUpdate v-if="isUpdated" :comment="comment" @update-comment="commentModify" />
-          <span v-else class="text-dark">{{comment.content}}</span>
+          <span v-else class="text-dark"></span>
         </li>
       </ul>
     </div>

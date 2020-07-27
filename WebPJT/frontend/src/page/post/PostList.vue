@@ -148,7 +148,8 @@ export default {
     gocreate() {
       this.$router.push({
         name: "PostCreate",
-      });
+      })
+      this.$router.go();
     },
     getdetail(pid) {
       this.$router.push({

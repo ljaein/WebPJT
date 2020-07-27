@@ -1,11 +1,11 @@
 <template>
   <div class="input-group">
     <div class="input-group-prepend">
-        <span class="input-group-text">Comment</span>
+        <span class="input-group-text bg-white" style="height: 2.5rem; border: none;">Comment</span>
     </div>
-    <textarea class="form-control" aria-label="With textarea" v-model="commentData.content" placeholder="댓글을 자유롭게 남겨주세요^^"></textarea>
-    <div class="input-group-prepend buttonComment">
-        <span class="input-group-text" @click="createComment">작성</span>
+    <textarea class="form-control my-1" style="height: 2.5rem; border:none !important; " aria-label="With textarea" v-model="commentData.content" placeholder="댓글을 자유롭게 남겨주세요^^"></textarea>
+    <div class="input-group-prepend buttonComment" style="border:none;" >
+        <span class="input-group-text bg-white" style="height: 2.5rem; border:none; border-top-right-radius: 5px; border-bottom-right-radius: 5px;" @click="createComment"><i class="far fa-keyboard" style="font-size:25px"></i></span>
     </div>
   </div> 
 </template>
