@@ -17,22 +17,13 @@
     text-decoration: none !important;
 }
 
-.header-link {
+.nav-link {
     font-size: 0.8rem;
     color: black !important;
-}
-
-.dropdown-menu {
-    background-color: rgb(236, 236, 236) !important;
-    width: 2rem;
-}
-
-.dropdown-item {
-    color: black;
     cursor: pointer;
 }
 
-.login {
+/* .login {
     color: rgb(153, 153, 153);
     text-decoration: none !important;
-}
+} */
