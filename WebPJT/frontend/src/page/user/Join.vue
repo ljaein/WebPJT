@@ -5,11 +5,12 @@
         <h1>회원가입</h1>
         <div class="form-wrap">
           <!-- 라디오 박스 -->
-          <input type="radio" id="normal" name="type" value="normal" v-model="checkType">
-            <label for="normal">일반 사용자</label>
-          <input type="radio" id="business" name="type" value="business" v-model="checkType">
-            <label for="business">사업자 </label><br>
-            <div class="error-text" v-if="error.checkType">{{error.checkType}}</div>
+          <input type="radio" id="normal" name="type" value="normal" v-model="checkType" />
+          <label for="normal">일반 사용자</label>
+          <input type="radio" id="business" name="type" value="business" v-model="checkType" />
+          <label for="business">사업자</label>
+          <br />
+          <div class="error-text" v-if="error.checkType">{{error.checkType}}</div>
 
           <div class="input-wrap">
             <input v-model="name" id="name" placeholder="이름을 입력해주세요" type="text" />
@@ -95,29 +96,29 @@ export default {
       .has()
       .letters();
 
-      this.checkForm();
+    this.checkForm();
   },
 
   watch: {
-    password: function(v) {
+    password: function (v) {
       this.checkForm();
     },
-    email: function(v) {
+    email: function (v) {
       this.checkForm();
     },
-    passwordconfirm: function(v) {
+    passwordconfirm: function (v) {
       this.checkForm();
     },
-    nickname: function(v) {
+    nickname: function (v) {
       this.checkForm();
     },
-    checkType: function(v) {
+    checkType: function (v) {
       this.checkForm();
-    }
+    },
   },
   methods: {
     checkForm() {
-      if(this.checkType == null) {
+      if (this.checkType == null) {
         this.error.checkType = "사용자 구분을 해주세요.";
       } else {
         this.error.checkType = false;
@@ -126,7 +127,7 @@ export default {
       if (this.nickname.length > 0) {
         axios
           .get(`${baseURL}/checkNickname/${this.nickname}`)
-          .then(response => {
+          .then((response) => {
             this.error.nickname = response.data;
           })
           .catch(() => {
@@ -138,7 +139,7 @@ export default {
       else if (this.email.length > 0 && EmailValidator.validate(this.email)) {
         axios
           .get(`${baseURL}/checkEmail/${this.email}`)
-          .then(response => {
+          .then((response) => {
             this.error.email = response.data;
           })
           .catch(() => {
@@ -166,11 +167,11 @@ export default {
         nickname,
         password,
         name,
-        checkType
+        checkType,
       };
       axios
         .post(`${baseURL}/signup`, data)
-        .then(response => {
+        .then((response) => {
           // console.log(data);
           alert("회원가입 인증 메일이 발송되었습니다. 이메일을 확인해주세요.");
           this.$router.push("/");
@@ -179,10 +180,10 @@ export default {
           alert("회원 정보를 모두 입력해주세요.");
           this.$router.push({
             name: "Params",
-            params: { name: err.response.status }
+            params: { name: err.response.status },
           });
         });
-    }
+    },
   },
   data: () => {
     return {
@@ -198,13 +199,13 @@ export default {
         password: false,
         nickname: false,
         passwordconfirm: false,
-        checkType: false
+        checkType: false,
       },
       isTerm: false,
       passwordType: "password",
-      passwordConfirmType: "password"
+      passwordConfirmType: "password",
     };
-  }
+  },
 };
 </script>
 

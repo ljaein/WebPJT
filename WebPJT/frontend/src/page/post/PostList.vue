@@ -43,7 +43,7 @@
           <div class="card mb-3 profile-post mr-0 ml-0">
             <div class="card-body" style="padding: 0;">
               <img
-                src="https://t1.daumcdn.net/cfile/tistory/99BB93335A03C69C30"
+                :src="post.imgurl"
                 class="card-img"
                 
                 style="height:8rem"

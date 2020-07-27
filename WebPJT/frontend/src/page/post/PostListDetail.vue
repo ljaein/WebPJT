@@ -5,7 +5,7 @@
         <div class="row no-gutters">
           <div class="col-md-5">
             <img
-              src="https://cdn0000.airklass.com/classes/340/new_cover-w1920-h1080?v=-1153120733"
+              :src="post.imgurl"
               class="card-img"
               style="height: 16rem;"
               alt
@@ -153,7 +153,7 @@ export default {
         this.pid = this.$route.params.ID,
         this.getPost();
         this.fetchComment(),
-        Kakao.init('765ed14c0d508f8aa48c6d173446acba'); 
+        Kakao.init('765ed14c0d508f8aa48c6d173446acba');
   },
   methods: {
          test(){
@@ -218,7 +218,6 @@ export default {
         .then((response) => {
           commentData.content = ''
           this.fetchComment();
-          console.log(response.data)
         }).catch((error) => {
           console.log(error)
         })
@@ -227,7 +226,6 @@ export default {
       axios.get(`${baseURL}/reply/list/${this.$route.params.ID}`)
         .then((response) => {
           this.receiveComment = response.data
-          console.log(response.data)
         }).catch((error) => {
           console.log(error.response.data)
         })
