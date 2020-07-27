@@ -20,8 +20,7 @@
     "vue-msgbox": "^0.2.14",
     "vue-router": "^3.3.4",
     "vue-session": "^1.0.0",
-    "vue-toasted": "^1.1.28",
-    "vue-toastr": "^2.1.2"
+    "vue-toasted": "^1.1.28"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~4.4.0",
