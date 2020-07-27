@@ -1,21 +1,6 @@
 <template>
   <div class="post">
-    <!-- 
-    <select v-model="key">
-      <option value="all">전체검색</option>
-      <option value="title">제목</option>
-      <option value="activity">액티비티</option>
-      <option value="price">가격</option>
-    </select>
-    <input
-      class="my-2 my-lg-0 mr-2 bg-light"
-      type="text"
-      placeholder="Search"
-      v-model="word"
-      @keypress.enter="search"
-    />
-    <button type="button" @click="search"><i class="fas fa-search mr-1"></i>검색</button>-->
-
+    
     <div class="container col-md-6">
       <div class="input-group mb-3">
         <div class="input-group-prepend">
@@ -110,6 +95,7 @@
 import "../../assets/css/postlist.css";
 import axios from "axios";
 
+
 const baseURL = "http://localhost:8080";
 
 // const likeButtons = document.querySelectorAll('.like-button');
@@ -190,6 +176,19 @@ export default {
         .then((res) => {
           this.checklike();
           this.init();
+          if (this.check(pid) == false) {
+            this.$toasted.show('좋아요!', {
+            theme: 'bubble',
+            position: 'top-right',
+            duration:1000,
+          })
+          } else {
+            this.$toasted.show('싫어졌어요!', {
+            theme: 'bubble',
+            position: 'top-right',
+            duration:1000,
+          })
+          }
         })
         .catch((err) => {
           alert(err);
@@ -256,7 +255,4 @@ export default {
 .card-title, .card-img-overlay{
   cursor:pointer;
 }
-/* listhover:hover {
-  color: burlywood;
-} */
 </style>
