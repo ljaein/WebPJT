@@ -61,7 +61,7 @@
 
                 </div>
                 <div class="d-flex justify-content-end">
-                  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#BasketModal"><i class="fas fa-shopping-basket mr-2"></i>장바구니</button>
+                  <button type="button" class="btn btn-primary mr-1" data-toggle="modal" data-target="#BasketModal"><i class="fas fa-shopping-basket mr-2"></i>장바구니</button>
                   <BasketModal />
                   <button class="btn btn-danger"><i class="far fa-hand-point-up mr-2"></i>바로구매</button>
                 </div>
