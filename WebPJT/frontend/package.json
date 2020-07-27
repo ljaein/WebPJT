@@ -15,9 +15,13 @@
     "password-validator": "^5.0.3",
     "serve": "^11.3.2",
     "vue": "^2.6.11",
+    "vue-bootstrap-toasts": "^1.0.7",
     "vue-cookies": "^1.7.2",
+    "vue-msgbox": "^0.2.14",
     "vue-router": "^3.3.4",
-    "vue-session": "^1.0.0"
+    "vue-session": "^1.0.0",
+    "vue-toasted": "^1.1.28",
+    "vue-toastr": "^2.1.2"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~4.4.0",
