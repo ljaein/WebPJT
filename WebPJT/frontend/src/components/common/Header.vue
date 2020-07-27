@@ -162,11 +162,3 @@ export default {
   }
 };
 </script>
-
-<style scoped>
-.hr-line{
-    border: 0.5px solid rgb(214, 214, 214) !important;
-    /* margin-top: 0; */
-    /* margin-bottom: 4rem; */
-}
-</style>

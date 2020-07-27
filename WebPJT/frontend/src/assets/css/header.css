@@ -1,11 +1,13 @@
 .header-nav{
     position: fixed;
+    background-color: white;
     z-index: 2 !important;
     color: black !important;
     font-weight: bold;
     text-decoration: none !important;
     padding-bottom: 0;
     margin: auto;
+    border-bottom: 0.5px solid gray !important;
 }
 
 .nav-title{
