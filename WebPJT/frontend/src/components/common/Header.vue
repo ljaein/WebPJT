@@ -21,7 +21,6 @@
           <li class="nav-item dropdown">
             <a
               class="nav-link dropdown-toggle mt-2 mr-3 header-link"
-              href="#"
               id="navbarDropdown"
               role="button"
               data-toggle="dropdown"
@@ -29,11 +28,11 @@
               aria-expanded="false"
             >Season</a>
             <div class="dropdown-menu dropdown-menu-left" aria-labelledby="navbarDropdown">
-              <a class="dropdown-item" style="padding-top:0;" @click="goPost" href="#">Post</a>
-              <a class="dropdown-item" @click="goSpring" href="#">Spring</a>
-              <a class="dropdown-item" @click="goSummer" href="#">Summer</a>
-              <a class="dropdown-item" @click="goAutumn" href="#">Autumn</a>
-              <a class="dropdown-item" style="padding-bottom:0;" @click="goWinter" href="#">Winter</a>
+              <a class="dropdown-item" style="padding-top:0;" @click="goPost">Post</a>
+              <a class="dropdown-item" @click="goSpring">Spring</a>
+              <a class="dropdown-item" @click="goSummer">Summer</a>
+              <a class="dropdown-item" @click="goAutumn">Autumn</a>
+              <a class="dropdown-item" style="padding-bottom:0;" @click="goWinter">Winter</a>
             </div>
           </li>
           <li class="nav-item dropdown">
@@ -47,9 +46,9 @@
               aria-expanded="false"
             >Activity</a>
             <div class="dropdown-menu dropdown-menu-left" aria-labelledby="navbarDropdown">
-              <a class="dropdown-item" @click="groundAct" href="#">Ground Activity</a>
-              <a class="dropdown-item" @click="waterAct" href="#">Water Activity</a>
-              <a class="dropdown-item" @click="skyAct" href="#">Sky Activity</a>
+              <a class="dropdown-item" @click="groundAct">Ground Activity</a>
+              <a class="dropdown-item" @click="waterAct">Water Activity</a>
+              <a class="dropdown-item" @click="skyAct">Sky Activity</a>
             </div>
           </li>
           <a v-if="!this.$cookies.isKey('Auth-Token')" data-toggle="modal" data-target="#LoginModal" class="nav-link mt-2" style="font-size:0.8rem;" href="#"><i class="fas fa-sign-in-alt mr-1"></i>Login</a>
@@ -64,8 +63,8 @@
               aria-expanded="false"
             >User</a>
             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-              <a v-if="this.$cookies.isKey('Auth-Token')" @click="logout" class="dropdown-item" href="#"><i class="fas fa-sign-out-alt mr-1"></i>Logout</a>
-              <a v-if="this.$cookies.isKey('Auth-Token')" @click="info" class="dropdown-item" href="#"><i class="far fa-user mr-1"></i> Page</a>
+              <a v-if="this.$cookies.isKey('Auth-Token')" @click="logout" class="dropdown-item"><i class="fas fa-sign-out-alt mr-1"></i>Logout</a>
+              <a v-if="this.$cookies.isKey('Auth-Token')" @click="info" class="dropdown-item pageclick"><i class="far fa-user mr-1"></i> Page</a>
               <!-- <div class="dropdown-divider"></div> -->
             </div>
           </li>
@@ -162,3 +161,9 @@ export default {
   }
 };
 </script>
+
+<style>
+/* .pageclick {
+  cursor: pointer;
+} */
+</style>

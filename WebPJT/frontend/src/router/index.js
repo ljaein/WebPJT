@@ -124,7 +124,7 @@ export default new Router({
         // kakao login
         {
             path: '/msg/kakao',
-            component : Kakao
+            component: Kakao
         }
 
     ]
