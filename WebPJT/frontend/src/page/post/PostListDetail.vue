@@ -90,10 +90,10 @@
 
     <hr>
     <!-- 댓글 작성 -->
-    <CommentInput @create-comment="createcomment" />
+    <CommentInput v-if="this.$cookies.get('User')" @create-comment="createcomment" />
 
     <!-- 댓글 List -->
-    <hr>
+    <hr v-if="this.$cookies.get('User')">
     <div class="d-flex bg-white">댓글 수 : {{receiveComment.length}}</div>
     <CommentList v-for="comment in receiveComment" :key="comment.rid" :comment="comment" @comment-delete="commentDelete"/>
   
@@ -135,11 +135,11 @@ export default {
   created() {
         this.pid = this.$route.params.ID,
         this.getPost();
-        this.fetchComment()
+        this.fetchComment(),
+        Kakao.init('765ed14c0d508f8aa48c6d173446acba'); 
   },
   methods: {
          test(){
-            Kakao.init('765ed14c0d508f8aa48c6d173446acba'); 
             Kakao.Link.createDefaultButton({
             container: '#kakao-link-btn',
             objectType: 'feed',
