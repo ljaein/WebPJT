@@ -1,21 +1,6 @@
 <template>
   <div class="post">
-    <!-- 
-    <select v-model="key">
-      <option value="all">전체검색</option>
-      <option value="title">제목</option>
-      <option value="activity">액티비티</option>
-      <option value="price">가격</option>
-    </select>
-    <input
-      class="my-2 my-lg-0 mr-2 bg-light"
-      type="text"
-      placeholder="Search"
-      v-model="word"
-      @keypress.enter="search"
-    />
-    <button type="button" @click="search"><i class="fas fa-search mr-1"></i>검색</button>-->
-
+    
     <div class="container col-md-6">
       <div class="input-group mb-3">
         <div class="input-group-prepend">
@@ -27,7 +12,8 @@
             v-model="key"
           >
             <div role="separator" class="dropdown-divider"></div>
-            <option value="all">All</option>
+            <option value="">All</option>
+            <!-- <option value="all">All</option> -->
             <option value="title">Title</option>
             <option value="activity">Activity</option>
             <option value="price">Price</option>
@@ -109,6 +95,7 @@
 import "../../assets/css/postlist.css";
 import axios from "axios";
 
+
 const baseURL = "http://localhost:8080";
 
 // const likeButtons = document.querySelectorAll('.like-button');
@@ -147,7 +134,8 @@ export default {
     gocreate() {
       this.$router.push({
         name: "PostCreate",
-      });
+      })
+      this.$router.go();
     },
     getdetail(pid) {
       this.$router.push({
@@ -156,11 +144,12 @@ export default {
       });
     },
     search() {
-      if (this.key == "all" || this.key == "") {
+      if (this.key == "") {
         axios
           .get(`${baseURL}/post/list`)
           .then((res) => {
             this.posts = res.data;
+            this.word = "";
           })
           .catch((err) => {
             console.log(err);
@@ -173,6 +162,7 @@ export default {
             .get(`${baseURL}/post/search/${this.key}/${this.word}`)
             .then((res) => {
               this.posts = res.data;
+              this.word = "";
             })
             .catch((err) => {
               alert("올바른 값을 입력하세요.");
@@ -180,15 +170,25 @@ export default {
         }
       }
     },
-    createpost() {
-      this.$router.push("/postcreate");
-    },
     registlike(pid) {
       axios
         .get(`${baseURL}/like/registDelete/${this.email}/${pid}`)
         .then((res) => {
           this.checklike();
           this.init();
+          if (this.check(pid) == false) {
+            this.$toasted.show('좋아요!', {
+            theme: 'bubble',
+            position: 'top-right',
+            duration:1000,
+          })
+          } else {
+            this.$toasted.show('싫어졌어요!', {
+            theme: 'bubble',
+            position: 'top-right',
+            duration:1000,
+          })
+          }
         })
         .catch((err) => {
           alert(err);
@@ -255,7 +255,4 @@ export default {
 .card-title, .card-img-overlay{
   cursor:pointer;
 }
-/* listhover:hover {
-  color: burlywood;
-} */
 </style>
