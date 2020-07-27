@@ -2,7 +2,7 @@
   <div class="post">
     
     <div class="container col-md-6">
-      <div class="input-group mb-3">
+      <div class="input-group mb-5">
         <div class="input-group-prepend">
           <select
             class="btn dropdown-toggle text-black"
@@ -28,11 +28,11 @@
         />
       </div>
 
-      <div class="d-flex justify-content-end">
+      <!-- <div class="d-flex justify-content-end">
         <a type="button" class="btn btn-outline form-check mb-2" @click="gocreate">
           <i class="fas fa-pen"></i> 상품 등록
         </a>
-      </div>
+      </div> -->
       <div class="row justify-content-left">
         <div
           class="col-12 col-sm-12 col-md-4 card-deck"
@@ -48,7 +48,7 @@
                 
                 style="height:8rem"
               />
-              <div class="card-img-overlay" @click="getdetail(post.pid)" style="padding:10px; text-align:right; font-weight:bold;">
+              <div class="card-img-overlay" @click="getdetail(post.pid)" style="padding:10px; text-align:right; font-weight:bold; color: white;">
                 <p>{{post.location}}</p>
             </div>
             <div class="col-md-12 p-0">
@@ -131,12 +131,12 @@ export default {
       }
       return false;
     },
-    gocreate() {
-      this.$router.push({
-        name: "PostCreate",
-      })
-      this.$router.go();
-    },
+    // gocreate() {
+    //   this.$router.push({
+    //     name: "PostCreate",
+    //   })
+    //   this.$router.go();
+    // },
     getdetail(pid) {
       this.$router.push({
         name: "PostListDetail",
