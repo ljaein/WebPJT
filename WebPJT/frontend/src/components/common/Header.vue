@@ -22,13 +22,16 @@
             <a class="nav-link mt-3 mr-2" @click="goPost"><i class="fas fa-stream mr-1"></i><br>Post</a>
           </li>
           <li class="nav-item">
+            <a class="nav-link mt-3 mr-2" @click="gocreate"><i class="fas fa-pen mr-1"></i><br>Write</a>
+          </li>
+          <li class="nav-item">
             <a v-if="this.$cookies.isKey('Auth-Token')" @click="info" class="nav-link mt-3 mr-2"><i class="far fa-user mr-1"></i><br>MyPage</a>
           </li>
           <li class="nav-item">
-            <a v-if="this.$cookies.isKey('Auth-Token')" @click="logout" class="nav-link mt-3"><i class="fas fa-sign-out-alt mr-1"></i><br>Logout</a>
+            <a v-if="this.$cookies.isKey('Auth-Token')" @click="logout" class="nav-link mt-3 pl-1"><i class="fas fa-sign-out-alt mr-1"></i><br>Logout</a>
           </li>
           <li class="nav-item">
-            <a v-if="!this.$cookies.isKey('Auth-Token')" data-toggle="modal" data-target="#LoginModal" class="nav-link mt-3"><i class="fas fa-sign-in-alt mr-1"></i><br>Login</a>
+            <a v-if="!this.$cookies.isKey('Auth-Token')" data-toggle="modal" data-target="#LoginModal" class="nav-link mt-3 pl-1"><i class="fas fa-sign-in-alt mr-1"></i><br>Login</a>
           </li>
             <!-- <a
               class="nav-link mt-2 mr-3 header-link"
@@ -118,7 +121,12 @@ export default {
   watch: {},
   created() {},
   methods: {
-    
+    gocreate() {
+      this.$router.push({
+        name: "PostCreate",
+      })
+      this.$router.go();
+    },
     logout: function() {
       alert("로그아웃 되었습니다.");
       this.$cookies.remove("Auth-Token");
