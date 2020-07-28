@@ -1,23 +1,8 @@
 <template>
   <div class="post">
-    <!-- 
-    <select v-model="key">
-      <option value="all">전체검색</option>
-      <option value="title">제목</option>
-      <option value="activity">액티비티</option>
-      <option value="price">가격</option>
-    </select>
-    <input
-      class="my-2 my-lg-0 mr-2 bg-light"
-      type="text"
-      placeholder="Search"
-      v-model="word"
-      @keypress.enter="search"
-    />
-    <button type="button" @click="search"><i class="fas fa-search mr-1"></i>검색</button>-->
-
+    
     <div class="container col-md-6">
-      <div class="input-group mb-3">
+      <div class="input-group mb-5">
         <div class="input-group-prepend">
           <select
             class="btn dropdown-toggle text-black"
@@ -42,11 +27,11 @@
         />
       </div>
 
-      <div class="d-flex justify-content-end">
+      <!-- <div class="d-flex justify-content-end">
         <a type="button" class="btn btn-outline form-check mb-2" @click="gocreate">
           <i class="fas fa-pen"></i> 상품 등록
         </a>
-      </div>
+      </div> -->
       <div class="row justify-content-left">
         <div
           class="col-12 col-sm-12 col-md-4 card-deck"
@@ -57,12 +42,12 @@
           <div class="card mb-3 profile-post mr-0 ml-0">
             <div class="card-body" style="padding: 0;">
               <img
-                src="https://t1.daumcdn.net/cfile/tistory/99BB93335A03C69C30"
+                :src="post.imgurl"
                 class="card-img"
                 
                 style="height:8rem"
               />
-              <div class="card-img-overlay" @click="getdetail(post.pid)" style="padding:10px; text-align:right; font-weight:bold;">
+              <div class="card-img-overlay" @click="getdetail(post.pid)" style="padding:10px; text-align:right; font-weight:bold; color: white;">
                 <p>{{post.location}}</p>
             </div>
             <div class="col-md-12 p-0">
@@ -115,6 +100,7 @@
 import "../../assets/css/postlist.css";
 import axios from "axios";
 import InfiniteLoading from 'vue-infinite-loading'
+
 
 const baseURL = "http://localhost:8080";
 
@@ -199,11 +185,12 @@ export default {
       }
       return false;
     },
-    gocreate() {
-      this.$router.push({
-        name: "PostCreate",
-      });
-    },
+    // gocreate() {
+    //   this.$router.push({
+    //     name: "PostCreate",
+    //   })
+    //   this.$router.go();
+    // },
     getdetail(pid) {
       this.$router.push({
         name: "PostListDetail",
@@ -231,7 +218,24 @@ export default {
         .get(`${baseURL}/like/registDelete/${this.email}/${pid}`)
         .then((res) => {
           this.checklike();
+<<<<<<< HEAD
           this.search();
+=======
+          this.init();
+          if (this.check(pid) == false) {
+            this.$toasted.show('좋아좋아요!', {
+            theme: 'bubble',
+            position: 'top-right',
+            duration:1000,
+          })
+          } else {
+            this.$toasted.show('싫어싫어요!', {
+            theme: 'bubble',
+            position: 'top-right',
+            duration:1000,
+          })
+          }
+>>>>>>> 583b63f0bf883a97945f750667a86dfb18277e10
         })
         .catch((err) => {
           alert(err);
@@ -310,7 +314,4 @@ export default {
 .card-title, .card-img-overlay{
   cursor:pointer;
 }
-/* listhover:hover {
-  color: burlywood;
-} */
 </style>

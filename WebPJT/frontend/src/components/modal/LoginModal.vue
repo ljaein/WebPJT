@@ -1,24 +1,25 @@
 <template>
 
     <div class="modal fade" id="LoginModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-        <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">로그인</h5>
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content" style="margin:auto;height:20rem; width:25rem;">
+        <div class="modal-header border-0 pl-0">
+            <h4 class="modal-title w-100 text-center font-weight-bold position-absolute" id="exampleModalLabel">Login</h4>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
             </button>
         </div>
-        <div class="modal-body">
-            E-mail : <input type="text" v-model="email" id="email" placeholder="이메일을 입력해주세요."><br>
+        <div class="modal-body pb-0">
+            <i class="fas fa-envelope" style="font-size:20px"></i> <input class="text-center ml-1 mt-4 bg-white" style="width:60%; border: none;" type="text" v-model="email" id="email" placeholder="이메일을 입력해주세요.">
             <div class="error-text" v-if="error.email">{{error.email}}</div>
-            Password : <input type="password" v-model="password" id="password" placeholder="비밀번호를 입력해주세요.">
+            <p class="mb-4"></p>
+            <i class="fas fa-lock" style="font-size:20px"></i> <input class="text-center ml-1 mt-4" style="width:60%; border: none;" type="password" v-model="password" id="password" placeholder="비밀번호를 입력해주세요." @keypress.enter="login">
 
         </div>
-        <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary" @click="login" data-dismiss="modal" >로그인 하기</button>
-            <button type="button" class="btn btn-primary" @click="join" data-dismiss="modal" >회원 가입 하기</button>
+        <div class="modal-footer border-0 pt-0">
+            <!-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> -->
+            <button type="button" class="btn" @click="join" data-dismiss="modal" ><i class="far fa-user mr-1"></i><br>회원 가입 하기</button>
+            <button type="button" class="btn" @click="login" data-dismiss="modal" ><i class="fas fa-sign-in-alt mr-1"></i><br>로그인 하기</button>
         </div>
         </div>
     </div>
