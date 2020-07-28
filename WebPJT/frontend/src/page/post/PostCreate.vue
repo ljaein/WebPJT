@@ -4,52 +4,51 @@
       <label class="d-flex">Image</label>
       <!-- <input type="text" class="form-control" id="imgurl" v-model="PostCreate.imgurl"> -->
       <div class="col-md-8 p-0" align="left">
-        
-        <img class="card-img mb-2" v-if="this.PostCreate.imgurl" :src="this.PostCreate.imgurl" style="height: 16rem;" />
+        <img
+          class="card-img mb-2"
+          v-if="this.PostCreate.imgurl"
+          :src="this.PostCreate.imgurl"
+          style="height: 16rem;"
+        />
         <button type="button" class="btn btn-primary btn-sm" @click="onClickImageUpload">이미지 업로드</button>
       </div>
-        <input ref="imageInput" type="file" hidden @change="onChangeImages" />
+      <input ref="imageInput" type="file" hidden @change="onChangeImages" />
       <!-- <small class="form-text text-muted d-flex">원하는 사진을 업로드해주세요.</small> -->
     </div>
     <div class="form-group">
       <label class="d-flex">Title</label>
-      <input
-        type="text"
-        class="form-control"
-        id="title"
-        v-model="PostCreate.title"
-      />
+      <input type="text" class="form-control" id="title" v-model="PostCreate.title" />
       <small class="form-text text-muted d-flex">상품명을 입력하세요.</small>
     </div>
     <div class="form-group">
+      <label class="d-flex justify-content-start">Activity</label>
+      <input type="text" class="form-control" id="activity" v-model="PostCreate.activity" />
+      <small class="form-text text-muted d-flex" v-if="!error.activity">활동명을 입력하세요.</small>
+      <small class="form-text d-flex" style="color:red;" v-if="error.activity">{{error.activity}}</small>
+    </div>
+    <div class="form-group">
       <label class="d-flex justify-content-start">Location</label>
-      <input
-        type="text"
-        class="form-control"
-        id="location"
-        v-model="PostCreate.location"
-      />
+      <input type="text" class="form-control" id="location" v-model="PostCreate.location" />
       <small class="form-text text-muted d-flex">주소를 입력하세요.</small>
     </div>
     <div class="form-group">
       <label class="d-flex justify-content-start">Price</label>
-      <input
-        type="text"
-        class="form-control"
-        id="price"
-        v-model="PostCreate.price"
-      />
+      <input type="text" class="form-control" id="price" v-model="PostCreate.price" />
       <small class="form-text text-muted d-flex">가격을 입력하세요.</small>
     </div>
     <div class="form-group">
-      <label class="d-flex justify-content-start">Start-Date</label>
-      <input type="text" class="form-control" id="start-date" v-model="PostCreate.sdate" />
-      <small class="form-text text-muted d-flex">시작일을 지정해주세요.</small>
-    </div>
-    <div class="form-group">
-      <label class="d-flex justify-content-start">End-Date</label>
-      <input type="text" class="form-control" id="end-date" v-model="PostCreate.edate" />
-      <small class="form-text text-muted d-flex">마감일을 지정해주세요.</small>
+      <label class="d-flex justify-content-start">Expiration-Date</label>
+      <div class="d-flex justify-content-between">
+        <div>
+          <small class="form-text text-muted d-flex">시작일</small>
+          <b-form-datepicker id="sdate" v-model="PostCreate.sdate" class="col-md-5"></b-form-datepicker>
+        </div>
+        <div>
+          <small class="form-text text-muted d-flex">마감일</small>
+          <b-form-datepicker id="edate" v-model="PostCreate.edate" class="col-md-5"></b-form-datepicker>
+        </div>
+      </div>
+      <small class="form-text text-muted d-flex">상품 유효기간을 지정해주세요.</small>
     </div>
     <div class="form-group">
       <label class="d-flex justify-content-start">Corporation-Detail</label>
@@ -63,26 +62,11 @@
     </div>
     <div class="form-group">
       <label class="d-flex justify-content-start">Detail-Info</label>
-      <input
-        type="text"
-        class="form-control"
-        id="detail"
-        v-model="PostCreate.detail"
-      />
+      <input type="text" class="form-control" id="detail" v-model="PostCreate.detail" />
       <small class="form-text text-muted d-flex" v-if="!error.detail">상품 상세정보를 입력하세요.</small>
       <small class="form-text d-flex" style="color:red;" v-if="error.detail">{{error.detail}}</small>
     </div>
-    <div class="form-group">
-      <label class="d-flex justify-content-start">Activity</label>
-      <input
-        type="text"
-        class="form-control"
-        id="activity"
-        v-model="PostCreate.activity"
-      />
-      <small class="form-text text-muted d-flex" v-if="!error.activity">활동명을 입력하세요.</small>
-      <small class="form-text d-flex" style="color:red;" v-if="error.activity">{{error.activity}}</small>
-    </div>
+    
     <!-- <a type="button" class="btn btn-outline form-check mb-2" href="#" @click="gocreate()"> -->
     <div class="d-flex justify-content-end mb-5">
       <button
