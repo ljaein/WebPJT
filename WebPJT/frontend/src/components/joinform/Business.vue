@@ -53,6 +53,16 @@
       <div class="error-text" v-if="error.passwordconfirm">{{error.passwordconfirm}}</div>
     </div>
 
+    <!-- 주소 -->
+    <div class="input-wrap">
+      <input type="text" v-model="clocation" id="location" placeholder="사업자 주소를 작성해주세요.">
+    </div>
+
+    <!-- 핸드폰 입력 -->
+    <div class="input-wrap">
+      <input type="text" v-model="cphone" id="phone" placeholder="사업자 핸드폰 번호를 입력해주쇼">
+    </div>
+
     <!-- img upload -->
     <div class="card col-sm-12 mt-1" align="left" >
       <input ref="imageInput" type="file" hidden @change="onChangeImages" />
@@ -144,7 +154,7 @@ export default {
       else this.error.passwordconfirm = false;
     },
     join() {
-      this.$emit('join-create-business', this.email, this.nickname, this.password, this.name, this.checkType, this.imgurl)
+      this.$emit('join-create-business', this.email, this.nickname, this.password, this.name, this.checkType, this.imgurl, this.clocation, this.cphone)
     },
     onClickImageUpload() {
       this.$refs.imageInput.click();
@@ -173,6 +183,8 @@ export default {
       password: "",
       passwordconfirm: "",
       imgurl: "",
+      clocation: "",
+      cphone: "",
       passwordSchema: new PV(),
       error: {
         email: false,

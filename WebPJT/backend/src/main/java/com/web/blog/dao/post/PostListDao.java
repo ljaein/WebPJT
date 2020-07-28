@@ -15,5 +15,6 @@ public interface PostListDao extends JpaRepository<PostList, String> {
     List<PostList> findByActivityLikeOrderByCreateDateDesc(String word);
     List<PostList> findByTitleLikeOrderByCreateDateDesc(String word);
     List<PostList> findByPriceLessThanEqualOrderByCreateDateDesc(int word);
+    List<PostList> findAllByOrderByLikecntDesc();
     
 }
