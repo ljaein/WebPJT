@@ -161,8 +161,8 @@ export default {
             container: '#kakao-link-btn',
             objectType: 'feed',
             content: {
-              title: '상세페이지 제목 호출',
-              description: '내용, 주로 해시태그',
+              title: this.post.title,
+              description: this.post.activity,
               imageUrl: document.images[0].src,
               link: {
                 webUrl: 'http://localhost:3000/#/posts/' + this.pid,

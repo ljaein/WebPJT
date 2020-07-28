@@ -5,6 +5,12 @@ import VueCookies from 'vue-cookies'
 import VueBootstrapToasts from 'vue-bootstrap-toasts'
 import Toasted from 'vue-toasted'
 
+import BootstrapVue from 'bootstrap-vue'
+import 'bootstrap/dist/css/bootstrap.min.css'
+import 'bootstrap-vue/dist/bootstrap-vue.css'
+
+Vue.use(BootstrapVue)
+
 Vue.use(Toasted)
 
 Vue.use(VueBootstrapToasts);
