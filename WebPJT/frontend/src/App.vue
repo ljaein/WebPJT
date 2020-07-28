@@ -8,7 +8,6 @@
 
 <script src="https://use.fontawesome.com/releases/v5.2.0/js/all.js"></script>  
 <script> 
-import './assets/css/style.css'
 import Header from './components/common/Header.vue'
 import constants from './lib/constants'
 import LoginModal from './components/modal/LoginModal.vue'

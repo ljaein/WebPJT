@@ -11,6 +11,24 @@
     border: 0;
 }
 
+.card-img-overlay p{
+    visibility: hidden;
+}
+
+.card-img-overlay:hover p{
+    cursor: pointer;
+    visibility: visible;
+}
+
+/* .location-button{
+    border: none;
+    border-radius: 5px;
+    background-color: black;
+    color: white;
+    font-weight: bold;
+    font-size: 10px;
+} */
+
 .card-body img{
     border-radius: 5px;
 }

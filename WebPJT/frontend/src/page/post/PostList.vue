@@ -46,9 +46,10 @@
                 :src="post.imgurl"
                 class="card-img"
                 
-                style="height:8rem"
+                style="height:10rem"
               />
-              <div class="card-img-overlay" @click="getdetail(post.pid)" style="padding:10px; text-align:right; font-weight:bold; color: white;">
+              <div class="card-img-overlay" @click="getdetail(post.pid)" style="padding:60px; text-align:center; font-size:1.3rem; font-weight:bold; color: white;">
+                <!-- <button class="location-button">{{post.location}}</button> -->
                 <p>{{post.location}}</p>
             </div>
             <div class="col-md-12 p-0">
