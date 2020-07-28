@@ -9,6 +9,8 @@
   },
   "dependencies": {
     "axios": "^0.19.2",
+    "bootstrap": "^4.5.0",
+    "bootstrap-vue": "^2.15.0",
     "core-js": "^3.6.5",
     "email-validator": "^2.0.4",
     "jsonwebtoken": "^8.5.1",
@@ -17,6 +19,7 @@
     "vue": "^2.6.11",
     "vue-bootstrap-toasts": "^1.0.7",
     "vue-cookies": "^1.7.2",
+    "vue-infinite-loading": "^2.4.5",
     "vue-msgbox": "^0.2.14",
     "vue-router": "^3.3.4",
     "vue-session": "^1.0.0",

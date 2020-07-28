@@ -7,6 +7,7 @@ import constants from '../lib/constants'
 import Login from '../page/user/Login.vue'
 import Join from '../page/user/Join.vue'
 import Info from '../page/user/Info.vue'
+import Basket from '../page/user/Basket.vue'
 
 // error
 import NotFound from '../page/error/NotFound.vue'
@@ -50,6 +51,11 @@ export default new Router({
             path: '/user/info',
             name: constants.URL_TYPE.USER.INFO,
             component: Info
+        },
+        {
+            path: '/user/basket',
+            name: 'Basket',
+            component: Basket
         },
         // 메인
         {

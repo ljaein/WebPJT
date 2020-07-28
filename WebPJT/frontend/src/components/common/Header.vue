@@ -25,6 +25,9 @@
             <a class="nav-link mt-3 mr-2" @click="gocreate"><i class="fas fa-pen mr-1"></i><br>Write</a>
           </li>
           <li class="nav-item">
+            <a class="nav-link mt-3 mr-2" @click="goBasket"><i class="fas fa-shopping-basket"></i><br>Basket</a>
+          </li>
+          <li class="nav-item">
             <a v-if="this.$cookies.isKey('Auth-Token')" @click="info" class="nav-link mt-3 mr-2"><i class="far fa-user mr-1"></i><br>MyPage</a>
           </li>
           <li class="nav-item">
@@ -142,34 +145,10 @@ export default {
       this.$router.push("/posts/");
       this.$router.go();
     },
-    goSpring: function() {
-      this.$router.push("/spring/");
+    goBasket: function() {
+      this.$router.push("/user/basket/");
       this.$router.go();
     },
-    goSummer: function() {
-      this.$router.push("/summer/");
-      this.$router.go();
-    },
-    goAutumn: function() {
-      this.$router.push("/autumn/");
-      this.$router.go();
-    },
-    goWinter: function() {
-      this.$router.push("/winter/");
-      this.$router.go();
-    },
-    groundAct: function() {
-      this.$router.push("/ground/");
-      this.$router.go();
-    },
-    waterAct: function() {
-      this.$router.push("/water/");
-      this.$router.go();
-    },
-    skyAct: function() {
-      this.$router.push("/sky/");
-      this.$router.go();
-    }
   },
   data: function() {
     return {
