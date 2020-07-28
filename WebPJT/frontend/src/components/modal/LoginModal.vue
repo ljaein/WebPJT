@@ -13,7 +13,7 @@
             <i class="fas fa-envelope" style="font-size:20px"></i> <input class="text-center ml-1 mt-4 bg-white" style="width:60%; border: none;" type="text" v-model="email" id="email" placeholder="이메일을 입력해주세요.">
             <div class="error-text" v-if="error.email">{{error.email}}</div>
             <p class="mb-4"></p>
-            <i class="fas fa-lock" style="font-size:20px"></i> <input class="text-center ml-1 mt-4" style="width:60%; border: none;" type="password" v-model="password" id="password" placeholder="비밀번호를 입력해주세요.">
+            <i class="fas fa-lock" style="font-size:20px"></i> <input class="text-center ml-1 mt-4" style="width:60%; border: none;" type="password" v-model="password" id="password" placeholder="비밀번호를 입력해주세요." @keypress.enter="login">
 
         </div>
         <div class="modal-footer border-0 pt-0">
