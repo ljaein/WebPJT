@@ -18,7 +18,8 @@
     <div class="form-group">
       <label class="d-flex">Title</label>
       <input type="text" class="form-control" id="title" v-model="PostCreate.title" />
-      <small class="form-text text-muted d-flex">상품명을 입력하세요.</small>
+      <small class="form-text text-muted d-flex" v-if="!error.title">상품명을 입력하세요.</small>
+      <small class="form-text d-flex" style="color:red;" v-if="error.title">{{error.title}}</small>
     </div>
     <div class="form-group">
       <label class="d-flex justify-content-start">Activity</label>
@@ -34,11 +35,12 @@
     <div class="form-group">
       <label class="d-flex justify-content-start">Price</label>
       <input type="text" class="form-control" id="price" v-model="PostCreate.price" />
-      <small class="form-text text-muted d-flex">가격을 입력하세요.</small>
+      <small class="form-text text-muted d-flex" v-if="!error.price">가격을 입력하세요.</small>
+      <small class="form-text d-flex" style="color:red;" v-if="error.price">{{error.price}}</small>
     </div>
     <div class="form-group">
       <label class="d-flex justify-content-start">Expiration-Date</label>
-      <div class="d-flex justify-content-between">
+      <!-- <div class="d-flex justify-content-between"> -->
         <div>
           <small class="form-text text-muted d-flex">시작일</small>
           <b-form-datepicker id="sdate" v-model="PostCreate.sdate" class="col-md-5"></b-form-datepicker>
@@ -47,22 +49,22 @@
           <small class="form-text text-muted d-flex">마감일</small>
           <b-form-datepicker id="edate" v-model="PostCreate.edate" class="col-md-5"></b-form-datepicker>
         </div>
-      </div>
+      <!-- </div> -->
       <small class="form-text text-muted d-flex">상품 유효기간을 지정해주세요.</small>
     </div>
     <div class="form-group">
       <label class="d-flex justify-content-start">Corporation-Detail</label>
-      <input
-        type="textarea"
+      <textarea
         class="form-control"
         id="company-information"
-        v-model="PostCreate.companyInfo"
-      />
-      <small class="form-text text-muted d-flex">업체 정보를 입력하세요.</small>
+        v-model="PostCreate.companyInfo">
+      </textarea>
+      <small class="form-text text-muted d-flex" v-if="!error.companyInfo">업체 정보를 입력하세요.</small>
+      <small class="form-text d-flex" style="color:red;" v-if="error.companyInfo">{{error.companyInfo}}</small>
     </div>
     <div class="form-group">
       <label class="d-flex justify-content-start">Detail-Info</label>
-      <input type="text" class="form-control" id="detail" v-model="PostCreate.detail" />
+      <textarea class="form-control" id="detail" v-model="PostCreate.detail"></textarea>
       <small class="form-text text-muted d-flex" v-if="!error.detail">상품 상세정보를 입력하세요.</small>
       <small class="form-text d-flex" style="color:red;" v-if="error.detail">{{error.detail}}</small>
     </div>
@@ -105,18 +107,55 @@ export default {
       error: {
         activity: false,
         detail: false,
+        price: false,
+        companyInfo: false,
+        title: false
       },
     };
   },
+  watch:{
+    PostCreate: {
+      handler: function(val){
+        if(!/^[0-9]+$/g.test(val.price) && val.price.length>0){
+          this.error.price = "가격은 숫자만 입력 가능합니다.";
+        }else{
+          this.error.price=false;
+        }
+        // const reg = /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/;
+        // if(reg.exec(val.price)!==null){
+        //   this.error.price = "가격은 숫자만 입력 가능합니다.";
+        // }
+      },
+      deep: true
+    },
+  },
   methods: {
     regist: function () {
+      var flag = 0;
       if (this.PostCreate.activity == "") {
         this.error.activity = "활동명은 빈칸일 수 없습니다.";
+        flag = 1;
       }
       if (this.PostCreate.detail == "") {
         this.error.detail = "상품 세부정보는 빈칸일 수 없습니다.";
+        flag = 1;
       }
-      return;
+      if (this.PostCreate.companyInfo == "") {
+        this.error.companyInfo = "업체 정보는 빈칸일 수 없습니다.";
+        flag = 1;
+      }
+      if (this.PostCreate.price == "") {
+        this.error.price = "가격은 빈칸일 수 없습니다.";
+        flag = 1;
+      }
+      if (this.PostCreate.title == "") {
+        this.error.title = "상품명은 빈칸일 수 없습니다.";
+        flag = 1;
+      }
+      if(flag==1){
+        alert("정보를 모두 입력해주세요.")
+        return;
+      }
 
       axios
         .post(`${baseURL}/post/regist`, this.PostCreate)
@@ -130,6 +169,11 @@ export default {
     },
     tempSave() {
       //임시저장 메소드
+      if (this.PostCreate.title == "") {
+        this.error.title = "상품명은 빈칸일 수 없습니다.";
+        alert("정보를 확인해주세요");
+        return;
+      }
       axios
         .post(`${baseURL}/temp/regist`, this.PostCreate)
         .then((response) => {
@@ -164,3 +208,8 @@ export default {
   },
 };
 </script>
+<style>
+.sdate{
+  margin: 0 !important;
+}
+</style>
