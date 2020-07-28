@@ -37,6 +37,8 @@ public class User {
     private String name;
     private String imgurl;
     private String checkType;
+    private String clocation;
+    private String cphone;
     @Column(insertable = false, updatable = false)
     private LocalDateTime createDate;
 

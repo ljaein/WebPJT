@@ -53,7 +53,7 @@ export default {
         this.error.checkType = false;
       }
     },
-    joinBusiness(email, nickname, password, name, checkType, imgurl){
+    joinBusiness(email, nickname, password, name, checkType, imgurl, clocation, cphone){
       let data = {
         name,
         nickname,
@@ -61,6 +61,8 @@ export default {
         password,
         checkType,
         imgurl,
+        clocation,
+        cphone,
       };
       axios
         .post(`${baseURL}/signup`, data)
