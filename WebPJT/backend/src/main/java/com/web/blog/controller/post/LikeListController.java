@@ -39,7 +39,7 @@ public class LikeListController {
     @ApiOperation("좋아요 리스트")
     public List<PostList> selectAll(@PathVariable String email) throws SQLException, IOException {
         List<LikeList> plist = new LinkedList<>();
-        plist = likeListDao.findByEmail(email);
+        plist = likeListDao.findByEmailAndCart(email,0);
 
         List<PostList> list = new LinkedList<>();
         for (LikeList likeList : plist) {
@@ -55,6 +55,7 @@ public class LikeListController {
             LikeList list = new LikeList();
             list.setPid(Integer.parseInt(pid));
             list.setEmail(email);
+            list.setCart(0);
             likeListDao.save(list);
 
             return list;
@@ -66,12 +67,13 @@ public class LikeListController {
     @GetMapping("/registDelete/{email}/{pid}")
     @ApiOperation("좋아요 등록 및 삭제")
     public Object registDelete(@PathVariable String email, @PathVariable String pid) throws SQLException, IOException {
-        LikeList like = likeListDao.findByEmailAndPid(email, Integer.parseInt(pid));
+        LikeList like = likeListDao.findByEmailAndPidAndCart(email, Integer.parseInt(pid),0);
         if (like == null) { // 등록
             try {
                 LikeList list = new LikeList();
                 list.setPid(Integer.parseInt(pid));
                 list.setEmail(email);
+                list.setCart(0);
                 likeListDao.save(list);
                 PostList post = postListDao.findByPid(Integer.parseInt(pid));
                 post.setLikecnt(post.getLikecnt() + 1);
@@ -104,7 +106,7 @@ public class LikeListController {
     @GetMapping("/check/{email}")
     @ApiOperation("좋아요 확인")
     public Object check(@PathVariable String email) throws SQLException, IOException {
-        List<LikeList> like = likeListDao.findByEmail(email);
+        List<LikeList> like = likeListDao.findByEmailAndCart(email,0);
         List<Integer> likelist = new LinkedList<>();
         for(LikeList ll : like){
             likelist.add(ll.getPid());

@@ -14,6 +14,7 @@ import NotFound from '../page/error/NotFound.vue'
 import Params from '../page/error/Params.vue'
 import Msg from '../page/msg/msg.vue'
 import Kakao from '../page/msg/kakao.vue'
+import Calender from '../page/msg/calender.vue'
 // main
 import List from '../page/main/List.vue'
 
@@ -131,6 +132,10 @@ export default new Router({
         {
             path: '/msg/kakao',
             component: Kakao
+        },
+        {
+            path: '/msg/calender',
+            component: Calender
         }
 
     ]

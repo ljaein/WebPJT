@@ -178,13 +178,13 @@ export default {
           this.checklike();
           this.init();
           if (this.check(pid) == false) {
-            this.$toasted.show('좋아요!', {
+            this.$toasted.show('좋아좋아요!', {
             theme: 'bubble',
             position: 'top-right',
             duration:1000,
           })
           } else {
-            this.$toasted.show('싫어졌어요!', {
+            this.$toasted.show('싫어싫어요!', {
             theme: 'bubble',
             position: 'top-right',
             duration:1000,

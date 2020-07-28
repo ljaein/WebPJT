@@ -113,6 +113,7 @@ public class AccountController {
         user.setPassword(request.getPassword());
         user.setNickname(request.getNickname());
         user.setCheckType(request.getCheckType());
+        user.setImgurl(request.getImgurl());
         userDao.save(user);
 
         try {
