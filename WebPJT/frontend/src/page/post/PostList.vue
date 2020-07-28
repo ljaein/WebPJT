@@ -28,7 +28,6 @@
           >
             <div role="separator" class="dropdown-divider"></div>
             <option value="">All</option>
-            <!-- <option value="all">All</option> -->
             <option value="title">Title</option>
             <option value="activity">Activity</option>
             <option value="price">Price</option>
@@ -102,6 +101,12 @@
         </div>
       </div>
     </div>
+
+    <!-- infinite loading -->
+    <infinite-loading :identifier="infiniteId" @infinite="infiniteHandler" spinner="waveDots">
+      <div slot="no-more"></div>
+      <div slot="no-result"></div>
+    </infinite-loading>
   </div>
   </div>
 </template>
@@ -109,14 +114,20 @@
 <script>
 import "../../assets/css/postlist.css";
 import axios from "axios";
+import InfiniteLoading from 'vue-infinite-loading'
 
 const baseURL = "http://localhost:8080";
 
 // const likeButtons = document.querySelectorAll('.like-button');
 
 export default {
+  components: {
+    InfiniteLoading
+  },
   data() {
     return {
+      page: 1,
+      infiniteId: 0,
       posts: {
         pid: "",
         email: "",
@@ -136,7 +147,50 @@ export default {
       cntLike: [],
     };
   },
+  
   methods: {
+    infiniteHandler($state) {
+      if(this.key==""){
+        axios.get(`${baseURL}/post/getList?page=` + this.page)
+        .then( res => {
+          setTimeout(() => {
+            if(res.data.length) {
+              this.posts = this.posts.concat(res.data);
+              $state.loaded();
+              this.page += 1;
+              if(this.posts.length / 9 == 0) {
+                $state.complete();
+              }
+            } else {
+              $state.complete();
+            }
+          }, 1000);
+        })
+        .catch( err => {
+          console.log(err);
+        })
+      } else {
+        axios.get(`${baseURL}/post/search/${this.key}/${this.word}?page=` + this.page)
+        .then( res => {
+          setTimeout(() => {
+            if(res.data.length) {
+              this.posts = this.posts.concat(res.data);
+              $state.loaded();
+              this.page += 1;
+              if(this.posts.length / 9 == 0) {
+                $state.complete();
+              }
+            } else {
+              $state.complete();
+            }
+          }, 1000);
+        })
+        .catch( err => {
+          console.log(err);
+        })
+      }
+    }
+    ,
     check(pid) {
       for (var i = 0; i < this.postLike.length; i++) {
         if (this.postLike[i] == pid) {
@@ -157,29 +211,18 @@ export default {
       });
     },
     search() {
+      this.page = 1;
+      console.log(this.page);
+      this.infiniteId += 1;
       if (this.key == "") {
-        axios
-          .get(`${baseURL}/post/list`)
-          .then((res) => {
-            this.posts = res.data;
-            this.word = "";
-          })
-          .catch((err) => {
-            console.log(err);
-          });
+        this.word = "";
+        this.init();
       } else {
         if (this.word == "") {
           alert("검색어를 입력하세요.");
         } else {
-          axios
-            .get(`${baseURL}/post/search/${this.key}/${this.word}`)
-            .then((res) => {
-              this.posts = res.data;
-              this.word = "";
-            })
-            .catch((err) => {
-              alert("올바른 값을 입력하세요.");
-            });
+          this.page = 1;
+          this.init();
         }
       }
     },
@@ -188,7 +231,7 @@ export default {
         .get(`${baseURL}/like/registDelete/${this.email}/${pid}`)
         .then((res) => {
           this.checklike();
-          this.init();
+          this.search();
         })
         .catch((err) => {
           alert(err);
@@ -215,14 +258,25 @@ export default {
         });
     },
     init() {
-      axios
-        .get(`${baseURL}/post/list/`)
+      if(this.key ==""){
+        axios
+        .get(`${baseURL}/post/getList?page=0`)
         .then((res) => {
           this.posts = res.data;
         })
         .catch((err) => {
           console.log(err);
         });
+      } else {
+        axios
+        .get(`${baseURL}/post/search/${this.key}/${this.word}?page=0`)
+        .then((res) => {
+          this.posts = res.data;
+        })
+        .catch((err) => {
+          console.log(err);
+        })
+      }
     },
   },
   created() {
@@ -230,6 +284,7 @@ export default {
     this.init();
     this.checklike();
   },
+  
 };
 </script>
 

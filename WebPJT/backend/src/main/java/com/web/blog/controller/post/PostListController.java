@@ -22,9 +22,13 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import io.swagger.annotations.ApiOperation;
+import jdk.internal.org.jline.utils.Log;
+
 import org.springframework.web.bind.annotation.PostMapping;
 
 
@@ -39,7 +43,7 @@ public class PostListController {
 
     @GetMapping("/search/{key}/{word}")
     @ApiOperation(value = "검색")
-    public List<PostList> search(@PathVariable String key, @PathVariable String word) throws SQLException, IOException {
+    public List<PostList> search(@PathVariable String key, @PathVariable String word, @RequestParam int page) throws SQLException, IOException {
         List<PostList> post = new LinkedList<>();
         if(key.equals("")){
             post = postDao.findByFlagOrderByCreateDateDesc(1);
@@ -51,7 +55,20 @@ public class PostListController {
             int price = Integer.parseInt(word);
             post = postDao.findByPriceLessThanEqualOrderByCreateDateDesc(price);
         }
-        return post;
+
+        int start = page * 9;
+        int end = start + 9;
+
+        if(end > post.size()) {
+            end = post.size();
+        }
+
+        List<PostList> list = new LinkedList<>();
+        for (int i = start; i < end; i++) {
+            list.add(post.get(i));
+        }
+
+        return list;
     }
 
     @GetMapping("/list")
@@ -62,6 +79,26 @@ public class PostListController {
         return temp;
     }
 
+    @GetMapping("/getList")
+    @ResponseBody
+    public List<PostList> getList(@RequestParam int page) {
+        int start = page * 9;
+        int end = start + 9;
+
+        List<PostList> temp = new LinkedList<>();
+        temp = postDao.findByFlagOrderByCreateDateDesc(1);
+
+        if(end > temp.size()) {
+            end = temp.size();
+        }
+
+        List<PostList> list = new LinkedList<>();
+        for (int i = start; i < end; i++) {
+            list.add(temp.get(i));
+        }
+
+        return list;
+    }
    
 
     @GetMapping("/detail/{pid}")
