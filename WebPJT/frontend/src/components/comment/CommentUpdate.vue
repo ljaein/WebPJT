@@ -30,12 +30,30 @@ export default {
   },
   methods: {
     commentUpdate() {
-      axios.put(`${baseURL}/reply/modify`,this.updateComment)
-        .then(() => {
-          alert('댓글 수정 완료!')
-          this.$router.go()
-        }).catch((error) => {
-          console.log(error.response.data)
+      Swal.fire({
+        title: '댓글을 수정하시겠습니까?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, update it!'
+        }).then((result) => {
+          if (result.value) {
+            Swal.fire(
+              'Update Complete!',
+              'Your file has been updated.',
+              'success',
+            )
+          axios.put(`${baseURL}/reply/modify`,this.updateComment)
+            .then(() => {
+              setTimeout(() => {
+                this.$router.go()
+              },1000)
+            }).catch((error) => {
+              console.log(error.response.data)
+            })
+          }
         })
     },
     fetchComment() {
