@@ -89,9 +89,13 @@
       </div>
     </div>
 
-     <!-- infinite loading -->
+    <!-- top button -->
+    <i class="fas fa-2x fa-angle-double-up upBtn" @click="toTop"></i>
+    <!-- infinite loading -->
     <infinite-loading :identifier="infiniteId" @infinite="infiniteHandler" spinner="waveDots">
-      <div slot="no-more"></div>
+      <div slot="no-more">
+        <a @click="toTop">Top</a>
+      </div>
       <div slot="no-result"></div>
     </infinite-loading>
   </div>
@@ -135,6 +139,9 @@ export default {
     };
   },
   methods: {
+    toTop() {
+      scroll(0, 0);
+    },
     infiniteHandler($state) {
       if(this.key==""){
         axios.get(`${baseURL}/post/getList?page=` + this.page)
@@ -333,5 +340,11 @@ export default {
 }
 .card-title, .card-img-overlay{
   cursor:pointer;
+}
+.upBtn { 
+  position:fixed;
+  right:5%;
+  top:90%;
+  color: red;
 }
 </style>
