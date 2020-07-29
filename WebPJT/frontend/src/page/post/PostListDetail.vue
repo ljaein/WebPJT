@@ -117,7 +117,7 @@
     
       
       <!-- 글 수정 삭제 -->
-      <div class="d-flex justify-content-end mt-3 mb-3">
+      <div class="d-flex justify-content-end mt-3 mb-3" v-if="this.$cookies.get('User') == this.post.email">
         <button class="btn btn-success" @click="goModify"><i class="far fa-edit mr-2"></i>수정하기</button>
         <button class="btn btn-danger" @click="goDelete"><i class="far fa-trash-alt mr-2"></i>삭제하기</button>
       </div>
@@ -133,6 +133,8 @@ import PostUpdateVue from './PostUpdate.vue';
 
 import CommentInput from '../../components/comment/CommentInput.vue'
 import CommentList from '../../components/comment/CommentList.vue'
+
+import Swal from 'sweetalert2'
 
 const baseURL = "http://localhost:8080";
 
@@ -161,22 +163,22 @@ export default {
             container: '#kakao-link-btn',
             objectType: 'feed',
             content: {
-              title: this.post.title,
-              description: this.post.activity,
-              imageUrl: document.images[0].src,
+              title: this.post.title, // 콘텐츠의 타이틀
+              description: this.post.activity,  // 콘텐츠 상세설명
+              imageUrl: document.images[0].src, // 썸네일 이미지
               link: {
                 webUrl: 'http://localhost:3000/#/posts/' + this.pid,
                 mobileWebUrl: 'https://developers.kakao.com'
               }
           },
           social: {
-            likeCount: 286,
-            commentCount: 45,
+            likeCount: 286, // LIKE 개수
+            commentCount: 45, // 댓글 개수
             sharedCount: 845
           },
           buttons: [
             {
-              title: 'Open!',
+              title: 'Open!',  // 버튼 제목
               link: {
                 mobileWebUrl: 'https://developers.kakao.com',
                 webUrl: 'http://localhost:3000/#/posts/' + this.pid     
@@ -207,8 +209,24 @@ export default {
     goDelete() {
       axios.delete(`${baseURL}/post/delete/${this.$route.params.ID}`)
         .then(() => {
-          alert('삭제 완료')
-          this.$router.push(`/posts`)
+          Swal.fire({
+            title: 'Are you sure?',
+            text: 'You will not be able to revert this!',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+          }).then((result) => {
+            if (result.value) {
+              Swal.fire(
+                'Delete!',
+                'Your file has been deleted.',
+                'success'
+              )
+            this.$router.push(`/posts`)
+            }
+          })
         }).catch((error) => {
           console.log(error.response.data)
         })
