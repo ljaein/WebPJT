@@ -100,6 +100,7 @@ export default {
     },
     join: function() {
       this.$router.push("/user/join/");
+      this.$router.go()
     }
   },
   data: () => {
