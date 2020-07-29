@@ -34,7 +34,7 @@
       </div> -->
       <div class="row justify-content-left">
         <div
-          class="col-12 col-sm-12 col-md-4 card-deck"
+          class="col-12 col-sm-12 col-md-3 card-deck"
           style="margin:auto 0;"
           v-for="(post, index) in posts"
           :key="index"
@@ -47,7 +47,7 @@
                 
                 style="height:10rem"
               />
-              <div class="card-img-overlay" @click="getdetail(post.pid)" style="padding:60px; text-align:center; font-size:1.3rem; font-weight:bold; color: white;">
+              <div class="card-img-overlay" @click="getdetail(post.pid)" style="padding:4rem 0; text-align:center; font-size:1.3rem; font-weight:bold; color: white;">
                 <!-- <button class="location-button">{{post.location}}</button> -->
                 <p>{{post.location}}</p>
             </div>
@@ -74,7 +74,7 @@
                   <i
                     v-if="check(post.pid)"
                     class="fas fa-heart select-button like-button"
-                    style="text-align: right; font-size: 20px; color:red;"
+                    style="text-align: right; font-size: 20px; color:crimson;"
                   ></i>
                   <i
                     v-if="!check(post.pid)"

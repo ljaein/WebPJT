@@ -21,9 +21,17 @@
     font-weight: bold;
 }
 
+.btn-spring:hover{
+    transform: rotate(15deg);
+}
+
 .btn-summer{
     background-image: url(https://png.pngtree.com/thumb_back/fw800/back_our/20190620/ourmid/pngtree-summer-promotion-poster-background-material-image_150395.jpg);
     font-weight: bold;
+}
+
+.btn-summer:hover{
+    transform: rotate(15deg);
 }
 
 .btn-fall{
@@ -31,9 +39,17 @@
     font-weight: bold;
 }
 
+.btn-fall:hover{
+    transform: rotate(15deg);
+}
+
 .btn-winter{
     background-image: url(https://dimg.donga.com/wps/NEWS/IMAGE/2019/12/01/98576905.2.jpg);
     font-weight: bold;
+}
+
+.btn-winter:hover{
+    transform: rotate(15deg);
 }
 
 .btn-ground{
@@ -41,9 +57,17 @@
     font-weight: bold;
 }
 
+.btn-ground:hover{
+    transform: rotate(15deg);
+}
+
 .btn-water{
     background-image: url(https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcT_Gy5HbcA7w4lV4vfaFCLO6pzZlh7JHKBCmw&usqp=CAU);
     font-weight: bold;
+}
+
+.btn-water:hover{
+    transform: rotate(15deg);
 }
 
 .btn-sky{
@@ -51,9 +75,18 @@
     font-weight: bold;
 }
 
+.btn-sky:hover{
+    transform: rotate(15deg);
+}
+
 .hot-item{
     font-weight: bold;
     font-size: 1.5rem;
     text-align: left;
     color: red;
+}
+
+.more{
+    font-size: 1.1rem;
+    cursor: pointer;
 }
