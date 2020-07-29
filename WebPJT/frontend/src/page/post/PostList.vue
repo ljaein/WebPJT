@@ -1,6 +1,5 @@
 <template>
   <div class="post">
-    
     <div class="container col-md-6">
       <div class="input-group mb-5">
         <div class="input-group-prepend">
@@ -68,6 +67,8 @@
                     class="card-text"
                     style="font-size: 1rem; text-align: left; text-overflow:ellipsis;overflow: hidden;white-space: nowrap;"
                   >가격 : {{post.price}}</p>
+
+                  <!-- heart like -->
                   <div id="heart" @click="registlike(post.pid)">
                   {{post.likecnt}}
                   <i
@@ -80,7 +81,9 @@
                     class="far fa-heart"
                     style="text-align: right; font-size: 20px;"
                   ></i>
-              </div>
+                </div>
+
+
                 </div>
               </div>
             </div>
@@ -89,9 +92,13 @@
       </div>
     </div>
 
-     <!-- infinite loading -->
-    <!-- <infinite-loading :identifier="infiniteId" @infinite="infiniteHandler" spinner="waveDots">
-      <div slot="no-more"></div>
+    <!-- top button -->
+    <i class="fas fa-2x fa-angle-double-up upBtn" @click="toTop"></i>
+    <!-- infinite loading -->
+    <infinite-loading :identifier="infiniteId" @infinite="infiniteHandler" spinner="waveDots">
+      <div slot="no-more">
+        <a @click="toTop">Top</a>
+      </div>
       <div slot="no-result"></div>
     </infinite-loading> -->
   </div>
@@ -105,7 +112,6 @@ import InfiniteLoading from 'vue-infinite-loading'
 
 const baseURL = "http://localhost:8080";
 
-// const likeButtons = document.querySelectorAll('.like-button');
 
 export default {
   components: {
@@ -135,6 +141,9 @@ export default {
     };
   },
   methods: {
+    toTop() {
+      scroll(0, 0);
+    },
     infiniteHandler($state) {
       if(this.key==""){
         axios.get(`${baseURL}/post/getList?page=` + this.page)
@@ -184,12 +193,6 @@ export default {
       }
       return false;
     },
-    // gocreate() {
-    //   this.$router.push({
-    //     name: "PostCreate",
-    //   })
-    //   this.$router.go();
-    // },
     getdetail(pid) {
       this.$router.push({
         name: "PostListDetail",
@@ -231,28 +234,33 @@ export default {
       }
     },
     registlike(pid) {
-      axios
-        .get(`${baseURL}/like/registDelete/${this.email}/${pid}`)
-        .then((res) => {
-          this.checklike();
-          this.init();
-          if (this.check(pid) == false) {
-            this.$toasted.show('좋아좋아요!', {
-            theme: 'bubble',
-            position: 'top-right',
-            duration:1000,
+      if (this.$cookies.get('Auth-Token')) {
+        axios
+          .get(`${baseURL}/like/registDelete/${this.email}/${pid}`)
+          .then((res) => {
+            this.checklike();
+            this.init();
+            if (this.check(pid) == false) {
+              this.$toasted.show('좋아좋아요!', {
+              theme: 'bubble',
+              position: 'top-right',
+              duration:1000,
+            })
+            } else {
+              this.$toasted.show('싫어싫어요!', {
+              theme: 'bubble',
+              position: 'top-right',
+              duration:1000,
+            })
+            }
           })
-          } else {
-            this.$toasted.show('싫어싫어요!', {
-            theme: 'bubble',
-            position: 'top-right',
-            duration:1000,
-          })
-          }
-        })
-        .catch((err) => {
-          alert(err);
-        });
+          .catch((err) => {
+            alert(err);
+          });
+      } else {
+        confirm('로그인 하여야 가능한 기능입니다. 로그인 하시겠습니까?')
+        this.$router.push('/')
+      }
     },
     checklike() {
       axios
@@ -306,6 +314,11 @@ export default {
   },
   created() {
     this.email = this.$cookies.get("User");
+    // if(this.email == null) {
+    //   this.flag = false;
+    // } else {
+    //   this.flag = true;
+    // }
     this.init();
     this.checklike();
   },
@@ -333,5 +346,11 @@ export default {
 }
 .card-title, .card-img-overlay{
   cursor:pointer;
+}
+.upBtn { 
+  position:fixed;
+  right:5%;
+  top:90%;
+  color: red;
 }
 </style>
