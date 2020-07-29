@@ -110,6 +110,7 @@ import "../../assets/css/postlist.css";
 import axios from "axios";
 import InfiniteLoading from 'vue-infinite-loading'
 import Swal from 'sweetalert2'
+import LoginModal from '../../components/modal/LoginModal.vue'
 
 // const Swal = require('sweetalert2')
 
@@ -118,7 +119,8 @@ const baseURL = "http://localhost:8080";
 
 export default {
   components: {
-    InfiniteLoading
+    InfiniteLoading,
+    LoginModal
   },
   data() {
     return {
@@ -244,12 +246,7 @@ export default {
           });
       } else {
         // confirm('로그인 후 이용해주시기 바랍니다.')
-        Swal.fire({
-          icon: 'error',
-          title: 'Oops...',
-          text: '로그인 후 이용해주세요.',
-          footer: '<a href>Why do I have this Issue?</a>'
-        })
+      
       }
     },
     checklike() {
