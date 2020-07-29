@@ -232,10 +232,25 @@ export default {
         })
     },
     createcomment(commentData) {
+      const Toast = Swal.mixin({
+        toast: true,
+        position: 'top-end',
+        showConfirmButton: false,
+        timer: 1500,
+        timerProgressBar: true,
+        onOpen: (toast) => {
+          toast.addEventListener('mouseenter', Swal.stopTimer)
+          toast.addEventListener('mouseleave', Swal.resumeTimer)
+        }
+      })
       axios.post(`${baseURL}/reply/register`,commentData)
         .then((response) => {
           commentData.content = ''
           this.fetchComment();
+          Toast.fire({
+            icon: 'success',
+            title: '댓글 작성 완료!'
+          })
         }).catch((error) => {
           console.log(error)
         })
@@ -249,12 +264,29 @@ export default {
         })
     },
     commentDelete(comment) {
-      axios.delete(`${baseURL}/reply/delete/${comment.rid}`)
-        .then((response) => {
-          this.fetchComment()
-        }).catch((error) => {
-          console.log(error.response.data)
-        })
+      Swal.fire({
+        title: '댓글을 삭제하시겠습니까?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+      }).then((result) => {
+        if (result.value) {
+          Swal.fire(
+            'Deleted!',
+            '댓글이 삭제되었습니다!',
+            'success'
+          )
+        axios.delete(`${baseURL}/reply/delete/${comment.rid}`)
+          .then((response) => {
+            this.fetchComment()
+          }).catch((error) => {
+            console.log(error.response.data)
+          })
+        }
+      })
     },
   },
  

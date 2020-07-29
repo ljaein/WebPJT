@@ -50,9 +50,7 @@ export default {
   },
   methods: {
     commentDelete: function() {
-      if (confirm('댓글을 삭제하시겠습니까?')) {
-        this.$emit('comment-delete',this.comment)
-      }
+      this.$emit('comment-delete',this.comment)
     },
     commentModify() {
       this.isUpdated = !this.isUpdated
