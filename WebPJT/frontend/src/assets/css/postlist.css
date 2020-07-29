@@ -8,7 +8,7 @@
 }
 
 .card{
-    border: 0;
+    border: none !important;
 }
 
 .card-img-overlay p{

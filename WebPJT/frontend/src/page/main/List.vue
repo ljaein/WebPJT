@@ -3,7 +3,7 @@
     <button class="btn btn-spring btn-circle btn-xl mb-5 mr-5">
       <br />
       <br />
-      <br />Spirng
+      <br />Spring
     </button>
     <button class="btn btn-summer btn-circle btn-xl mb-5 mr-5">
       <br />
@@ -83,18 +83,39 @@
         <span class="sr-only">Next</span>
       </a>
     </div>
-    <p class="hot-item mt-3">HOT ITEM</p>
-    <div class="row justify-contetn-left">
-    <div class="card col-12 col-sm-12 col-md-3" v-for="(post, index) in posts" :key="index" style="width: 18rem;">
-      <div v-if="index < 4">
-      <img :src="post.imgurl" class="card-img-top" style="height:13rem;" />
-      <div class="card-body">
-        <p
-          class="card-text" style="color: black;"
-        >{{post.likecnt}}</p>
-      </div>
-      </div>
+    <div class="d-flex justify-content-between">
+      <p class="hot-item mt-3 mb-0">HOT ITEM</p>
+      <span class="more mt-4" @click="goPost">+ more</span>
     </div>
+    <div class="row">
+      <div
+        class="card col-12 col-sm-12 col-md-3 p-3"
+        v-for="(post, index) in posts"
+        :key="index"
+        style="width: 18rem; border: none;"
+      >
+        <div v-if="index < 4">
+          <img
+            :src="post.imgurl"
+            class="card-img-top"
+            style="height:11rem; cursor: pointer;"
+            @click="getdetail(post.pid)"
+          />
+          <div class="card-body p-0">
+            <p
+              class="card-text mb-1"
+              style="text-overflow:ellipsis;overflow: hidden;white-space: nowrap; font-weight: bold; color: gray;"
+            >[{{post.location}}]{{post.title}}</p>
+            <p class="card-text d-flex justify-content-start" style="text-overflow:ellipsis; overflow: hidden; white-space: nowrap;">
+              <i
+                class="fas fa-heart select-button like-button mr-2 mt-1"
+                style="text-align: left; font-size: 18px; color: crimson; "
+              ></i>
+              {{post.likecnt}}명이 좋아합니다.
+            </p>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -116,7 +137,7 @@ export default {
   methods: {
     init() {
       axios
-        .get(`${baseURL}/post/list/`)
+        .get(`${baseURL}/post/listbylike/`)
         .then((res) => {
           this.posts = res.data;
           console.log(res.data);
@@ -125,13 +146,23 @@ export default {
           console.log(err);
         });
     },
+    goPost: function () {
+      this.$router.push("/posts/");
+      this.$router.go();
+    },
+    getdetail(pid) {
+      this.$router.push({
+        name: "PostListDetail",
+        params: { ID: pid },
+      });
+    },
   },
   data: () => {
     return {
       email: "",
       password: "",
       itemcount: 0,
-      posts:{
+      posts: {
         pid: "",
         email: "",
         activity: "",
@@ -139,9 +170,9 @@ export default {
         location: "",
         imgurl: "",
         price: "",
-        sdate:"",
-        edate:"",
-        likecnt:""
+        sdate: "",
+        edate: "",
+        likecnt: "",
       },
     };
   },

@@ -39,14 +39,12 @@
     <div class="form-group">
       <label class="d-flex justify-content-start">Expiration-Date</label>
       <div class="d-flex justify-content-between">
-        <div>
-          <small class="form-text text-muted d-flex">시작일</small>
-          <b-form-datepicker id="sdate" v-model="PostCreate.sdate" class="col-md-5"></b-form-datepicker>
-        </div>
-        <div>
-          <small class="form-text text-muted d-flex">마감일</small>
-          <b-form-datepicker id="edate" v-model="PostCreate.edate" class="col-md-5"></b-form-datepicker>
-        </div>
+          <small class="form-text text-muted " style="margin-right:auto;">시작일</small><br>
+          <small class="form-text text-muted " style="margin-right:auto;">마감일</small>
+      </div>
+      <div class="d-flex justify-content-between">
+          <b-form-datepicker id="sdate" v-model="PostCreate.sdate" class="col-md-6"></b-form-datepicker>
+          <b-form-datepicker id="edate" v-model="PostCreate.edate" class="col-md-6"></b-form-datepicker>
       </div>
       <small class="form-text text-muted d-flex">상품 유효기간을 지정해주세요.</small>
     </div>
