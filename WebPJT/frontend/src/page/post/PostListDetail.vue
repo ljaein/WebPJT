@@ -279,12 +279,12 @@ export default {
             '댓글이 삭제되었습니다!',
             'success'
           )
-        axios.delete(`${baseURL}/reply/delete/${comment.rid}`)
-          .then((response) => {
-            this.fetchComment()
-          }).catch((error) => {
-            console.log(error.response.data)
-          })
+          axios.delete(`${baseURL}/reply/delete/${comment.rid}`)
+            .then((response) => {
+              this.fetchComment()
+            }).catch((error) => {
+              console.log(error.response.data)
+            })
         }
       })
     },

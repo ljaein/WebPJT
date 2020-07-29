@@ -348,7 +348,4 @@ export default {
   top:90%;
   color: red;
 }
-.confirmButton {
-  border: red;
-}
 </style>

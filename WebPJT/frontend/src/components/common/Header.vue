@@ -135,7 +135,8 @@ export default {
       this.$cookies.remove("User");
       this.$router.push("/");
       Swal.fire({
-        position: 'top',
+        width:250,
+        position: 'top-right',
         icon: 'success',
         title: '로그아웃 완료!!!',
         showConfirmButton: false,
