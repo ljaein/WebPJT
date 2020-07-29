@@ -61,8 +61,8 @@
 
                 </div>
                 <div class="d-flex justify-content-end">
-                  <button type="button" class="btn btn-primary mr-1" data-toggle="modal" data-target="#BasketModal"><i class="fas fa-shopping-basket mr-2"></i>장바구니</button>
-                  <BasketModal />
+                  <button type="button" class="btn btn-primary mr-1" data-toggle="modal" data-target="#BasketModal" @click="alertbasket(post)"><i class="fas fa-shopping-basket mr-2"></i>장바구니</button>
+                  <!-- <BasketModal /> -->
                   <button class="btn btn-danger"><i class="far fa-hand-point-up mr-2"></i>바로구매</button>
                 </div>
               </div>
@@ -129,7 +129,7 @@
 import axios from "axios";
 import '../../assets/css/postlistdetail.css'
 import PostUpdateVue from './PostUpdate.vue';
-import BasketModal from '../../components/modal/BasketModal.vue'
+// import BasketModal from '../../components/modal/BasketModal.vue'
 
 import CommentInput from '../../components/comment/CommentInput.vue'
 import CommentList from '../../components/comment/CommentList.vue'
@@ -140,7 +140,7 @@ export default {
   components: {
     CommentInput,
     CommentList,
-    BasketModal
+    // BasketModal
   },
   data(){
     return{
@@ -237,6 +237,17 @@ export default {
         }).catch((error) => {
           console.log(error.response.data)
         })
+    },
+    alertbasket(post){
+      Swal.fire({
+        title: `${post.title}`,
+        text: '장바구니에 담겼습니다.',
+        imageUrl: `${imgurl}`,
+        imageWidth: 400,
+        imageHeight: 200,
+        imageAlt: 'Custom image',
+      })
+      // alert(`'${title}'상품을 장바구니에 담았습니다!`)
     },
   },
  
