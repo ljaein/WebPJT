@@ -100,7 +100,7 @@
         <a @click="toTop">Top</a>
       </div>
       <div slot="no-result"></div>
-    </infinite-loading>
+    </infinite-loading> -->
   </div>
   </div>
 </template>

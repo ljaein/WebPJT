@@ -77,6 +77,14 @@ public class PostListController {
         return temp;
     }
 
+    @GetMapping("/listbylike")
+    @ApiOperation(value="포스트 리스트 좋아요 정렬")
+    public List<PostList> selectAllByLike() throws SQLException, IOException {
+        List<PostList> temp = new LinkedList<>();
+        temp = postDao.findAllByOrderByLikecntDesc();
+        return temp;
+    }
+
     // infinite-loading paging
     @GetMapping("/getList")
     @ResponseBody
