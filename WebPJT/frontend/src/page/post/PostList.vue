@@ -90,10 +90,10 @@
     </div>
 
      <!-- infinite loading -->
-    <infinite-loading :identifier="infiniteId" @infinite="infiniteHandler" spinner="waveDots">
+    <!-- <infinite-loading :identifier="infiniteId" @infinite="infiniteHandler" spinner="waveDots">
       <div slot="no-more"></div>
       <div slot="no-result"></div>
-    </infinite-loading>
+    </infinite-loading> -->
   </div>
   </div>
 </template>
