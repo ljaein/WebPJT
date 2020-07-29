@@ -1,89 +1,24 @@
 <template>
   <div>
-    <div
-      ref="searchWindow"
-      :style="searchWindow"
-      style="border:1px solid;width:500px;margin:5px 0;position:relative"
-    >
-      <img
-        src="//t1.daumcdn.net/postcode/resource/images/close.png"
-        id="btnFoldWrap"
-        style="cursor:pointer;right:0px;top:-1px;z-index:1"
-        @click="searchWindow.display = 'none'"
-        alt="close"
-      >
-    </div>
-    <input type="text" v-model="address" placeholder="주소">
-    <br>
-    <input type="text" v-model="extraAddress" ref="extraAddress" placeholder="상세주소">
-    <input type="text" placeholder="우편번호" v-model="postcode">
-    <input type="button" value="우편번호 찾기" @click="execDaumPostcode" id="ttt">
-    <br>
+   우편번호 : <input type="text" name="zip" style="width:80px; height:26px;" />
+<button type="button" class="btn btn-primary mr-1" @click="Search">검색</button><br>
+주소 : <input type="text" name="addr1" style="width:300px; height:30px;" readonly /><br>
+상세 : <input type="text" name="addr2" style="width:300px; height:30px;" />
   </div>
 </template>
 
 <script>
 export default {
-  data() {
-    return {
-      searchWindow: {
-        // display: 'none',
-        height: '300px',
-      },
-      postcode: '',
-      address: '',
-      extraAddress: '',
-    };
-  },
   methods: {
-    execDaumPostcode() {
-      const currentScroll = Math.max(
-        document.body.scrollTop,
-        document.documentElement.scrollTop,
-      );
-      // eslint-disable-next-line
-      new daum.Postcode({
-        onComplete: (data) => {
-          if (data.userSelectedType === 'R') {
-            this.address = data.roadAddress;
-          } else {
-            this.address = data.jibunAddress;
-          }
-          if (data.userSelectedType === 'R') {
-            if (data.bname !== '' && /[동|로|가]$/g.test(data.bname)) {
-              this.extraAddress += data.bname;
+          Search() {
+          new daum.Postcode({
+            oncomplete: function(data) {
+              $('[name=zip]').val(data.zonecode); // 우편번호 (5자리)
+              $('[name=addr1]').val(data.address);
+              $('[name=addr2]').val(data.buildingName);
             }
-            if (data.buildingName !== '' && data.apartment === 'Y') {
-              this.extraAddress +=
-                this.extraAddress !== ''
-                  ? `, ${data.buildingName}`
-                  : data.buildingName;
-            }
-            if (this.extraAddress !== '') {
-              this.extraAddress = ` (${this.extraAddress})`;
-            }
-          } else {
-            this.extraAddress = '';
-          }
-          this.postcode = data.zonecode;
-          this.$refs.extraAddress.focus();
-          // this.searchWindow.display = 'none';
-          document.body.scrollTop = currentScroll;
-        },
-        onResize: (size) => {
-          this.searchWindow.height = `${size.height}px`;
-        },
-        width: '100%',
-        height: '100%',
-      }).embed(this.$refs.searchWindow);
-      // this.searchWindow.display = 'block';s
-    },
-  },
-};
-</script>
-
-<style>
-#ttt {
-  background-color : red;
+          }).open();
 }
-</style>
+  }
+}
+</script>

@@ -161,22 +161,22 @@ export default {
             container: '#kakao-link-btn',
             objectType: 'feed',
             content: {
-              title: this.post.title,
-              description: this.post.activity,
-              imageUrl: document.images[0].src,
+              title: this.post.title, // 콘텐츠의 타이틀
+              description: this.post.activity,  // 콘텐츠 상세설명
+              imageUrl: document.images[0].src, // 썸네일 이미지
               link: {
                 webUrl: 'http://localhost:3000/#/posts/' + this.pid,
                 mobileWebUrl: 'https://developers.kakao.com'
               }
           },
           social: {
-            likeCount: 286,
-            commentCount: 45,
+            likeCount: 286, // LIKE 개수
+            commentCount: 45, // 댓글 개수
             sharedCount: 845
           },
           buttons: [
             {
-              title: 'Open!',
+              title: 'Open!',  // 버튼 제목
               link: {
                 mobileWebUrl: 'https://developers.kakao.com',
                 webUrl: 'http://localhost:3000/#/posts/' + this.pid     
