@@ -1,6 +1,5 @@
 <template>
   <div class="post">
-    
     <div class="container col-md-6">
       <div class="input-group mb-5">
         <div class="input-group-prepend">
@@ -68,6 +67,8 @@
                     class="card-text"
                     style="font-size: 1rem; text-align: left; text-overflow:ellipsis;overflow: hidden;white-space: nowrap;"
                   >가격 : {{post.price}}</p>
+
+                  <!-- heart like -->
                   <div id="heart" @click="registlike(post.pid)">
                   {{post.likecnt}}
                   <i
@@ -80,7 +81,9 @@
                     class="far fa-heart"
                     style="text-align: right; font-size: 20px;"
                   ></i>
-              </div>
+                </div>
+
+
                 </div>
               </div>
             </div>
@@ -88,6 +91,16 @@
         </div>
       </div>
     </div>
+
+    <!-- top button -->
+    <i class="fas fa-2x fa-angle-double-up upBtn" @click="toTop"></i>
+    <!-- infinite loading -->
+    <infinite-loading :identifier="infiniteId" @infinite="infiniteHandler" spinner="waveDots">
+      <div slot="no-more">
+        <a @click="toTop">Top</a>
+      </div>
+      <div slot="no-result"></div>
+    </infinite-loading> -->
   </div>
   </div>
 </template>
@@ -95,15 +108,19 @@
 <script>
 import "../../assets/css/postlist.css";
 import axios from "axios";
-
+import InfiniteLoading from 'vue-infinite-loading'
 
 const baseURL = "http://localhost:8080";
 
-// const likeButtons = document.querySelectorAll('.like-button');
 
 export default {
+  components: {
+    InfiniteLoading
+  },
   data() {
     return {
+      page: 1,
+      infiniteId: 0,
       posts: {
         pid: "",
         email: "",
@@ -124,6 +141,50 @@ export default {
     };
   },
   methods: {
+    toTop() {
+      scroll(0, 0);
+    },
+    infiniteHandler($state) {
+      if(this.key==""){
+        axios.get(`${baseURL}/post/getList?page=` + this.page)
+        .then( res => {
+          setTimeout(() => {
+            if(res.data.length) {
+              this.posts = this.posts.concat(res.data);
+              $state.loaded();
+              this.page += 1;
+              if(this.posts.length / 9 == 0) {
+                $state.complete();
+              }
+            } else {
+              $state.complete();
+            }
+          }, 1000);
+        })
+        .catch( err => {
+          console.log(err);
+        })
+      } else {
+        axios.get(`${baseURL}/post/search/${this.key}/${this.word}?page=` + this.page)
+        .then( res => {
+          setTimeout(() => {
+            if(res.data.length) {
+              this.posts = this.posts.concat(res.data);
+              $state.loaded();
+              this.page += 1;
+              if(this.posts.length / 9 == 0) {
+                $state.complete();
+              }
+            } else {
+              $state.complete();
+            }
+          }, 1000);
+        })
+        .catch( err => {
+          console.log(err);
+        })
+      }
+    },
     check(pid) {
       for (var i = 0; i < this.postLike.length; i++) {
         if (this.postLike[i] == pid) {
@@ -132,12 +193,6 @@ export default {
       }
       return false;
     },
-    // gocreate() {
-    //   this.$router.push({
-    //     name: "PostCreate",
-    //   })
-    //   this.$router.go();
-    // },
     getdetail(pid) {
       this.$router.push({
         name: "PostListDetail",
@@ -145,55 +200,67 @@ export default {
       });
     },
     search() {
+      this.page = 1;
+      this.infiniteId += 1;
+
       if (this.key == "") {
-        axios
-          .get(`${baseURL}/post/list`)
-          .then((res) => {
-            this.posts = res.data;
-            this.word = "";
-          })
-          .catch((err) => {
-            console.log(err);
-          });
+        this.word = "";
+        this.init();
+        // axios
+        //   .get(`${baseURL}/post/list`)
+        //   .then((res) => {
+        //     this.posts = res.data;
+        //     this.word = "";
+        //   })
+        //   .catch((err) => {
+        //     console.log(err);
+        //   });
       } else {
         if (this.word == "") {
           alert("검색어를 입력하세요.");
         } else {
-          axios
-            .get(`${baseURL}/post/search/${this.key}/${this.word}`)
-            .then((res) => {
-              this.posts = res.data;
-              this.word = "";
-            })
-            .catch((err) => {
-              alert("올바른 값을 입력하세요.");
-            });
+          this.page = 1;
+          this.init();
+        //   axios
+        //     .get(`${baseURL}/post/search/${this.key}/${this.word}`)
+        //     .then((res) => {
+        //       this.posts = res.data;
+        //       this.word = "";
+        //     })
+        //     .catch((err) => {
+        //       alert("올바른 값을 입력하세요.");
+        //     });
         }
       }
     },
     registlike(pid) {
-      axios
-        .get(`${baseURL}/like/registDelete/${this.email}/${pid}`)
-        .then((res) => {
-          this.checklike();
-          this.init();
-          if (this.check(pid) == false) {
-            this.$toasted.show('좋아좋아요!', {
-            theme: 'bubble',
-            position: 'top-right',
-            duration:1000,
+      if (this.$cookies.get('Auth-Token')) {
+        axios
+          .get(`${baseURL}/like/registDelete/${this.email}/${pid}`)
+          .then((res) => {
+            this.checklike();
+            this.init();
+            if (this.check(pid) == false) {
+              this.$toasted.show('좋아좋아요!', {
+              theme: 'bubble',
+              position: 'top-right',
+              duration:1000,
+            })
+            } else {
+              this.$toasted.show('싫어싫어요!', {
+              theme: 'bubble',
+              position: 'top-right',
+              duration:1000,
+            })
+            }
           })
-          } else {
-            this.$toasted.show('싫어싫어요!', {
-            theme: 'bubble',
-            position: 'top-right',
-            duration:1000,
-          })
-          }
-        })
-        .catch((err) => {
-          alert(err);
-        });
+          .catch((err) => {
+            alert(err);
+          });
+      } else {
+        confirm('로그인 하여야 가능한 기능입니다. 로그인 하시겠습니까?')
+        this.$router.push('/')
+      }
     },
     checklike() {
       axios
@@ -216,18 +283,42 @@ export default {
         });
     },
     init() {
-      axios
-        .get(`${baseURL}/post/list/`)
+      // axios
+      //   .get(`${baseURL}/post/list/`)
+      //   .then((res) => {
+      //     this.posts = res.data;
+      //   })
+      //   .catch((err) => {
+      //     console.log(err);
+      //   });
+       if(this.key ==""){
+        axios
+        .get(`${baseURL}/post/getList?page=0`)
         .then((res) => {
           this.posts = res.data;
         })
         .catch((err) => {
           console.log(err);
         });
+      } else {
+        axios
+        .get(`${baseURL}/post/search/${this.key}/${this.word}?page=0`)
+        .then((res) => {
+          this.posts = res.data;
+        })
+        .catch((err) => {
+          console.log(err);
+        })
+      }
     },
   },
   created() {
     this.email = this.$cookies.get("User");
+    // if(this.email == null) {
+    //   this.flag = false;
+    // } else {
+    //   this.flag = true;
+    // }
     this.init();
     this.checklike();
   },
@@ -255,5 +346,11 @@ export default {
 }
 .card-title, .card-img-overlay{
   cursor:pointer;
+}
+.upBtn { 
+  position:fixed;
+  right:5%;
+  top:90%;
+  color: red;
 }
 </style>
