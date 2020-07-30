@@ -1,0 +1,56 @@
+.infoimg{
+    height:15rem; 
+    width:15rem; 
+}
+
+.inputimg button{
+    width: 100%;
+    color: crimson;
+    font-weight: bold;
+}
+
+.nickname-edit{
+    color: crimson;
+    font-weight: bold;
+}
+
+.form-group-info input{
+    border: none !important;
+    /* text-align: right; */
+}
+/* 
+.form-group input :focus{
+    outline: 1px dashed crimson !important;
+} */
+
+.form-control{
+    background-color: white !important;
+}
+
+.form-group-pw{
+    color: crimson;
+    font-weight: bold;
+}
+
+.form-group-pw label{
+    font-size: 1rem;
+}
+
+.btn-link{
+    color: crimson !important;
+    font-weight: bold !important;
+    font-size: 1.1rem !important;
+    margin-left: auto;
+}
+
+.error-text{
+    font-size: 0.8rem;
+}
+
+.mypage-select{
+    font-weight: bold;
+    font-size: 1.1rem;
+    margin-right: 2rem;
+    margin-top: 2rem;
+    cursor: pointer;
+}
