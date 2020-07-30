@@ -29,36 +29,54 @@
     </div>
     <div class="form-group">
       <label class="d-flex justify-content-start">Location</label>
-      <input type="text" class="form-control" id="location" v-model="PostCreate.location" />
+      <!-- <input type="text" class="form-control" id="location" v-model="PostCreate.location" /> -->
+
+      <div >
+        <div class="d-flex mb-1">
+          <input
+            type="text"
+            class="form-control"
+            v-model="addr1"
+            style="width:200px;"
+            placeholder="우편번호"
+          />
+          <button type="button" class="btn btn-primary btn-sm ml-1" @click="Search">우편번호 찾기</button>
+        </div>
+        <input type="text" class="form-control mb-1" v-model="addr2" placeholder="주소" readonly />
+        <input type="text" class="form-control mb-1" v-model="addr3" placeholder="상세주소" />
+      </div>
+
       <small class="form-text text-muted d-flex">주소를 입력하세요.</small>
     </div>
     <div class="form-group">
       <label class="d-flex justify-content-start">Price</label>
       <input type="text" class="form-control" id="price" v-model="PostCreate.price" />
-      <small class="form-text text-muted d-flex" v-if="!error.price">가격을 입력하세요.</small>
+      <small class="form-text text-muted d-flex" v-if="!error.price && !error.priceint">가격을 입력하세요.</small>
       <small class="form-text d-flex" style="color:red;" v-if="error.price">{{error.price}}</small>
+      <small class="form-text d-flex" style="color:red;" v-if="error.priceint">{{error.priceint}}</small>
     </div>
     <div class="form-group">
       <label class="d-flex justify-content-start">Expiration-Date</label>
       <div class="d-flex justify-content-between">
-          <small class="form-text text-muted " style="margin-right:auto;">시작일</small><br>
-          <small class="form-text text-muted " style="margin-right:auto;">마감일</small>
+        <small class="form-text text-muted" style="margin-right:auto;">시작일</small>
+        <br />
+        <small class="form-text text-muted" style="margin-right:auto;">마감일</small>
       </div>
       <div class="d-flex justify-content-between">
-          <b-form-datepicker id="sdate" v-model="PostCreate.sdate" class="col-md-6"></b-form-datepicker>
-          <b-form-datepicker id="edate" v-model="PostCreate.edate" class="col-md-6"></b-form-datepicker>
+        <b-form-datepicker id="sdate" v-model="PostCreate.sdate" class="col-md-6"></b-form-datepicker>
+        <b-form-datepicker id="edate" v-model="PostCreate.edate" class="col-md-6"></b-form-datepicker>
       </div>
       <small class="form-text text-muted d-flex">상품 유효기간을 지정해주세요.</small>
     </div>
     <div class="form-group">
       <label class="d-flex justify-content-start">Corporation-Detail</label>
-      <textarea
-        class="form-control"
-        id="company-information"
-        v-model="PostCreate.companyInfo">
-      </textarea>
+      <textarea class="form-control" id="company-information" v-model="PostCreate.companyInfo"></textarea>
       <small class="form-text text-muted d-flex" v-if="!error.companyInfo">업체 정보를 입력하세요.</small>
-      <small class="form-text d-flex" style="color:red;" v-if="error.companyInfo">{{error.companyInfo}}</small>
+      <small
+        class="form-text d-flex"
+        style="color:red;"
+        v-if="error.companyInfo"
+      >{{error.companyInfo}}</small>
     </div>
     <div class="form-group">
       <label class="d-flex justify-content-start">Detail-Info</label>
@@ -66,7 +84,7 @@
       <small class="form-text text-muted d-flex" v-if="!error.detail">상품 상세정보를 입력하세요.</small>
       <small class="form-text d-flex" style="color:red;" v-if="error.detail">{{error.detail}}</small>
     </div>
-    
+
     <!-- <a type="button" class="btn btn-outline form-check mb-2" href="#" @click="gocreate()"> -->
     <div class="d-flex justify-content-end mb-5">
       <button
@@ -88,12 +106,12 @@ const baseURL = "http://localhost:8080/";
 import axios from "axios";
 
 export default {
-  data: function () {
+  data() {
     return {
       PostCreate: {
         email: "",
         title: "",
-        locations: "",
+        location: "",
         imgurl: "",
         price: "",
         sdate: "",
@@ -107,54 +125,80 @@ export default {
         detail: false,
         price: false,
         companyInfo: false,
-        title: false
+        title: false,
+        priceint: false,
+        location: false
       },
+      addr1: "",
+      addr2: "",
+      addr3: "",
     };
   },
-  watch:{
+  watch: {
     PostCreate: {
-      handler: function(val){
-        if(!/^[0-9]+$/g.test(val.price) && val.price.length>0){
-          this.error.price = "가격은 숫자만 입력 가능합니다.";
-        }else{
-          this.error.price=false;
+      handler: function (val) {
+        if (!/^[0-9]+$/g.test(val.price) && val.price.length > 0) {
+          this.error.priceint = "가격은 숫자만 입력 가능합니다.";
+        } else {
+          this.error.priceint = false;
         }
         // const reg = /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/;
         // if(reg.exec(val.price)!==null){
         //   this.error.price = "가격은 숫자만 입력 가능합니다.";
         // }
       },
-      deep: true
+      deep: true,
     },
   },
   methods: {
+    Search() {
+      let x = this;
+      new daum.Postcode({
+        oncomplete: function (data) {
+          x.addr1 = data.zonecode;
+          x.addr2 = data.address;
+          x.addr3 = data.buildingName;
+        },
+      }).open();
+    },
     regist: function () {
       var flag = 0;
       if (this.PostCreate.activity == "") {
         this.error.activity = "활동명은 빈칸일 수 없습니다.";
         flag = 1;
+      } else {
+        this.error.activity = false;
       }
       if (this.PostCreate.detail == "") {
         this.error.detail = "상품 세부정보는 빈칸일 수 없습니다.";
         flag = 1;
+      } else {
+        this.error.detail = false;
       }
       if (this.PostCreate.companyInfo == "") {
         this.error.companyInfo = "업체 정보는 빈칸일 수 없습니다.";
         flag = 1;
+      } else {
+        this.error.companyInfo = false;
       }
       if (this.PostCreate.price == "") {
         this.error.price = "가격은 빈칸일 수 없습니다.";
         flag = 1;
+      } else {
+        this.error.price = false;
       }
       if (this.PostCreate.title == "") {
         this.error.title = "상품명은 빈칸일 수 없습니다.";
         flag = 1;
+      } else {
+        this.error.title = false;
       }
-      if(flag==1){
-        alert("정보를 모두 입력해주세요.")
+      if (flag == 1) {
+        alert("정보를 모두 입력해주세요.");
         return;
       }
-
+      this.PostCreate.location =
+        "(" + this.addr1 + ") " + this.addr2 + " " + this.addr3;
       axios
         .post(`${baseURL}/post/regist`, this.PostCreate)
         .then((response) => {
@@ -207,7 +251,7 @@ export default {
 };
 </script>
 <style>
-.sdate{
+.sdate {
   margin: 0 !important;
 }
 </style>
