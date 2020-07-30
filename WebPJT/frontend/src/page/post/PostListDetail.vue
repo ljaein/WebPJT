@@ -207,29 +207,40 @@ export default {
       })
     },
     goDelete() {
-      axios.delete(`${baseURL}/post/delete/${this.$route.params.ID}`)
-        .then(() => {
-          Swal.fire({
-            title: 'Are you sure?',
-            text: 'You will not be able to revert this!',
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Yes, delete it!'
-          }).then((result) => {
-            if (result.value) {
-              Swal.fire(
-                'Delete!',
-                'Your file has been deleted.',
-                'success'
-              )
-            this.$router.push(`/posts`)
+      Swal.fire({
+        width: 350,
+        text: '삭제하시겠습니까?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: '<a style="font-size:1rem; color:black">Delete</a>',
+        cancelButtonText: '<a style="font-size:1rem; color:black">Cancel</a>',
+      }).then((result) => {
+        if (result.value) {
+          const Toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 3000,
+            timerProgressBar: true,
+            onOpen: (toast) => {
+              toast.addEventListener('mouseenter', Swal.stopTimer)
+              toast.addEventListener('mouseleave', Swal.resumeTimer)
             }
           })
-        }).catch((error) => {
-          console.log(error.response.data)
-        })
+          Toast.fire({
+            icon: 'success',
+            title: '글이 삭제되었습니다.'
+          })
+          axios.delete(`${baseURL}/post/delete/${this.$route.params.ID}`)
+            .then(() => {
+              this.$router.push(`/posts`)
+            }).catch((error) => {
+              console.log(error.response.data)
+            })
+        }
+      })
     },
     createcomment(commentData) {
       const Toast = Swal.mixin({
@@ -265,20 +276,32 @@ export default {
     },
     commentDelete(comment) {
       Swal.fire({
-        title: '댓글을 삭제하시겠습니까?',
-        text: "You won't be able to revert this!",
+        width: 350,
+        text: "댓글을 삭제하시겠습니까?",
         icon: 'warning',
         showCancelButton: true,
         confirmButtonColor: '#3085d6',
         cancelButtonColor: '#d33',
-        confirmButtonText: 'Yes, delete it!'
+        confirmButtonText: '<a style="font-size:1rem; color:black">Delete</a>',
+        cancelButtonText: '<a style="font-size:1rem; color:black">Cancel</a>'
       }).then((result) => {
         if (result.value) {
-          Swal.fire(
-            'Deleted!',
-            '댓글이 삭제되었습니다!',
-            'success'
-          )
+          const Toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 1000,
+            timerProgressBar: true,
+            onOpen: (toast) => {
+              toast.addEventListener('mouseenter', Swal.stopTimer)
+              toast.addEventListener('mouseleave', Swal.resumeTimer)
+            }
+          })
+
+          Toast.fire({
+            icon: 'success',
+            title: '댓글이 삭제되었습니다.'
+          })
           axios.delete(`${baseURL}/reply/delete/${comment.rid}`)
             .then((response) => {
               this.fetchComment()
