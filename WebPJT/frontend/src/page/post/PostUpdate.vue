@@ -94,7 +94,6 @@ export default {
               toast.addEventListener('mouseleave', Swal.resumeTimer)
             }
           })
-
           Toast.fire({
             icon: 'success',
             title: 'Update Completed!'

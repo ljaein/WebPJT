@@ -2,14 +2,15 @@
   <div class="user" id="join">
     <div class="wrapC table">
       <div class="middle">
-        <h1>회원가입</h1>
-        <div class="form-wrap">
+        <h1 class="text-center font-weight-bold">회원가입</h1>
+        <div class="form-wrap mt-3 mb-3">
           <!-- 라디오 박스 -->
-          <input type="radio" id="normal" name="type" value="normal" v-model="checkType">
-            <label for="normal">일반 사용자</label>
-          <input type="radio" id="business" name="type" value="business" v-model="checkType">
-            <label for="business">사업자 </label><br>
-          <div class="error-text" v-if="error.checkType">{{error.checkType}}</div>
+            <input class="mr-1" type="radio" id="normal" name="type" value="normal" v-model="checkType">
+              <i class="fas fa-child"></i><label for="normal">일반 사용자 &emsp;</label>
+            
+            <input class="mr-1 ml-5" type="radio" id="business" name="type" value="business" v-model="checkType">
+              <i class="fas fa-user-tie"></i><label for="business">사업자 </label><br>
+            <div class="error-text my-4" v-if="error.checkType">{{error.checkType}}</div>
 
           <Business v-if="checkType == 'business'" :checkType="checkType" @join-create-business="joinBusiness"/>
           <Normal v-if="checkType == 'normal'" :checkType="checkType" @join-create-normal="joinNormal" />
