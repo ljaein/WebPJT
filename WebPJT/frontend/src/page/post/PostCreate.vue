@@ -104,6 +104,7 @@
 const baseURL = "http://localhost:8080/";
 
 import axios from "axios";
+import Swal from 'sweetalert2'
 
 export default {
   data() {
@@ -197,12 +198,27 @@ export default {
         alert("정보를 모두 입력해주세요.");
         return;
       }
-      this.PostCreate.location =
-        "(" + this.addr1 + ") " + this.addr2 + " " + this.addr3;
+
+      const Toast = Swal.mixin({
+        toast: true,
+        position: 'top-end',
+        showConfirmButton: false,
+        timer: 3000,
+        timerProgressBar: true,
+        onOpen: (toast) => {
+          toast.addEventListener('mouseenter', Swal.stopTimer)
+          toast.addEventListener('mouseleave', Swal.resumeTimer)
+        }
+      })
+
       axios
         .post(`${baseURL}/post/regist`, this.PostCreate)
         .then((response) => {
           console.log(response.data);
+          Toast.fire({
+            icon: 'success',
+            title:'작성이 완료되었습니다.'
+          })
           this.$router.push("/posts");
         })
         .catch((error) => {

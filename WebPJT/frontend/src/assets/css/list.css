@@ -18,7 +18,9 @@
 
 .btn-spring{
     background-image: url(https://fpost.co.kr/board/data/editor/2003/d4bf3e4345bf3dee5d7a04d5a62302e4_1583479481_1401.jpg);
-    font-weight: bold;
+    font-weight: bold !important;
+    padding-left: 10px !important;
+    padding-top: 10px !important;
 }
 
 .btn-spring:hover{
@@ -26,8 +28,11 @@
 }
 
 .btn-summer{
-    background-image: url(https://png.pngtree.com/thumb_back/fw800/back_our/20190620/ourmid/pngtree-summer-promotion-poster-background-material-image_150395.jpg);
-    font-weight: bold;
+    background-image: url(https://t1.daumcdn.net/cfile/tistory/2543984557A18BF133);
+    font-weight: bold !important;
+    padding-left: 3px !important;
+    padding-top: 10px !important;
+
 }
 
 .btn-summer:hover{
@@ -36,7 +41,9 @@
 
 .btn-fall{
     background-image: url(https://rimage.gnst.jp/livejapan.com/public/article/detail/a/00/02/a0002718/img/basic/a0002718_main.jpg?20200707153932&q=80&rw=750&rh=536);
-    font-weight: bold;
+    font-weight: bold !important;
+    padding-top: 10px !important;
+
 }
 
 .btn-fall:hover{
@@ -45,7 +52,10 @@
 
 .btn-winter{
     background-image: url(https://dimg.donga.com/wps/NEWS/IMAGE/2019/12/01/98576905.2.jpg);
-    font-weight: bold;
+    padding-left: 10px !important;
+    font-weight: bold !important;
+    padding-top: 10px !important;
+
 }
 
 .btn-winter:hover{
@@ -54,7 +64,10 @@
 
 .btn-ground{
     background-image: url(https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQPz9xoBP6vegsSE_1ycAiuwhe4kDWvkVI55w&usqp=CAU);
-    font-weight: bold;
+    font-weight: bold !important;
+    padding-left: 7px !important;
+    padding-top: 10px !important;
+
 }
 
 .btn-ground:hover{
@@ -63,7 +76,9 @@
 
 .btn-water{
     background-image: url(https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcT_Gy5HbcA7w4lV4vfaFCLO6pzZlh7JHKBCmw&usqp=CAU);
-    font-weight: bold;
+    font-weight: bold !important;
+    padding-top: 10px !important;
+
 }
 
 .btn-water:hover{
@@ -72,7 +87,9 @@
 
 .btn-sky{
     background-image: url(https://img1.daumcdn.net/thumb/R800x0/?scode=mtistory2&fname=https%3A%2F%2Ft1.daumcdn.net%2Fcfile%2Ftistory%2F1909213E4FD817CD1F);
-    font-weight: bold;
+    font-weight: bold !important;
+    padding-top: 10px !important;
+
 }
 
 .btn-sky:hover{

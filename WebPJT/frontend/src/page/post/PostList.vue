@@ -93,7 +93,7 @@
     </div>
 
     <!-- top button -->
-    <i class="fas fa-2x fa-angle-double-up upBtn" @click="toTop"></i>
+    <i class="fas fa-2x fa-angle-double-up upBtn" @click="toTop" style="cursor:pointer;"></i>
     <!-- infinite loading -->
     <infinite-loading :identifier="infiniteId" @infinite="infiniteHandler" spinner="waveDots">
       <div slot="no-more">
@@ -109,6 +109,9 @@
 import "../../assets/css/postlist.css";
 import axios from "axios";
 import InfiniteLoading from 'vue-infinite-loading'
+import Swal from 'sweetalert2'
+
+// const Swal = require('sweetalert2')
 
 const baseURL = "http://localhost:8080";
 
@@ -206,30 +209,12 @@ export default {
       if (this.key == "") {
         this.word = "";
         this.init();
-        // axios
-        //   .get(`${baseURL}/post/list`)
-        //   .then((res) => {
-        //     this.posts = res.data;
-        //     this.word = "";
-        //   })
-        //   .catch((err) => {
-        //     console.log(err);
-        //   });
       } else {
         if (this.word == "") {
           alert("검색어를 입력하세요.");
         } else {
           this.page = 1;
           this.init();
-        //   axios
-        //     .get(`${baseURL}/post/search/${this.key}/${this.word}`)
-        //     .then((res) => {
-        //       this.posts = res.data;
-        //       this.word = "";
-        //     })
-        //     .catch((err) => {
-        //       alert("올바른 값을 입력하세요.");
-        //     });
         }
       }
     },
@@ -258,8 +243,18 @@ export default {
             alert(err);
           });
       } else {
-        confirm('로그인 하여야 가능한 기능입니다. 로그인 하시겠습니까?')
-        this.$router.push('/')
+        Swal.fire({
+          icon: 'error',
+          text: '로그인 후 이용해주세요...',
+          confirmButtonColor: '#fff',
+          width:350,
+          confirmButtonText: '<a data-toggle="modal" data-target="#LoginModal" style="font-size:1rem; color:black" >Login</a>',
+          showCancelButton: true,
+          cancelButtonText: '<a style="font-size:1rem; color:black">Cancel</a>',
+          cancelButtonColor: '#fff',
+        }).then((result) => {
+          Swal.close()
+        })
       }
     },
     checklike() {

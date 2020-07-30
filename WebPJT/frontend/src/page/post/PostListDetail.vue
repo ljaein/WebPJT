@@ -61,8 +61,8 @@
 
                 </div>
                 <div class="d-flex justify-content-end">
-                  <button type="button" class="btn btn-primary mr-1" data-toggle="modal" data-target="#BasketModal"><i class="fas fa-shopping-basket mr-2"></i>장바구니</button>
-                  <BasketModal />
+                  <button type="button" class="btn btn-primary mr-1" data-toggle="modal" data-target="#BasketModal" @click="alertbasket(post)"><i class="fas fa-shopping-basket mr-2"></i>장바구니</button>
+                  <!-- <BasketModal /> -->
                   <button class="btn btn-danger"><i class="far fa-hand-point-up mr-2"></i>바로구매</button>
                 </div>
               </div>
@@ -117,7 +117,7 @@
     
       
       <!-- 글 수정 삭제 -->
-      <div class="d-flex justify-content-end mt-3 mb-3">
+      <div class="d-flex justify-content-end mt-3 mb-3" v-if="this.$cookies.get('User') == this.post.email">
         <button class="btn btn-success" @click="goModify"><i class="far fa-edit mr-2"></i>수정하기</button>
         <button class="btn btn-danger" @click="goDelete"><i class="far fa-trash-alt mr-2"></i>삭제하기</button>
       </div>
@@ -129,10 +129,12 @@
 import axios from "axios";
 import '../../assets/css/postlistdetail.css'
 import PostUpdateVue from './PostUpdate.vue';
-import BasketModal from '../../components/modal/BasketModal.vue'
+// import BasketModal from '../../components/modal/BasketModal.vue'
 
 import CommentInput from '../../components/comment/CommentInput.vue'
 import CommentList from '../../components/comment/CommentList.vue'
+
+import Swal from 'sweetalert2'
 
 const baseURL = "http://localhost:8080";
 
@@ -140,7 +142,7 @@ export default {
   components: {
     CommentInput,
     CommentList,
-    BasketModal
+    // BasketModal
   },
   data(){
     return{
@@ -205,19 +207,61 @@ export default {
       })
     },
     goDelete() {
-      axios.delete(`${baseURL}/post/delete/${this.$route.params.ID}`)
-        .then(() => {
-          alert('삭제 완료')
-          this.$router.push(`/posts`)
-        }).catch((error) => {
-          console.log(error.response.data)
-        })
+      Swal.fire({
+        width: 350,
+        text: '삭제하시겠습니까?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: '<a style="font-size:1rem; color:black">Delete</a>',
+        cancelButtonText: '<a style="font-size:1rem; color:black">Cancel</a>',
+      }).then((result) => {
+        if (result.value) {
+          const Toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 3000,
+            timerProgressBar: true,
+            onOpen: (toast) => {
+              toast.addEventListener('mouseenter', Swal.stopTimer)
+              toast.addEventListener('mouseleave', Swal.resumeTimer)
+            }
+          })
+          Toast.fire({
+            icon: 'success',
+            title: '글이 삭제되었습니다.'
+          })
+          axios.delete(`${baseURL}/post/delete/${this.$route.params.ID}`)
+            .then(() => {
+              this.$router.push(`/posts`)
+            }).catch((error) => {
+              console.log(error.response.data)
+            })
+        }
+      })
     },
     createcomment(commentData) {
+      const Toast = Swal.mixin({
+        toast: true,
+        position: 'top-end',
+        showConfirmButton: false,
+        timer: 1500,
+        timerProgressBar: true,
+        onOpen: (toast) => {
+          toast.addEventListener('mouseenter', Swal.stopTimer)
+          toast.addEventListener('mouseleave', Swal.resumeTimer)
+        }
+      })
       axios.post(`${baseURL}/reply/register`,commentData)
         .then((response) => {
           commentData.content = ''
           this.fetchComment();
+          Toast.fire({
+            icon: 'success',
+            title: '댓글 작성 완료!'
+          })
         }).catch((error) => {
           console.log(error)
         })
@@ -231,12 +275,52 @@ export default {
         })
     },
     commentDelete(comment) {
-      axios.delete(`${baseURL}/reply/delete/${comment.rid}`)
-        .then((response) => {
-          this.fetchComment()
-        }).catch((error) => {
-          console.log(error.response.data)
-        })
+      Swal.fire({
+        width: 350,
+        text: "댓글을 삭제하시겠습니까?",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: '<a style="font-size:1rem; color:black">Delete</a>',
+        cancelButtonText: '<a style="font-size:1rem; color:black">Cancel</a>'
+      }).then((result) => {
+        if (result.value) {
+          const Toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 1000,
+            timerProgressBar: true,
+            onOpen: (toast) => {
+              toast.addEventListener('mouseenter', Swal.stopTimer)
+              toast.addEventListener('mouseleave', Swal.resumeTimer)
+            }
+          })
+
+          Toast.fire({
+            icon: 'success',
+            title: '댓글이 삭제되었습니다.'
+          })
+          axios.delete(`${baseURL}/reply/delete/${comment.rid}`)
+            .then((response) => {
+              this.fetchComment()
+            }).catch((error) => {
+              console.log(error.response.data)
+            })
+        }
+      })
+    },
+    alertbasket(post){
+      Swal.fire({
+        title: `${post.title}`,
+        text: '장바구니에 담겼습니다.',
+        imageUrl: `${imgurl}`,
+        imageWidth: 400,
+        imageHeight: 200,
+        imageAlt: 'Custom image',
+      })
+      // alert(`'${title}'상품을 장바구니에 담았습니다!`)
     },
   },
  
