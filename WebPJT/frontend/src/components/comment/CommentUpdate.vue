@@ -31,22 +31,33 @@ export default {
   methods: {
     commentUpdate() {
       Swal.fire({
-        title: '댓글을 수정하시겠습니까?',
-        text: "You won't be able to revert this!",
+        width: 350,
+        text: "댓글을 수정하시겠습니까?",
         icon: 'warning',
         showCancelButton: true,
         confirmButtonColor: '#3085d6',
         cancelButtonColor: '#d33',
-        confirmButtonText: 'Yes, update it!'
+        confirmButtonText: '<a style="font-size:1rem; color:black">Udate</a>',
+        cancelButtonText: '<a style="font-size:1rem; color:black">Cancel</a>'
         }).then((result) => {
           if (result.value) {
-            Swal.fire(
-              'Update Complete!',
-              'Your file has been updated.',
-              'success',
-            )
+            const Toast = Swal.mixin({
+              toast: true,
+              position: 'top-end',
+              showConfirmButton: false,
+              timer: 1000,
+              timerProgressBar: true,
+              onOpen: (toast) => {
+                toast.addEventListener('mouseenter', Swal.stopTimer)
+                toast.addEventListener('mouseleave', Swal.resumeTimer)
+              }
+            })
           axios.put(`${baseURL}/reply/modify`,this.updateComment)
             .then(() => {
+              Toast.fire({
+                icon: 'success',
+                title: 'Update completed!'
+              })
               setTimeout(() => {
                 this.$router.go()
               },1000)
