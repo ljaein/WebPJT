@@ -68,7 +68,6 @@ export default {
             this.error.email = "";
           })
           .catch(() => {
-            alert("에러");
           });
       } else this.error.email = false;
 
