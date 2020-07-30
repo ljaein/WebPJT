@@ -61,7 +61,7 @@
 
                 </div>
                 <div class="d-flex justify-content-end">
-                  <button type="button" class="btn btn-primary mr-1" data-toggle="modal" data-target="#BasketModal" @click="alertbasket(post.title)"><i class="fas fa-shopping-basket mr-2"></i>장바구니</button>
+                  <button type="button" class="btn btn-primary mr-1" data-toggle="modal" data-target="#BasketModal" @click="alertbasket(post)"><i class="fas fa-shopping-basket mr-2"></i>장바구니</button>
                   <!-- <BasketModal /> -->
                   <button class="btn btn-danger"><i class="far fa-hand-point-up mr-2"></i>바로구매</button>
                 </div>
@@ -256,12 +256,12 @@ export default {
           console.log(error.response.data)
         })
     },
-    alertbasket(title){
+    alertbasket(post){
       Swal.fire({
-        title: `${title}`,
-        text: '상품이 장바구니에 담겼습니다.',
-        imageUrl: `${this.post.imgurl}`,
-        imageWidth: 300,
+        title: `${post.title}`,
+        text: '장바구니에 담겼습니다.',
+        imageUrl: `${imgurl}`,
+        imageWidth: 400,
         imageHeight: 200,
         imageAlt: 'Custom image',
       })
