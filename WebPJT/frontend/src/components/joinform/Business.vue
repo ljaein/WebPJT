@@ -1,77 +1,73 @@
 <template>
-  <div>
-    <!-- 이름 입력칸 -->
-    <div class="input-wrap">
-        <input v-model="name" id="name" placeholder="이름을 입력해주세요" type="text" />
-    </div>
+  <div class="container col-md-6">
+      <!-- 이름 입력칸  -->
+      <div class="form-group">
+        <label for="exampleInputEmail1" class="d-flex">Name</label>
+        <input v-model="name" type="text" class="form-control" id="name" aria-describedby="emailHelp" placeholder="이름을 입력해주세요.">
+        <small id="emailHelp" class="form-text text-muted d-flex">본인의 성함을 기재해주세요.</small>
+      </div>
 
-    <!-- 닉네임 입력칸 -->
-    <div class="input-wrap">
-      <input v-model="nickname" id="nickname" placeholder="닉네임을 입력해주세요" type="text" />
-      <div class="error-text" v-if="error.nickname">{{error.nickname}}</div>
-    </div>
+      <!-- 닉네임 입력칸 -->
+      <div class="form-group">
+        <label for="exampleInputPassword1" class="d-flex">Nickname</label>
+        <input v-model="nickname" type="text" class="form-control" id="nickname" placeholder="닉네임을 입력해주세요.">
+        <small id="emailHelp" class="form-text text-muted d-flex">원하는 닉네임을 설정해주세요.</small>
+        <i class="fas fa-user-check d-flex"><span class="error-text d-flex" v-if="error.nickname">{{error.nickname}}</span></i>
+      </div>
+      
+      <!-- email 입력칸 -->
+      <div class="form-group">
+        <label for="exampleInputPassword1" class="d-flex">E-mail</label>
+        <input v-model="email" v-bind:class="{error : error.email, complete:!error.email&&email.length!==0}" type="email" class="form-control" id="email" placeholder="이메일을 입력해주세요.">
+        <small id="emailHelp" class="form-text text-muted d-flex">회원가입을 위한 이메일을 입력해주세요.</small>
+        <i class="fas fa-at d-flex"><span class="error-text" v-if="error.email">{{error.email}}</span></i>
+      </div>
+      
+      <!-- 비밀번호 입력칸 -->
+      <div class="form-group">
+        <label for="exampleInputPassword1" class="d-flex">Password</label>
+        <input v-model="password" v-bind:class="{error : error.password, complete:!error.password&&password.length!==0}" :type="passwordType" class="form-control" id="password" placeholder="비밀번호를 입력해주세요.">
+        <small id="emailHelp" class="form-text text-muted d-flex">회원가입을 위한 비밀번호를 설정해주세요.</small>
+        <span :class="{active : passwordType==='text'}">
+          <i class="fas fa-eye d-flex"><span class="error-text" v-if="error.password">{{error.password}}</span></i>
+        </span>
+      </div>
 
-    <!-- email 입력칸 -->
-    <div class="input-wrap">
-      <input
-        v-model="email"
-        v-bind:class="{error : error.email, complete:!error.email&&email.length!==0}"
-        id="email"
-        placeholder="이메일을 입력해주세요"
-        type="text"
-      />
-      <div class="error-text" v-if="error.email">{{error.email}}</div>
-    </div>
-
-    <!-- 비밀번호 입력칸 -->
-    <div class="input-wrap password-wrap">
-      <input
-        v-model="password"
-        v-bind:class="{error : error.password, complete:!error.password&&password.length!==0}"
-        id="password"
-        :type="passwordType"
-        placeholder="비밀번호를 입력해주세요"
-      />
-      <span :class="{active : passwordType==='text'}">
-        <i class="fas fa-eye"></i>
-      </span>
-      <div class="error-text" v-if="error.password">{{error.password}}</div>
-    </div>
-
-    <!-- 비밀번호 확인 입력칸 -->
-    <div class="input-wrap password-wrap">
-      <input
-        v-model="passwordconfirm"
-        v-bind:class="{error : error.passwordconfirm, complete:!error.passwordconfirm&&passwordconfirm.length!==0}"
-        id="passwordconfirm"
-        :type="passwordConfirmType"
-        placeholder="비밀번호를 한번 더 입력해주세요"
-      />
-      <span :class="{active : passwordConfirmType==='text'}">
-        <i class="fas fa-eye"></i>
-      </span>
-      <div class="error-text" v-if="error.passwordconfirm">{{error.passwordconfirm}}</div>
-    </div>
-
-    <!-- 주소 -->
-    <div class="input-wrap">
-      <input type="text" v-model="clocation" id="location" placeholder="사업자 주소를 작성해주세요.">
-    </div>
-
-    <!-- 핸드폰 입력 -->
-    <div class="input-wrap">
-      <input type="text" v-model="cphone" id="phone" placeholder="사업자 핸드폰 번호를 입력해주쇼">
-    </div>
-
+      <!-- 비밀번호 확인 입력칸 -->
+      <div class="form-group">
+        <label for="exampleInputPassword1" class="d-flex">Password</label>
+        <input v-model="passwordconfirm" v-bind:class="{error : error.passwordconfirm, complete:!error.passwordconfirm&&passwordconfirm.length!==0}" :type="passwordConfirmType" class="form-control" id="passwordconfirm" placeholder="비밀번호를 확인해주세요.">
+        <small id="emailHelp" class="form-text text-muted d-flex">비밀번호 확인을 위해 다시 작성해주세요.</small>
+        <span :class="{active : passwordConfirmType==='text'}">
+          <i class="fas fa-eye d-flex"><span class="error-text" v-if="error.passwordconfirm">{{error.passwordconfirm}}</span></i>
+        </span>
+      </div>
+      
+      <!-- 주소 입력칸 -->
+      <div class="form-group">
+        <label for="exampleInputEmail1" class="d-flex">Address</label>
+        <input v-model="clocation" type="text" class="form-control" id="location" aria-describedby="emailHelp" placeholder="주소를 입력해주세요.">
+        <small id="emailHelp" class="form-text text-muted d-flex">업체의 주소를 기재해주세요.</small>
+      </div>
+      
+      <!-- 핸드폰 번호 입력칸 -->
+      <div class="form-group">
+        <label for="exampleInputEmail1" class="d-flex">Phone Number</label>
+        <input v-model="cphone" type="text" class="form-control" id="phone" aria-describedby="emailHelp" placeholder="연락처를 입력해주세요.">
+        <small id="emailHelp" class="form-text text-muted d-flex">업체 및 본인 연락처를 기재해주세요.</small>
+      </div>
+    
     <!-- img upload -->
-    <div class="card col-sm-12 mt-1" align="left" >
+    <button type="button" class = "btn btn-primary d-flex" @click="onClickImageUpload">이미지 업로드</button><br>
+    <i v-if="!this.imgurl" class="fas fa-images d-flex"><span>사진을 등록해주세요.</span></i>
+    <div class="col-md-8 p-0" align="left">
       <input ref="imageInput" type="file" hidden @change="onChangeImages" />
-      <img v-if="this.imgurl" :src="this.imgurl" />
-      <button type="button" class = "btn btn-primary" @click="onClickImageUpload">이미지 업로드</button>
+      <img class="card-img mb-2" style="height: 15rem; width: 15rem;" v-if="this.imgurl" :src="this.imgurl" />
     </div>
 
     <!-- 제출 버튼 -->
-    <button @click="join" class="btn">
+    <button @click="join" class="btn d-flex ml-auto">
+      <i class="fas fa-pen mr-1"></i>
           <span>작성완료</span>
     </button>
   </div>
