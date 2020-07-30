@@ -30,6 +30,7 @@
 import PV from "password-validator";
 import * as EmailValidator from "email-validator";
 import axios from 'axios'
+import Swal from 'sweetalert2'
 
 const baseURL = "http://localhost:8080/account"
 
@@ -77,13 +78,8 @@ export default {
         .get(`${baseURL}/login/${this.email}/${this.password}`)
         .then(response => {
           console.log(response.data);
-          this.$router.push("/");
-          this.$router.go();
-          // alert(this.$session.get("login_user"));
-          // axios.get(`${baseURL}/getuserinfo`)
-          // .then(response => {
-          //     alert(response);
-          // })
+          // this.$router.push("/");
+          // this.$router.go();
             if (response.status == 200) {
               var jwt = require("jsonwebtoken");
               var token = jwt.sign({ sub: this.email }, this.password);
@@ -104,6 +100,7 @@ export default {
     },
     join: function() {
       this.$router.push("/user/join/");
+      this.$router.go()
     }
   },
   data: () => {

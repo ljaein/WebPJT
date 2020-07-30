@@ -243,12 +243,17 @@ export default {
             alert(err);
           });
       } else {
-        // confirm('로그인 후 이용해주시기 바랍니다.')
         Swal.fire({
           icon: 'error',
-          title: 'Oops...',
-          text: '로그인 후 이용해주세요.',
-          footer: '<a href>Why do I have this Issue?</a>'
+          text: '로그인 후 이용해주세요...',
+          confirmButtonColor: '#fff',
+          width:350,
+          confirmButtonText: '<a data-toggle="modal" data-target="#LoginModal" style="font-size:1rem; color:black" >Login</a>',
+          showCancelButton: true,
+          cancelButtonText: '<a style="font-size:1rem; color:black">Cancel</a>',
+          cancelButtonColor: '#fff',
+        }).then((result) => {
+          Swal.close()
         })
       }
     },

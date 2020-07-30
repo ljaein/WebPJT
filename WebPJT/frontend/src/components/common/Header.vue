@@ -131,11 +131,19 @@ export default {
       this.$router.go();
     },
     logout: function() {
-      alert("로그아웃 되었습니다.");
       this.$cookies.remove("Auth-Token");
       this.$cookies.remove("User");
       this.$router.push("/");
-      this.$router.go();
+      Swal.fire({
+        width:250,
+        position: 'top-right',
+        icon: 'success',
+        title: '로그아웃 완료!!!',
+        showConfirmButton: false,
+      })
+      setTimeout(() => {
+        this.$router.go();
+      },1000)
     },
     info: function() {
       this.$router.push("/user/info/");
