@@ -38,15 +38,18 @@
 
      
 ### 5. 기술 스택  
-####    <Frontend>  
+####    
+    <Frontend>  
      - Vue.js
      - bootstrap
      
-####    <Backend>  
+####    
+    <Backend>  
      - Spring boot
      - maria-db
      
-####    <Server>  
+####    
+    <Server>  
      - AWS
 
 
