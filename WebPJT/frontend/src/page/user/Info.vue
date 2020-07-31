@@ -32,7 +32,7 @@
                 />
                 <span class="nickname-edit" v-if="validated==0">
                   <!-- <i class="fas fa-arrow-up mr-2"></i> -->
-                  닉네임 클릭시 변경
+                  닉네임 클릭하여 변경
                   <!-- <i class="fas fa-arrow-up"></i> -->
                 </span>
               </div>
