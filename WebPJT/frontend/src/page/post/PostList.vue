@@ -99,7 +99,6 @@
       <div slot="no-more">
         <a @click="toTop">Top</a>
       </div>
-      <!-- <div slot="no-result"></div> -->
     </infinite-loading>
   </div>
   </div>
