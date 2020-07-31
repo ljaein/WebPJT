@@ -31,8 +31,9 @@
                   style="font-size: 30px; font-weight:bold;"
                 />
                 <span class="nickname-edit" v-if="validated==0">
-                  <i class="fas fa-arrow-up mr-2"></i>닉네임을 클릭하여 변경해주세요!
-                  <i class="fas fa-arrow-up"></i>
+                  <!-- <i class="fas fa-arrow-up mr-2"></i> -->
+                  닉네임 클릭시 변경
+                  <!-- <i class="fas fa-arrow-up"></i> -->
                 </span>
               </div>
               <div class="form-group-info">
@@ -63,7 +64,7 @@
               <button
                 @click="passwordModify"
                 v-if="pwvalidated==0 && validated==0"
-                class="btn btn-link btn-sm"
+                class="btn btn-link btn-sm" style="font-size:1rem;"
               >비밀번호 변경</button>
 
               <div class="form-group-pw mb-2 mt-1" align="left" v-if="pwvalidated==1">

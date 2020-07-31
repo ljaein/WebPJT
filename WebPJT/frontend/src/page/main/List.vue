@@ -105,7 +105,7 @@
             <p
               class="card-text mb-1"
               style="text-overflow:ellipsis;overflow: hidden;white-space: nowrap; font-weight: bold; color: gray;"
-            >[{{post.location}}]{{post.title}}</p>
+            >{{post.title}}</p>
             <p class="card-text d-flex justify-content-start" style="text-overflow:ellipsis; overflow: hidden; white-space: nowrap;">
               <i
                 class="fas fa-heart select-button like-button mr-2 mt-1"
