@@ -41,9 +41,11 @@
 ####    <Frontend>  
      - Vue.js
      - bootstrap
+     
 ####    <Backend>  
      - Spring boot
      - maria-db
+     
 ####    <Server>  
      - AWS
 
