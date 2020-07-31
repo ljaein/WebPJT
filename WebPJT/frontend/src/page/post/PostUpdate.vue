@@ -72,16 +72,43 @@ export default {
         })
     },
     modify: function() {
-      axios.put(`${baseURL}/modify`,this.PostUpdate)
-        .then(() => {
-          alert('수정 완료!!')
-          this.$router.push({
-            name: "PostListDetailView",
-            params: { ID: this.pid }
-          });
-        }).catch((error) => {
-          console.log(error.response.data)
-        })
+      Swal.fire({
+        width: 350,
+        text: '수정하시겠습니까?',
+        icon: 'question',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: '<a style="font-size:1rem; color:black">Udate</a>',
+        cancelButtonText: '<a style="font-size:1rem; color:black">Cancel</a>',
+      }).then((result) => {
+        if (result.value) {
+          const Toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 3000,
+            timerProgressBar: true,
+            onOpen: (toast) => {
+              toast.addEventListener('mouseenter', Swal.stopTimer)
+              toast.addEventListener('mouseleave', Swal.resumeTimer)
+            }
+          })
+          Toast.fire({
+            icon: 'success',
+            title: 'Update Completed!'
+          })
+          axios.put(`${baseURL}/modify`,this.PostUpdate)
+            .then(() => {
+              this.$router.push({
+                name: "PostListDetail",
+                params: { ID: this.pid }
+              });
+            }).catch((error) => {
+              console.log(error.response.data)
+            })
+        }
+      })
     },
   },
   created() {

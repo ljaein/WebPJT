@@ -113,6 +113,11 @@ public class AccountController {
         user.setPassword(request.getPassword());
         user.setNickname(request.getNickname());
         user.setCheckType(request.getCheckType());
+        user.setImgurl(request.getImgurl());
+        if(request.getCheckType().equals("business")){
+            user.setClocation(request.getClocation());
+            user.setCphone(request.getCphone());
+        }
         userDao.save(user);
 
         try {

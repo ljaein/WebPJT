@@ -30,12 +30,41 @@ export default {
   },
   methods: {
     commentUpdate() {
-      axios.put(`${baseURL}/reply/modify`,this.updateComment)
-        .then(() => {
-          alert('댓글 수정 완료!')
-          this.$router.go()
-        }).catch((error) => {
-          console.log(error.response.data)
+      Swal.fire({
+        width: 350,
+        text: "댓글을 수정하시겠습니까?",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: '<a style="font-size:1rem; color:black">Udate</a>',
+        cancelButtonText: '<a style="font-size:1rem; color:black">Cancel</a>'
+        }).then((result) => {
+          if (result.value) {
+            const Toast = Swal.mixin({
+              toast: true,
+              position: 'top-end',
+              showConfirmButton: false,
+              timer: 1000,
+              timerProgressBar: true,
+              onOpen: (toast) => {
+                toast.addEventListener('mouseenter', Swal.stopTimer)
+                toast.addEventListener('mouseleave', Swal.resumeTimer)
+              }
+            })
+          axios.put(`${baseURL}/reply/modify`,this.updateComment)
+            .then(() => {
+              Toast.fire({
+                icon: 'success',
+                title: 'Update completed!'
+              })
+              setTimeout(() => {
+                this.$router.go()
+              },1000)
+            }).catch((error) => {
+              console.log(error.response.data)
+            })
+          }
         })
     },
     fetchComment() {

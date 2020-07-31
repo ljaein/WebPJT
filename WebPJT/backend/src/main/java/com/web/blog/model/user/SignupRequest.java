@@ -30,4 +30,6 @@ public class SignupRequest {
     @ApiModelProperty(required = true)
     @NotNull
     String checkType;
+    private String clocation;
+    private String cphone;
 }

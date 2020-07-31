@@ -7,12 +7,14 @@ import constants from '../lib/constants'
 import Login from '../page/user/Login.vue'
 import Join from '../page/user/Join.vue'
 import Info from '../page/user/Info.vue'
+import Basket from '../page/user/Basket.vue'
 
 // error
 import NotFound from '../page/error/NotFound.vue'
 import Params from '../page/error/Params.vue'
 import Msg from '../page/msg/msg.vue'
 import Kakao from '../page/msg/kakao.vue'
+import Calender from '../page/msg/calender.vue'
 // main
 import List from '../page/main/List.vue'
 
@@ -50,6 +52,11 @@ export default new Router({
             path: '/user/info',
             name: constants.URL_TYPE.USER.INFO,
             component: Info
+        },
+        {
+            path: '/user/basket',
+            name: 'Basket',
+            component: Basket
         },
         // 메인
         {
@@ -125,6 +132,10 @@ export default new Router({
         {
             path: '/msg/kakao',
             component: Kakao
+        },
+        {
+            path: '/msg/calender',
+            component: Calender
         }
 
     ]

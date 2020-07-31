@@ -23,4 +23,5 @@ public class LikeList {
 
     private String email;
     private int pid;
+    private int cart;
 }

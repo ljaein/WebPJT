@@ -13,13 +13,13 @@
             <i class="fas fa-envelope" style="font-size:20px"></i> <input class="text-center ml-1 mt-4 bg-white" style="width:60%; border: none;" type="text" v-model="email" id="email" placeholder="이메일을 입력해주세요.">
             <div class="error-text" v-if="error.email">{{error.email}}</div>
             <p class="mb-4"></p>
-            <i class="fas fa-lock" style="font-size:20px"></i> <input class="text-center ml-1 mt-4" style="width:60%; border: none;" type="password" v-model="password" id="password" placeholder="비밀번호를 입력해주세요.">
+            <i class="fas fa-lock" style="font-size:20px"></i> <input class="text-center ml-1 mt-4" style="width:60%; border: none;" type="password" v-model="password" id="password" placeholder="비밀번호를 입력해주세요." @keypress.enter="login">
 
         </div>
         <div class="modal-footer border-0 pt-0">
             <!-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> -->
-            <button type="button" class="btn" @click="join" data-dismiss="modal" ><i class="far fa-user mr-1"></i><br>회원 가입 하기</button>
-            <button type="button" class="btn" @click="login" data-dismiss="modal" ><i class="fas fa-sign-in-alt mr-1"></i><br>로그인 하기</button>
+            <button type="button" class="btn" @click="join" data-dismiss="modal" ><i class="far fa-user mr-1"></i><br>회원가입</button>
+            <button type="button" class="btn" @click="login" data-dismiss="modal" ><i class="fas fa-sign-in-alt mr-1"></i><br>로그인</button>
         </div>
         </div>
     </div>
@@ -30,6 +30,7 @@
 import PV from "password-validator";
 import * as EmailValidator from "email-validator";
 import axios from 'axios'
+import Swal from 'sweetalert2'
 
 const baseURL = "http://localhost:8080/account"
 
@@ -67,7 +68,6 @@ export default {
             this.error.email = "";
           })
           .catch(() => {
-            alert("에러");
           });
       } else this.error.email = false;
 
@@ -77,13 +77,8 @@ export default {
         .get(`${baseURL}/login/${this.email}/${this.password}`)
         .then(response => {
           console.log(response.data);
-          this.$router.push("/");
-          this.$router.go();
-          // alert(this.$session.get("login_user"));
-          // axios.get(`${baseURL}/getuserinfo`)
-          // .then(response => {
-          //     alert(response);
-          // })
+          // this.$router.push("/");
+          // this.$router.go();
             if (response.status == 200) {
               var jwt = require("jsonwebtoken");
               var token = jwt.sign({ sub: this.email }, this.password);
@@ -104,6 +99,7 @@ export default {
     },
     join: function() {
       this.$router.push("/user/join/");
+      this.$router.go()
     }
   },
   data: () => {
