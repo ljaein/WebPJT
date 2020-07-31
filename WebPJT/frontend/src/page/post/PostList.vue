@@ -99,6 +99,10 @@
       <div slot="no-more">
         <a @click="toTop">Top</a>
       </div>
+<<<<<<< HEAD
+      <!-- <div slot="no-result"></div> -->
+=======
+>>>>>>> 93e978d4fe413a2cf2f97617a8d026a98ba43ac3
     </infinite-loading>
   </div>
   </div>

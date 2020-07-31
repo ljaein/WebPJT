@@ -18,8 +18,8 @@
         </div>
         <div class="modal-footer border-0 pt-0">
             <!-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> -->
-            <button type="button" class="btn" @click="join" data-dismiss="modal" ><i class="far fa-user mr-1"></i><br>회원 가입 하기</button>
-            <button type="button" class="btn" @click="login" data-dismiss="modal" ><i class="fas fa-sign-in-alt mr-1"></i><br>로그인 하기</button>
+            <button type="button" class="btn" @click="join" data-dismiss="modal" ><i class="far fa-user mr-1"></i><br>회원가입</button>
+            <button type="button" class="btn" @click="login" data-dismiss="modal" ><i class="fas fa-sign-in-alt mr-1"></i><br>로그인</button>
         </div>
         </div>
     </div>

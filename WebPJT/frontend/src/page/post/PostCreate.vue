@@ -198,6 +198,8 @@ export default {
         alert("정보를 모두 입력해주세요.");
         return;
       }
+      this.PostCreate.location =
+        "(" + this.addr1 + ") " + this.addr2 + " " + this.addr3;
 
       const Toast = Swal.mixin({
         toast: true,
